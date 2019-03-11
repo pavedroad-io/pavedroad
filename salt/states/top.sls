@@ -1,7 +1,28 @@
-base:
-    # All environments
-    '*':
+#
+# Read the saltenv and then execute states based on that environment
+# satenv = dev|stag|test|prod
+#
+
+{%- set environment = saltenv %}
+
+{{ environment }}:
+
+    #
+    # Thinkgs that get installed on all boxes regardless of 
+    # thier role
+    #
+
+    'G@environment:{{environment}}':
+        - match: compound
         - bash
+
+
+    #
+    # Role specific packages
+    #
+
+    'G@environment:{{environment}}' and G@roles:pr-golang:
+        - match: compound
         - git
         - golang
         - vim
