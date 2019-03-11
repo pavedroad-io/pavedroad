@@ -15,4 +15,4 @@ brew install saltstack
 git clone https://github.com/pavedroad-io/kevlar-repo.git
 
 # Apply salt states
-sudo kevlar-repo/salt/apply-state.sh
+kevlar-repo/salt/apply-state.sh
