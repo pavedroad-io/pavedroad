@@ -1,6 +1,6 @@
-# Building and Installing Crossplane
+# Building and Installing {{org}}
 
-Crossplane is composed of golang project and can be built directly with standard `golang` tools. We currently support two different platforms for building:
+{{org}} is composed of golang project and can be built directly with standard `golang` tools. We currently support two different platforms for building:
 
   * Linux: most modern distros should work although most testing has been done on Ubuntu
   * Mac: macOS 10.6+ is supported
@@ -27,7 +27,7 @@ First ensure that you have the build submodule synced and updated:
 git submodule sync && git submodule update --init --recursive
 ```
 
-You can then build the Crossplane binaries and all container images for the host platform by simply running the command below. Building in parallel with the `-j` option is recommended.
+You can then build the {{org}} binaries and all container images for the host platform by simply running the command below. Building in parallel with the `-j` option is recommended.
 
 ```
 make -j4
@@ -37,7 +37,7 @@ Run `make help` for more options.
 
 ## Building inside the cross container
 
-Official Crossplane builds are done inside a build container. This ensures that we get a consistent build, test and release environment. To run the build inside the cross container run:
+Official {{org}} builds are done inside a build container. This ensures that we get a consistent build, test and release environment. To run the build inside the cross container run:
 
 ```
 > build/run make -j4
@@ -126,13 +126,13 @@ systemctl enable update-binfmt.service
 # Install
 
 ## Local
-Please refer to [Local Build & Install](/cluster/local/README.md) documentation on how to deploy locally built Crossplane image onto Kubernetes cluster running on minikube or using docker for mac.
+Please refer to [Local Build & Install](/cluster/local/README.md) documentation on how to deploy locally built {{org}} image onto Kubernetes cluster running on minikube or using docker for mac.
 
 # Improving Build Speed
 
 ## Image Caching and Pruning
 
-Doing a complete build of Crossplane and the dependent packages can take a long time. To speed things up we rely heavily on image caching in docker. Docker support content-addressable images by default and we use that effectively when building images. Images are factored to increase reusability across builds. We also tag and timestamp images that should remain in the cache to help future builds.
+Doing a complete build of {{org}} and the dependent packages can take a long time. To speed things up we rely heavily on image caching in docker. Docker support content-addressable images by default and we use that effectively when building images. Images are factored to increase reusability across builds. We also tag and timestamp images that should remain in the cache to help future builds.
 
 ### Pruning the cache
 
@@ -146,7 +146,7 @@ To prune the number of cached images run `make prune`. There are two options tha
 Every PR and every merge to master triggers the CI process in [Jenkins](https://jenkinsci.upbound.io/blue).
 The Jenkins CI will build, run unit tests, run integration tests and Publish artifacts- On every commit to PR and master. If any of the CI stages fail, then the process is aborted and no artifacts are published.
 
-On every successful build Artifacts are pushed to a [s3 bucket](https://releases.crossplane.io/). On every successful master build, images are uploaded to docker hub in addition.
+On every successful build Artifacts are pushed to a [s3 bucket](https://releases.{{org}}.io/). On every successful master build, images are uploaded to docker hub in addition.
 
 Based on nature of the PR, it may not be required to run full regression or users may want to skip build all together for trivial changes like documentation changes. Based on the PR body text, Jenkins will skip the build or skip some tests:
 

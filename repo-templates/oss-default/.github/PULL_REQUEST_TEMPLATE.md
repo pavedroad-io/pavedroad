@@ -1,6 +1,6 @@
 <!-- Please take a look at our [Contributing](../blob/master/CONTRIBUTING.md)
 documentation before submitting a Pull Request!
-Thank you for contributing to Crossplane! -->
+Thank you for contributing to {{org}}! -->
 
 **Description of your changes:**
 

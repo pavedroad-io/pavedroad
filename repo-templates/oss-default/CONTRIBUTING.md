@@ -1,6 +1,6 @@
 ## How to Contribute
 
-The Crossplane project is under [Apache 2.0 license](LICENSE). We accept contributions via
+The {{org}} project is under [Apache 2.0 license](LICENSE). We accept contributions via
 GitHub pull requests. This document outlines some of the conventions related to
 development workflow, commit message formatting, contact points and other
 resources to make it easier to get your contribution accepted.
@@ -57,24 +57,24 @@ This is a rough outline of what a contributor's workflow looks like:
 
 ## Building
 
-Details about building crossplane can be found in [INSTALL.md](INSTALL.md).
+Details about building {{org}} can be found in [INSTALL.md](INSTALL.md).
 
 ## Coding Style and Linting
 
-Crossplane projects are written in Go. Coding style is enforced by
-[golangci-lint](https://github.com/golangci/golangci-lint). Crossplane's linter
+{{org}} projects are written in Go. Coding style is enforced by
+[golangci-lint](https://github.com/golangci/golangci-lint). {{org}}'s linter
 configuration is [documented here](.golangci.yml). Builds will fail locally and
 in CI if linter warnings are introduced:
 
 ```bash
 $ make build
-==> Linting /REDACTED/go/src/github.com/crossplaneio/crossplane/cluster/charts/crossplane
+==> Linting /REDACTED/go/src/github.com/{{org}}io/{{org}}/cluster/charts/{{org}}
 [INFO] Chart.yaml: icon is recommended
 
 1 chart(s) linted, no failures
-20:31:42 [ .. ] helm dep crossplane 0.1.0-136.g2dfb012.dirty
-No requirements found in /REDACTED/go/src/github.com/crossplaneio/crossplane/cluster/charts/crossplane/charts.
-20:31:42 [ OK ] helm dep crossplane 0.1.0-136.g2dfb012.dirty
+20:31:42 [ .. ] helm dep {{org}} 0.1.0-136.g2dfb012.dirty
+No requirements found in /REDACTED/go/src/github.com/{{org}}io/{{org}}/cluster/charts/{{org}}/charts.
+20:31:42 [ OK ] helm dep {{org}} 0.1.0-136.g2dfb012.dirty
 20:31:42 [ .. ] golangci-lint
 pkg/clients/azure/redis/redis.go:35:7: exported const `NamePrefix` should have comment or be unexported (golint)
 const NamePrefix = "acr"
@@ -104,13 +104,13 @@ be created if they do not yet exist and updated if they do.
 
 The goal of comments is to make the code more readable and grokkable by future developers. Once you
 have made your code as understandable as possible, add comments to make sure future developers can
-understand (A) what this piece of code's responsibility is within Crossplane's architecture and (B) why it
+understand (A) what this piece of code's responsibility is within {{org}}'s architecture and (B) why it
 was written as it was.
 
 The below blog entry explains more the why's and how's of this guideline.
 https://blog.codinghorror.com/code-tells-you-how-comments-tell-you-why/
 
-For Go, Crossplane follows standard godoc guidelines.
+For Go, {{org}} follows standard godoc guidelines.
 A concise godoc guideline can be found here: https://blog.golang.org/godoc-documenting-go-code
 
 ## Commit Messages
@@ -145,9 +145,9 @@ git tools.
 ## Adding New Resources
 
 ### Project Organization
-The Crossplane project is based on and intially created by using [Kubebuilder is a framework for building Kubernetes APIs](https://github.com/kubernetes-sigs/kubebuilder).
+The {{org}} project is based on and intially created by using [Kubebuilder is a framework for building Kubernetes APIs](https://github.com/kubernetes-sigs/kubebuilder).
 
-The Crossplane project organizes resources (api types and controllers) by grouping them by Cloud Provider with further sub-group by resource type 
+The {{org}} project organizes resources (api types and controllers) by grouping them by Cloud Provider with further sub-group by resource type 
 
 The Kubebuilder framework does not provide good support for projects with multiple groups and group tiers which contain resources with overlapping names. 
 For example:
@@ -202,7 +202,7 @@ There are several different ways you can approach the creation of the new resour
 Good ol' copy & paste of existing resource for both apis and controller (if new controller is needed for your resource) and update the copied code to tailor your needs.
 
 #### Kubebuilder With New Project
-Create and Initialize a new (temporary) kubebuilder project and create new resources: apis and controller(s), then copy them into Crossplane project following the established project organization.
+Create and Initialize a new (temporary) kubebuilder project and create new resources: apis and controller(s), then copy them into {{org}} project following the established project organization.
 
 To verify that new artifacts run: 
 ```bash
