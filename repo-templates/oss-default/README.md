@@ -1,18 +1,18 @@
 <p align="center"><img src="../../assets/images/banner.png" alt="PavedRoad.io"></p>
 
 ## Overview
-PavedRoad.io is an OSS project for modeling the Softwaer Development and Operations (OSD) lifecycle.  While Infrastrucutre as Code (IaC) gave us the ability to model our servcie, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encomples the entire tool network including librarys, development tools, CI/CD, operations, and advance analytics using ML/AI. 
+PavedRoad.io is an OSS project for modeling the Software Development and Operations (OSD) lifecycle.  While Infrastrucutre as Code (IaC) gave us the ability to model our servcie, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encomples the entire tool network including library's, development tools, CI/CD, operations, and advance analytics using ML/AI. 
 
 # What is a Paved Road
 The term "Paved Road" was coined by the Netflix tools teams which created several fully integrated end-to-end tool networks for writing, testing, deploying, and operating their streaming video service. For each support execution framework such as Java, Python, or Go, an integrated working CI/CD tool network was created.  This method of pre-integrated and tested tool networks converts a bumpy and difficult road into a delightfully smooth road which dramatically increases the velocity of development teams
 
 # Kevlar for GO
-Kevlar a foundation for delivering miscroservcies, serverless functions, and integrating existing traditional and cloud applications, aka baremetal and virtual machines.  It comes with a complete integrated tool network for developming, deploying, and operating those services.  
+Kevlar a foundation for delivering microservices, serverless functions, and integrating existing traditional and cloud applications, aka bare-metal and virtual machines.  It comes with a complete integrated tool network for developing, deploying, and operating those services. 
 
 # Stacks as Code (SaC)
 Infrastructure as Code (IaC) is the process of managing and provisioning computer data centers through machine-readable definition files, rather than physical hardware configuration or interactive configuration tools [Wikipedia](https://en.wikipedia.org/wiki/Infrastructure_as_code).
 
-In SaC, we first automate the entire tool chain by using Kubernetes Custom Resource Definitions (CRD) as an abstraction layers/data model between each step.  Kuberentes metadata provides an abstraction layer for passing data between each step.  Customer controllers manage the flow and create a data presentation layer for tools making up the chain.  This enables the tooll network to be formed using standard k8s lables and selectors.
+In SaC, we first automate the entire tool chain by using Kubernetes Custom Resource Definitions (CRD) as an abstraction layers/data model between each step.  Kuberentes metadata provides an abstraction layer for passing data between each step.  Customer controllers manage the flow and create a data presentation layer for tools making up the chain.  This enables the tool network to be formed using standard k8s labels and selectors.
 
 ## Getting Started and Documentation
 
@@ -50,7 +50,7 @@ Anyone who wants to discuss the direction of the project, design and implementat
 
 ## Project Status
 
-The project is an early preview. We realize that it's going to take a village to arrive at the vision of a multicloud control plane, and we wanted to open this up early to get your help and feedback. Please see the [Roadmap](ROADMAP.md) for details on what we are planning for future releases.
+The project is an early preview. We realize that it's going to take a village to arrive at the vision of a multi-cloud control plane, and we wanted to open this up early to get your help and feedback. Please see the [Roadmap](ROADMAP.md) for details on what we are planning for future releases. 
 
 ### Official Releases
 
