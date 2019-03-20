@@ -3,7 +3,7 @@
 ## Overview
 PavedRoad.io is an OSS project for modeling the Software Development and Operations (OSD) lifecycle.  While Infrastrucutre as Code (IaC) gave us the ability to model our servcie, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encomples the entire tool network including library's, development tools, CI/CD, operations, and advance analytics using ML/AI. 
 
-# What is a Paved Road
+# What is a 'Paved Road'?
 The term "Paved Road" was coined by the Netflix tools teams which created several fully integrated end-to-end tool networks for writing, testing, deploying, and operating their streaming video service. For each support execution framework such as Java, Python, or Go, an integrated working CI/CD tool network was created.  This method of pre-integrated and tested tool networks converts a bumpy and difficult road into a delightfully smooth road which dramatically increases the velocity of development teams
 
 # Kevlar for GO
