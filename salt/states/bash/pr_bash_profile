@@ -1,0 +1,7 @@
+# Sourced by .bash_profile
+
+# Return if not interactive
+[ -z "$PS1" ] && return
+
+export EDITOR='vim'
+

@@ -1,0 +1,3 @@
+version: "1"
+domain: {{org}}.io
+repo: github.com/{{org}}/{{org}}
