@@ -1,2 +1,5 @@
 file_client: local
 root_dir: root
+grains:
+  roles:
+    - pr-golang
