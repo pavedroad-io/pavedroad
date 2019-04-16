@@ -1,10 +1,17 @@
 INSTALL.md
 
-In order to bootstrap the PR dev environemt run the following script:
+In order to bootstrap the PR dev environemt run one of the following scripts:
 
+bootstrap-unix.sh
 bootstrap-macos.sh
 
-The bootstrap script does the following:
+The unix bootstrap script does the following:
+
+1) uses saltstack bootstrap to install saltstack
+2) uses git to downlaod the salt states
+3) runs apply-state.sh to install the PR dev enviroment
+
+The macOS bootstrap script does the following:
 
 1) installs the xcode dev tools
 2) prepares /usr/local for homebrew installation
