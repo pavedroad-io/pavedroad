@@ -22,6 +22,16 @@ grains:
       - devtools
     devtools:
       version: latest
+  cfg_redhat:
+    installs:
+      - devtools
+    devtools:
+      version: latest
+  cfg_suse:
+    installs:
+      - devtools
+    devtools:
+      version: latest
   cfg_macos:
     commands:
       - show-all-files

@@ -1,7 +1,7 @@
 #
 # Execute states based on the following grains:
 # saltenv = dev|stage|test|prod
-# os =  debian|macos|windows
+# os_family =  debian|redhat|suse|macos|windows
 # roles = pr-golang
 # tops = base|bash|git|golang|vim
 #
@@ -21,17 +21,27 @@
 #
 
 # Debian
-  'G@os:Debian and G@tops:debian':
+  'G@os_family:Debian and G@tops:debian':
     - match: compound
     - debian
 
+# RedHat
+  'G@os_family:RedHat and G@tops:redhat':
+    - match: compound
+    - redhat
+
+# Suse
+  'G@os_family:Suse and G@tops:suse':
+    - match: compound
+    - suse
+
 # MacOS
-  'G@os:MacOS and G@tops:macos':
+  'G@os_family:MacOS and G@tops:macos':
     - match: compound
     - macos
 
 # Windows
-  'G@os:Windows and G@tops.windows':
+  'G@os_family:Windows and G@tops.windows':
     - match: compound
     - windows
 
