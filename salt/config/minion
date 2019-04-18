@@ -6,6 +6,8 @@ grains:
   tops:
     - base
     - debian
+    - redhat
+    - suse
     - macos
     - windows
     - bash
