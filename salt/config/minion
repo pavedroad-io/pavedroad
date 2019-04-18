@@ -1,5 +1,68 @@
 file_client: local
-root_dir: root
+root_dir: pr-root
 grains:
   roles:
     - pr-golang
+  tops:
+    - base
+    - debian
+    - macos
+    - windows
+    - bash
+    - git
+    - golang
+    - vim
+  cfg_base:
+    installs:
+      - firefox
+    firefox:
+      version: latest
+  cfg_debian:
+    installs:
+      - devtools
+    devtools:
+      version: latest
+  cfg_macos:
+    commands:
+      - show-all-files
+      - show-all-extensions
+  cfg_windows:
+    installs:
+      - devtools
+      - cygwin
+      - putty
+    devtools:
+      version: latest
+    cygwin:
+      version: latest
+    putty:
+      version: latest
+  cfg_bash:
+    files:
+      - profile
+      - bashrc
+    profile:
+      append: True
+    bashrc:
+      append: True
+  cfg_git:
+    installs:
+      - git
+    git:
+      version: latest
+  cfg_golang:
+    installs:
+      - golang
+    golang:
+      version: latest
+  cfg_vim:
+    installs:
+      - vim
+    vim:
+      version: latest
+    files:
+      - vimrc
+    vimrc:
+      append: True
+
+# vim: filetype=yaml

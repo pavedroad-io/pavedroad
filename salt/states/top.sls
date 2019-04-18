@@ -1,41 +1,60 @@
 #
-# Read the saltenv and then execute states based on that environment
-# saltenv = dev|stag|test|prod
+# Execute states based on the following grains:
+# saltenv = dev|stage|test|prod
+# os =  debian|macos|windows
+# roles = pr-golang
+# tops = base|bash|git|golang|vim
 #
 
 {{ saltenv }}:
 
-    #
-    # Things that get installed on all boxes regardless of 
-    # their role
-    #
+#
+# Packages that get installed on all boxes regardless
+#
 
-    'G@saltenv:dev':
-        - match: compound
-        - bash
+  'G@tops:base':
+    - match: compound
+    - base
 
-    #
-    # Role specific packages
-    #
+#
+# OS specific packages
+#
 
-    'G@saltenv:dev and G@roles:pr-golang':
-        - match: compound
-        - git
-        - golang
-        - vim
+# Debian
+  'G@os:Debian and G@tops:debian':
+    - match: compound
+    - debian
 
-    #
-    # OS specific packages
-    #
+# MacOS
+  'G@os:MacOS and G@tops:macos':
+    - match: compound
+    - macos
 
-    # Debian
-    'G@os:Debian':
-        - debian
+# Windows
+  'G@os:Windows and G@tops.windows':
+    - match: compound
+    - windows
 
-    # MacOS
-    'G@os:MacOS':
-        - macos
+#
+# Environment specific packages
+#
 
-    # Windows
-    'G@os:Windows':
-        - windows
+  'G@saltenv:dev and G@tops:bash':
+    - match: compound
+    - bash
+
+#
+# Role specific packages
+#
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:git':
+    - match: compound
+    - git
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:golang':
+    - match: compound
+    - golang
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:vim':
+    - match: compound
+    - vim
