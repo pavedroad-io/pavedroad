@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Apply salt states to install pavedroad development environment
 # Apply states in masterless mode using salt-call
 
-# for debugging
+# Possible debug settings
 # showgrains=1
 # dryrun="test=True"
 # loglevel=debug
