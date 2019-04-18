@@ -1,6 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Bootstrap saltstack on MacOS
+
+set -o errexit -o errtrace
+
+function error_trap
+{
+  local code="$?"
+  local command="${BASH_COMMAND:-unknown}"
+  echo "command [${command}] exited with code [${code}]" 1>&2
+}
+trap 'error_trap' ERR
+
+# Script only runs on macOS
+case "$OSTYPE" in
+  darwin*) ;;
+  *) echo "OS is not macOS, exiting"; exit 1 ;;
+esac
 
 # Install developer tools
 xcode-select --install
