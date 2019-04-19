@@ -7,9 +7,11 @@ bootstrap-macos.sh
 
 The unix bootstrap script does the following:
 
-1) uses saltstack bootstrap to install saltstack
-2) uses git to downlaod the salt states
-3) runs apply-state.sh to install the PR dev enviroment
+1) installs curl and git
+2) uses curl to download salt bootstrap script
+3) uses salt bootstrap script to install saltstack
+4) uses git to downlaod the salt states
+5) runs apply-state.sh to install the PR dev enviroment
 
 The macOS bootstrap script does the following:
 
