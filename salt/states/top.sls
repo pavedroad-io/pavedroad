@@ -1,7 +1,7 @@
 #
 # Execute states based on the following grains:
 # saltenv = dev|stage|test|prod
-# os_family =  debian|redhat|suse|macos|windows
+# os_family = debian|redhat|suse|macos|windows
 # roles = pr-golang
 # tops = base|bash|git|golang|vim
 #
@@ -56,6 +56,10 @@
 #
 # Role specific packages
 #
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:docker':
+    - match: compound
+    - docker
 
   'G@saltenv:dev and G@roles:pr-golang and G@tops:git':
     - match: compound

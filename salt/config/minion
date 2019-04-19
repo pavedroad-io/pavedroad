@@ -11,6 +11,7 @@ grains:
     - macos
     - windows
     - bash
+    - docker
     - git
     - golang
     - vim
@@ -57,6 +58,12 @@ grains:
       append: True
     bashrc:
       append: True
+  cfg_docker:
+    installs:
+      - docker
+    docker:
+      version: latest
+      service: True
   cfg_git:
     installs:
       - git
