@@ -14,8 +14,13 @@ trap 'error_trap' ERR
 
 # Script only runs on macOS
 case "$OSTYPE" in
-  darwin*) ;;
-  *) echo "OS is not macOS, exiting"; exit 1 ;;
+  darwin*)
+    echo OS family is MacOS
+    ;;
+  *)
+    echo OS family is not supported
+    exit 1
+    ;;
 esac
 
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
@@ -36,5 +41,12 @@ cd
 # Install saltstack
 brew install saltstack
 
+# Get salt states
+tmp=$(mktemp -d -t kevlar-repo.XXXXXX 2>/dev/null)
+# git clone https://github.com/pavedroad-io/kevlar-repo.git ${tmp}
+# Temporarily clone from salt-init branch
+git clone -b salt-init https://github.com/pavedroad-io/kevlar-repo.git ${tmp}
+
 # Apply salt states
-${saltdir}/apply-state.sh
+${tmp}/salt/apply-state.sh
+mv ${tmp} ${saltdir}
