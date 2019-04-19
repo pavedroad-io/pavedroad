@@ -2,6 +2,9 @@
 
 # Bootstrap saltstack on Unix
 
+sudo=$(command -v sudo >& /dev/null)
+
+# Setting must be after above sudo check which can fail
 set -o errexit -o errtrace
 
 function error_trap
@@ -12,23 +15,29 @@ function error_trap
 }
 trap 'error_trap' ERR
 
-# Not a comprehensive check
-case "$OSTYPE" in
-  darwin* | win*) echo "OS is not supported, exiting"; exit 1 ;;
-  *) ;;
-esac
+saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 
-# Install missing developer tools
-# Assuming curl is installed
+# Not a comprehensive check
+if [ -e "/etc/lsb-release" ]; then
+    echo OS family is Debian
+    ${sudo} apt-get -qq update
+    ${sudo} apt-get -qq -y install curl
+elif [ -e "/etc/redhat-release" ]; then
+    echo OS family is RedHat
+    ${sudo} yum -q -y install curl
+elif [ -e "/etc/SuSE-release" ]; then
+    echo OS family is SuSE
+    ${sudo} zypper -q install -y curl
+else
+    echo OS family is not supported
+    exit 1
+fi
 
 # Install saltstack
 curl -o install_salt.sh -L https://bootstrap.saltstack.com
 
-# Prevent failure with -P flag so that the script can use pip as a dependency source
-sudo sh install_salt.sh -P
+# -P Prevent failure by allowing the script to use pip as a dependency source
+# -X Do not start minion service with
+${sudo} sh install_salt.sh -P -X
 
-# Get salt states
-git clone https://github.com/pavedroad-io/kevlar-repo.git
-
-# Apply salt states
-kevlar-repo/salt/apply-state.sh
+${saltdir}/apply-state.sh

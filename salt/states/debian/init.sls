@@ -5,7 +5,7 @@
 {% if installs and 'devtools' in installs %}
 devtools:
   pkg.installed:
-    - name:     build-essentials
+    - name:     build-essential
   {% if grains.cfg_debian.devtools.version is defined %}
     - version:  {{ grains.cfg_debian.devtools.version }}
   {% endif %}

@@ -4,9 +4,6 @@
 
 {% if installs and 'devtools' in installs %}
 devtools:
-  pkg.installed:
-    - name:     Development Tools
-  {% if grains.cfg_redhat.devtools.version is defined %}
-    - version:  {{ grains.cfg_redhat.devtools.version }}
-  {% endif %}
+  cmd.run:
+    - name:     "yum -q -y groupinstall 'Development Tools'"
 {% endif %}

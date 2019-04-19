@@ -18,6 +18,8 @@ case "$OSTYPE" in
   *) echo "OS is not macOS, exiting"; exit 1 ;;
 esac
 
+saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
+
 # Install developer tools
 xcode-select --install
 
@@ -34,8 +36,5 @@ cd
 # Install saltstack
 brew install saltstack
 
-# Get salt states
-git clone https://github.com/pavedroad-io/kevlar-repo.git
-
 # Apply salt states
-kevlar-repo/salt/apply-state.sh
+${saltdir}/apply-state.sh
