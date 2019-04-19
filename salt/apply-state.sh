@@ -31,6 +31,10 @@ salt-call \
 
 salt-call \
     --config-dir "${saltdir}/config/" \
+    grains.setval stateroot ${saltdir}/states
+
+salt-call \
+    --config-dir "${saltdir}/config/" \
     grains.setval saltenv dev
 
 salt-call \
