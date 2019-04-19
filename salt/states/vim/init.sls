@@ -6,7 +6,11 @@
 {% if installs and 'vim' in installs %}
 vim:
   pkg.installed:
+  {% if grains.os_family == 'RedHat' %}
+    - name:     vim-enhanced
+  {% else %}
     - name:     vim
+  {% endif %}
   {% if grains.cfg_vim.vim.version is defined %}
     - version:  {{ grains.cfg_vim.vim.version }}
   {% endif %}
