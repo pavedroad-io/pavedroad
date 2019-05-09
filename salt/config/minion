@@ -61,7 +61,11 @@ grains:
   cfg_docker:
     installs:
       - docker
+      - compose
     docker:
+      version: latest
+      service: True
+    compose:
       version: latest
       service: True
   cfg_git:
