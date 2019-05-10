@@ -79,8 +79,14 @@ grains:
   cfg_golang:
     installs:
       - golang
+      - godep
+      - dlv
+      - golint
+      - gosec
     golang:
       version: latest
+    debug:
+      enable: True
   cfg_vim:
     installs:
       - vim
