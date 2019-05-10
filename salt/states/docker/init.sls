@@ -15,7 +15,9 @@
 docker:
   {% if docker_alt_install %}
   cmd.run:
-    - name:     curl -fsSL https://get.docker.com -o get-docker.sh ; sh get-docker.sh
+    - name: |
+                curl -fsSL https://get.docker.com -o get-docker.sh
+                sh get-docker.sh
   {% else %}
   pkg.installed:
     - name:     {{ docker_pkg_name }}
