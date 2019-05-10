@@ -68,6 +68,9 @@ grains:
     compose:
       version: latest
       service: True
+    debug:
+      enable: True
+      host: tcp://host.docker.internal:2375
   cfg_git:
     installs:
       - git
