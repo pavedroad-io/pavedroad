@@ -40,7 +40,7 @@ saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 curl -o install_salt.sh -L https://bootstrap.saltstack.com
 
 # -P Prevent failure by allowing the script to use pip as a dependency source
-# -X Do not start minion service with
+# -X Do not start minion service
 ${sudo} sh install_salt.sh -P -X
 
 # Get salt states
