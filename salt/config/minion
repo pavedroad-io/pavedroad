@@ -83,6 +83,25 @@ grains:
       - dlv
       - golint
       - gosec
+      - asmfmt
+      - errcheck
+      - fillstruct
+      - gocode
+      - gocode-gomod
+      - godef
+      - gogetdoc
+      - goimports
+      - gopls
+      - gometalinter
+      - golangci-lint
+      - gomodifytags
+      - gorename
+      - gotags
+      - guru
+      - impl
+      - keyify
+      - motion
+      - iferr
     golang:
       version: latest
     debug:
@@ -90,11 +109,15 @@ grains:
   cfg_vim:
     installs:
       - vim
+      - vim-go
     vim:
       version: latest
     files:
       - vimrc
+      - vimrc-go
     vimrc:
       append: True
+    vimrc_go:
+      prepend: True
 
 # vim: filetype=yaml
