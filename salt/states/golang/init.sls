@@ -1,4 +1,5 @@
-# Install golang
+# Install golang and selected go packages
+# Install vim-go plugin dependencies
 
 {% set installs = grains.cfg_golang.installs %}
 

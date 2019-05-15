@@ -1,4 +1,5 @@
-# Install vim and copy/source vimrc file
+# Install vim and vim-go plugin
+# Copy and source vimrc and vimrc-go files
 
 {% set installs = grains.cfg_vim.installs %}
 {% set files = grains.cfg_vim.files %}
