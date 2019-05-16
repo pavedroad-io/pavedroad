@@ -14,6 +14,7 @@ grains:
     - docker
     - git
     - golang
+    - microk8s
     - vim
   cfg_base:
     installs:
@@ -103,6 +104,13 @@ grains:
       - motion
       - iferr
     golang:
+      version: latest
+    debug:
+      enable: True
+  cfg_microk8s:
+    installs:
+      - microk8s
+    microk8s:
       version: latest
     debug:
       enable: True

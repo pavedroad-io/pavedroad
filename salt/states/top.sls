@@ -72,3 +72,7 @@
   'G@saltenv:dev and G@roles:pr-golang and G@tops:vim':
     - match: compound
     - vim
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:microk8s':
+    - match: compound
+    - microk8s
