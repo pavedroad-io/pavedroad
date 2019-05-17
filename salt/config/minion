@@ -15,7 +15,7 @@ grains:
     - git
     - golang
     - graphviz
-    - kompoase
+    - kompose
     - microk8s
     - skaffold
     - vim
