@@ -14,7 +14,10 @@ grains:
     - docker
     - git
     - golang
+    - graphviz
+    - kompoase
     - microk8s
+    - skaffold
     - vim
   cfg_base:
     installs:
@@ -107,6 +110,16 @@ grains:
       version: latest
     debug:
       enable: True
+  cfg_graphviz:
+    installs:
+      - graphviz
+    graphviz:
+      version: latest
+  cfg_kompose:
+    installs:
+      - kompose
+    kompose:
+      version: latest
   cfg_microk8s:
     installs:
       - microk8s
@@ -114,6 +127,11 @@ grains:
       version: latest
     debug:
       enable: True
+  cfg_skaffold:
+    installs:
+      - skaffold
+    skaffold:
+      version: latest
   cfg_vim:
     installs:
       - vim

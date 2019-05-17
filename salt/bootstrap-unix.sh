@@ -2,7 +2,7 @@
 
 # Bootstrap saltstack on Unix
 
-sudo=$(command -v sudo >& /dev/null)
+sudo=$(command -v sudo)
 
 # Setting must be after above sudo check which can fail
 set -o errexit -o errtrace
