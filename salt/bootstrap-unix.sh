@@ -15,22 +15,22 @@ function error_trap
 }
 trap 'error_trap' ERR
 
-# Not a comprehensive check
-if [ -e "/etc/lsb-release" ]; then
-    echo OS family is Debian
+# Not a comprehensive list of package managers
+if command -v apt-get >& /dev/null; then
+    echo Using package manager apt-get for OS family Debian
     ${sudo} apt-get -qq update
-    ${sudo} apt-get -qq -y install curl
-    ${sudo} apt-get -qq -y install git
-elif [ -e "/etc/redhat-release" ]; then
-    echo OS family is RedHat
-    ${sudo} yum -q -y install curl
-    ${sudo} yum -q -y install git
-elif [ -e "/etc/SuSE-release" ]; then
-    echo OS family is SuSE
-    ${sudo} zypper -q install -y curl
-    ${sudo} zypper -q install -y git
+    ${sudo} apt-get -y -qq install curl git
+elif command -v dnf >& /dev/null; then
+    echo Using package manager dnf for OS family RedHat
+    ${sudo} dnf -y -q install curl git
+elif command -v yum >& /dev/null; then
+    echo Using package manager yum for OS family RedHat
+    ${sudo} yum -y -q install curl git
+elif command -v zypper >& /dev/null; then
+    echo Using package manager zypper for OS family SuSE
+    ${sudo} zypper -q install -y curl git
 else
-    echo OS family is not supported
+    echo Supported package manager not found
     exit 1
 fi
 
