@@ -127,11 +127,25 @@ grains:
       version: latest
     debug:
       enable: True
+  cfg_multipass:
+    installs:
+      - multipass
+    multipass:
+      version: latest
+    debug:
+      enable: True
   cfg_skaffold:
     installs:
       - skaffold
     skaffold:
       version: latest
+  cfg_snapd:
+    installs:
+      - snapd
+    snapd:
+      version: latest
+    debug:
+      enable: True
   cfg_vim:
     installs:
       - vim
