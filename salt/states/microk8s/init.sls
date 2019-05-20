@@ -9,6 +9,9 @@
     {% set microk8s_vm_install = True %}
   {% elif grains.os_family == 'Windows' %}
     {% set microk8s_vm_install = True %}
+  {% elif grains.os_family == 'Suse' %}
+    {% set suse_path = 'https://download.opensuse.org/repositories/system:/snappy/' %}
+    {% set suse_repo = suse_path + 'openSUSE_Leap_' + grains.osrelease %}
   {% endif %}
 
   {% if grains.os_family == 'MacOS' %}
@@ -28,7 +31,7 @@ snap:
   cmd.run:
     - name: |
                 sudo=$(command -v sudo)
-                $sudo zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.0 snappy
+                $sudo zypper addrepo --refresh {{ suse_repo }} snappy
                 $sudo zypper --gpg-auto-import-keys refresh
                 $sudo zypper dup --from snappy
                 $sudo zypper install -y snapd
