@@ -5,7 +5,7 @@
 {% if installs and 'multipass' in installs %}
   {% set multipass_supported = False %}
 
-  {% if grains.os_family == 'Debian' %}
+  {% if grains.os_family == 'MacOS' %}
     {% set multipass_supported = True %}
   {% endif %}
 

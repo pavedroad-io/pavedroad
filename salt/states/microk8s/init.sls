@@ -15,19 +15,31 @@ include:
     {% set microk8s_vm_install = True %}
   {% endif %}
 
-microk8s:
-  cmd.run:
   {% if grains.os_family == 'MacOS' %}
+multipass-vm-launch:
+  cmd.run:
     - require:
       - sls:    multipass
     - name: |
+                multipass delete microk8s-vm
+                multipass purge
                 multipass launch --name microk8s-vm --mem 4G --disk 40G
-                sleep 10
-                multipass exec microk8s-vm -- sudo snap install microk8s --classic
-                sleep 10
+multipass-vm-running:
+  cmd.run:
+    - name:     until multipass exec microk8s-vm -- uname -a; do sleep 1; done
+    - timeout:  10
+microk8s-install:
+  cmd.run:
+    - name:     until multipass exec microk8s-vm -- sudo snap install microk8s --classic; do sleep 10; done
+    - timeout:  360
+microk8s-post-install:
+  cmd.run:
+    - name: |
                 multipass exec microk8s-vm -- /snap/bin/microk8s.inspect
                 multipass exec microk8s-vm -- sudo iptables -P FORWARD ACCEPT
   {% else %}
+microk8s:
+  cmd.run:
     - require:
       - sls:    snapd
     - name:     $(command -v sudo) snap install microk8s --classic
@@ -38,10 +50,13 @@ microk8s:
   {% if microk8s_vm_install %}
 microk8s-version:
   cmd.run:
-    - name: multipass exec microk8s-vm -- snap list
+    - name: multipass exec microk8s-vm -- snap list | grep microk8s
 microk8s-status:
   cmd.run:
-    - name: multipass exec microk8s-vm -- /snap/bin/microk8s.status
+    - name: |
+            multipass exec microk8s-vm -- /snap/bin/microk8s.start
+            multipass exec microk8s-vm -- /snap/bin/microk8s.status
+            multipass exec microk8s-vm -- /snap/bin/microk8s.stop
   {% else %}
 microk8s-files:
   cmd.run:

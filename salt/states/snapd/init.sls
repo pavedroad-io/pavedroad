@@ -30,9 +30,7 @@ snapd:
                 $sudo zypper --gpg-auto-import-keys refresh
                 $sudo zypper dup --from snappy
                 $sudo zypper install -y snapd
-                $sudo systemctl enable snapd
-                $sudo systemctl start snapd
-                sleep 10
+                $sudo systemctl enable --now snapd
     {% else %}
   pkg.installed:
     - name:     snapd
@@ -45,12 +43,16 @@ snapd:
                 sudo=$(command -v sudo)
                 sudo ln -s /var/lib/snapd/snap /snap
                 sudo systemctl restart snapd.service
-                sleep 20
       {% endif %}
     {% endif %}
   {% endif %}
 
   {% if snapd_supported %}
+snapd-running:
+  cmd.run:
+    - name:     until snap version; do sleep 1; done
+    - timeout:  10
+
     {% if grains.cfg_snapd.debug.enable %}
 snapd-version:
   cmd.run:
