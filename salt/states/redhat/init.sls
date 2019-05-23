@@ -5,5 +5,7 @@
 {% if installs and 'devtools' in installs %}
 devtools:
   cmd.run:
-    - name:     "yum -q -y groupinstall 'Development Tools'"
+    - name:     yum -q -y groupinstall 'Development Tools'
+  pkg.installed:
+    - name:     epel-release
 {% endif %}

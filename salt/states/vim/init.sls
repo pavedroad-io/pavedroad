@@ -6,32 +6,66 @@
 
 {% if installs and 'vim' in installs %}
   {% set vim_pkg_name = 'vim' %}
-  {% set vim_alt_install = False %}
+  {% set vim_src_install = False %}
 
   {% if grains.os_family == 'RedHat' %}
-    {% set vim_pkg_name = 'vim-enhanced' %}
+    {% set vim_src_install = True %}
   {% endif %}
 
+include:
+  - pip3
+  {% if vim_src_install %}
+  - vim.src
+  {% endif %}
+
+  {% if not vim_src_install %}
 vim:
   pkg.installed:
     - name:     {{ vim_pkg_name }}
-  {% if grains.cfg_vim.vim.version is defined %}
+    {% if grains.cfg_vim.vim.version is defined %}
     - version:  {{ grains.cfg_vim.vim.version }}
+    {% endif %}
+    {% if grains.os_family == 'MacOS' %}
+    - unless:   brew list {{ vim_pkg_name }}
+    {% endif %}
   {% endif %}
 {% endif %}
 
 {% if installs and 'vim-go' in installs %}
-vim-go:
+plug-vim:
   cmd.run:
-    - name: |
+    - name:     |
                 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-                git clone https://github.com/fatih/vim-go.git ~/.vim/plugged/vim-go
+  file.directory:
+    - name:     {{ grains.homedir }}/.vim/plugged
+    - user:     {{ grains.username }}
+    - makedirs: True
+    - mode:     755
+vimrc-plug:
+  file.managed:
+    - name:     {{ grains.homedir }}/.pr_vimrc_plug
+    - source:   {{ grains.stateroot }}/vim/pr_vimrc_plug
+    - user:     {{ grains.username }}
 vimrc-go:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_vimrc_go
     - source:   {{ grains.stateroot }}/vim/pr_vimrc_go
     - user:     {{ grains.username }}
-
+vim-plugin-deps:
+  cmd.run:
+    - name:     pip3 install --user pynvim
+    - require:
+      - sls:    pip3
+vim-plugins:
+  cmd.run:
+    - name:     vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    - timeout:  120
+    - use_vt:   True
+    - require:
+      - cmd:    plug-vim
+      - file:   plug-vim
+      - file:   vimrc-plug
+      - cmd:    vim-plugin-deps
   {% if grains.cfg_vim.vimrc_go.prepend %}
 prepend-source-vimrc-go:
   file.prepend:
@@ -39,6 +73,12 @@ prepend-source-vimrc-go:
     - text:     source $HOME/.pr_vimrc_go
     - require:
       - file:   vimrc-go
+prepend-source-vimrc-plug:
+  file.prepend:
+    - name:     {{ grains.homedir }}/.vimrc
+    - text:     source $HOME/.pr_vimrc_plug
+    - require:
+      - file:   vimrc-plug
   {% endif %}
 {% endif %}
 
@@ -56,5 +96,13 @@ append-source-vimrc:
     - text:     source $HOME/.pr_vimrc
     - require:
       - file:   vimrc
+  {% endif %}
+  {% if grains.cfg_vim.debug.enable %}
+vim-version:
+  cmd.run:
+    - name:     vim --version
+vim-plugin-ls:
+  cmd.run:
+    - name:     ls -l {{ grains.homedir }}/.vim/plugged
   {% endif %}
 {% endif %}

@@ -134,6 +134,9 @@ grains:
       version: latest
     debug:
       enable: True
+  cfg_pip3:
+    installs:
+      - pip3
   cfg_skaffold:
     installs:
       - skaffold
@@ -159,5 +162,7 @@ grains:
       append: True
     vimrc_go:
       prepend: True
+    debug:
+      enable: True
 
 # vim: filetype=yaml
