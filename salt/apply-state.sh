@@ -19,6 +19,8 @@ function error_trap
 }
 trap 'error_trap' ERR
 
+export PYTHONWARNINGS=ignore
+
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 
 salt-call \
@@ -36,6 +38,16 @@ salt-call \
 salt-call \
     --config-dir "${saltdir}/config/" \
     grains.setval saltenv dev
+
+if (cat /proc/1/cgroup | grep docker) >& /dev/null ; then
+    salt-call \
+        --config-dir "${saltdir}/config/" \
+        grains.setval docker True
+else
+    salt-call \
+        --config-dir "${saltdir}/config/" \
+        grains.setval docker False
+fi
 
 salt-call \
     --config-dir "${saltdir}/config/" \

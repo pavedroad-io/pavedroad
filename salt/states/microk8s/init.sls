@@ -1,6 +1,10 @@
 # Install microk8s
 
-{% set installs = grains.cfg_microk8s.installs %}
+{% if grains.docker %}
+  {% set installs = False %}
+{% else %}
+  {% set installs = grains.cfg_microk8s.installs %}
+{% endif %}
 
 {% if installs and 'microk8s' in installs %}
   {% set snapd_required = True %}
@@ -46,6 +50,7 @@ microk8s:
   cmd.run:
     - require:
       - sls:    snapd
+    - unless:   snap list | grep microk8s
     - name:     $(command -v sudo) snap install microk8s --classic
   {% endif %}
 
@@ -53,13 +58,13 @@ microk8s:
     {% if multipass_required %}
 microk8s-version:
   cmd.run:
-    - name: multipass exec microk8s-vm -- snap list | grep microk8s
+    - name:     multipass exec microk8s-vm -- snap list | grep microk8s
 microk8s-status:
   cmd.run:
     - name: |
-            multipass exec microk8s-vm -- /snap/bin/microk8s.start
-            multipass exec microk8s-vm -- /snap/bin/microk8s.status
-            multipass exec microk8s-vm -- /snap/bin/microk8s.stop
+                multipass exec microk8s-vm -- /snap/bin/microk8s.start
+                multipass exec microk8s-vm -- /snap/bin/microk8s.status
+                multipass exec microk8s-vm -- /snap/bin/microk8s.stop
   {% elif snapd_required %}
 microk8s-files:
   cmd.run:
@@ -70,9 +75,10 @@ microk8s-version:
 microk8s-test:
   cmd.run:
     - name: |
-            /snap/bin/microk8s.start
-            /snap/bin/microk8s.status
-            /snap/bin/microk8s.stop
+                sudo=$(command -v sudo)
+                $sudo /snap/bin/microk8s.start
+                $sudo /snap/bin/microk8s.status
+                $sudo /snap/bin/microk8s.stop
     {% endif %}
   {% endif %}
 {% endif %}
