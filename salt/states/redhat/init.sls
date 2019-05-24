@@ -3,9 +3,8 @@
 {% set installs = grains.cfg_redhat.installs %}
 
 {% if installs and 'devtools' in installs %}
-devtools:
-  cmd.run:
-    - name:     yum -q -y groupinstall 'Development Tools'
-  pkg.installed:
-    - name:     epel-release
+Development Tools:
+  pkg.group_installed
+epel-release:
+  pkg.installed
 {% endif %}
