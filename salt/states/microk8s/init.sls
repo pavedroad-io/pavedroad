@@ -68,10 +68,10 @@ microk8s-status:
   {% elif snapd_required %}
 microk8s-files:
   cmd.run:
-    - name: ls -l /snap/bin/microk8s*
+    - name:     ls -l /snap/bin/microk8s*
 microk8s-version:
   cmd.run:
-    - name: snap list | grep microk8s
+    - name:     snap list | grep microk8s
 microk8s-test:
   cmd.run:
     - name: |
