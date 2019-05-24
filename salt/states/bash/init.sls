@@ -5,6 +5,7 @@
 {% if files and 'profile' in files %}
 profile:
   file.managed:
+    - unless:   test -x {{ grains.homedir }}/.pr_bash_profile
     - name:     {{ grains.homedir }}/.pr_bash_profile
     - source:   {{ grains.stateroot }}/bash/pr_bash_profile
     - user:     {{ grains.username }}
@@ -22,6 +23,7 @@ append-source-profile:
 {% if files and 'bashrc' in files %}
 bashrc:
   file.managed:
+    - unless:   test -x {{ grains.homedir }}/.pr_bashrc
     - name:     {{ grains.homedir }}/.pr_bashrc
     - source:   {{ grains.stateroot }}/bash/pr_bashrc
     - user:     {{ grains.username }}

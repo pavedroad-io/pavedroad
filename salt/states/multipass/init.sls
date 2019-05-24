@@ -13,6 +13,7 @@
 multipass:
     {% if grains.os_family == 'MacOS' %}
   cmd.run:
+    - unless:   command -v multipass
     - name:     brew cask install multipass
 # The following worked for casks previously
 #   pkg.installed:
@@ -23,9 +24,10 @@ multipass:
 # searches for casks and caskroom in Homebrew project return nada
     {% else %}
   pkg.installed:
-      - name:     multipass
+    - unless:   command -v multipass
+    - name:     multipass
       {% if grains.cfg_multipass.multipass.version is defined %}
-      - version:  {{ grains.cfg_multipass.multipass.version }}
+    - version:  {{ grains.cfg_multipass.multipass.version }}
       {% endif %}
     {% endif %}
 

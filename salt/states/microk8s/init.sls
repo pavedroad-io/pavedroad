@@ -26,12 +26,10 @@ include:
   {% if multipass_required %}
 multipass-vm-launch:
   cmd.run:
+    - unless:   multipass list | grep microk8s
     - require:
       - sls:    multipass
-    - name: |
-                multipass delete microk8s-vm
-                multipass purge
-                multipass launch --name microk8s-vm --mem 4G --disk 40G
+    - name:     multipass launch --name microk8s-vm --mem 4G --disk 40G
 multipass-vm-running:
   cmd.run:
     - name:     until multipass exec microk8s-vm -- uname -a; do sleep 1; done

@@ -7,6 +7,7 @@
   {% if 'golang' in installs %}
 golang:
   pkg.installed:
+    - unless:   command -v go
     {% if grains.os_family == 'Suse' %}
     - name:     go
     {% else %}
