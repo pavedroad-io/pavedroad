@@ -18,7 +18,10 @@ pip3:
     - name:     python@3
   {% else %}
     - pkgs:
-    {% if grains.os_family == 'RedHat' %}
+    {% if grains.os_family == 'Debian' %}
+      - python-pip
+      - python3-pip
+    {% elif grains.os_family == 'RedHat' %}
       - python2-pip
       - python34-pip
     {% else %}
@@ -26,6 +29,7 @@ pip3:
       - python3-pip
     {% endif %}
   cmd.run:
+    - onlyif:   test -x /usr/bin/pip3.4
     - unless:   test -x /usr/bin/pip3
     - name:     ln -s /usr/bin/pip3.4 /usr/bin/pip3
   {% endif %}
