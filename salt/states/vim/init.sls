@@ -7,9 +7,11 @@
 {% if installs and 'vim' in installs %}
   {% set vim_pkg_name = 'vim' %}
   {% set vim_src_install = False %}
+  {% set vim_path = "" %}
 
   {% if grains.os_family == 'RedHat' %}
     {% set vim_src_install = True %}
+    {% set vim_path = "/usr/local/bin/" %}
   {% endif %}
 
 include:
@@ -21,6 +23,7 @@ include:
   {% if not vim_src_install %}
 vim:
   pkg.installed:
+    - unless:   command -v vim
     - name:     {{ vim_pkg_name }}
     {% if grains.cfg_vim.vim.version is defined %}
     - version:  {{ grains.cfg_vim.vim.version }}
@@ -34,8 +37,8 @@ vim:
 {% if installs and 'vim-go' in installs %}
 plug-vim:
   cmd.run:
-    - name:     |
-                curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    - unless:   test -x {{ grains.homedir }}/.vim/autoload/plug.vim
+    - name:     curl -fLo {{ grains.homedir }}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   file.directory:
     - name:     {{ grains.homedir }}/.vim/plugged
     - user:     {{ grains.username }}
@@ -43,22 +46,25 @@ plug-vim:
     - mode:     755
 vimrc-plug:
   file.managed:
+    - unless:   test -x {{ grains.homedir }}/.pr_vimrc_plug
     - name:     {{ grains.homedir }}/.pr_vimrc_plug
     - source:   {{ grains.stateroot }}/vim/pr_vimrc_plug
     - user:     {{ grains.username }}
 vimrc-go:
   file.managed:
+    - unless:   test -x {{ grains.homedir }}/.pr_vimrc_go
     - name:     {{ grains.homedir }}/.pr_vimrc_go
     - source:   {{ grains.stateroot }}/vim/pr_vimrc_go
     - user:     {{ grains.username }}
 vim-plugin-deps:
   cmd.run:
+    - unless:   pip3 list | grep pynvim
     - name:     pip3 install --user pynvim
     - require:
       - sls:    pip3
 vim-plugins:
   cmd.run:
-    - name:     vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    - name:     {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
     - timeout:  120
     - use_vt:   True
     - require:
@@ -100,7 +106,7 @@ append-source-vimrc:
   {% if grains.cfg_vim.debug.enable %}
 vim-version:
   cmd.run:
-    - name:     vim --version
+    - name:     {{ vim_path }}vim --version
 vim-plugin-ls:
   cmd.run:
     - name:     ls -l {{ grains.homedir }}/.vim/plugged
