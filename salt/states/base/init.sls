@@ -2,15 +2,20 @@
 
 {% set installs = grains.cfg_base.installs %}
 
-# homebrew has no firefox target, need brew cask install on MacOS
-
-{% if installs and 'firefox' in installs and not grains.os_family == 'MacOS' %}
+{% if installs and 'firefox' in installs %}
 firefox:
-  pkg.installed:
-  {% if grains.os_family == 'Suse' %}
-    - name:     MozillaFirefox
+  {% if grains.os_family == 'MacOS' %}
+  cmd.run:
+    - unless:   test -x /Applications/Firefox.app
+    - name:     brew cask install firefox
   {% else %}
+  pkg.installed:
+    - unless:   command -v firefox
+    {% if grains.os_family == 'Suse' %}
+    - name:     MozillaFirefox
+    {% else %}
     - name:     firefox
+    {% endif %}
   {% endif %}
   {% if grains.cfg_base.firefox.version is defined %}
     - version:  {{ grains.cfg_base.firefox.version }}
