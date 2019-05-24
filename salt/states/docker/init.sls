@@ -36,7 +36,6 @@ docker:
     - name:     docker
     - addusers:
       -         {{ grains.username }}
-  {% endif %}
   service.running:
     - name:     docker
     - reload:   True
@@ -44,6 +43,7 @@ docker:
     - enable:   True
     - require:
       - pkg:    docker
+  {% endif %}
 {% endif %}
 
 {% if installs and 'compose' in installs %}
