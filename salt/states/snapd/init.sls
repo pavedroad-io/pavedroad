@@ -41,6 +41,7 @@ snapd:
     {% if grains.os_family == 'RedHat' %}
 service-stop:
   service.dead:
+    - unless:   sudo systemctl status snapd.service
     - name:     snapd.service
     - enable:   True
     - init_delay: 10
@@ -48,6 +49,7 @@ service-stop:
       - pkg:    snapd
 socket-start:
   service.running:
+    - unless:   sudo systemctl status snapd.service
     - name:     snapd.socket
     - reload:   True
     - init_delay: 10
@@ -56,6 +58,7 @@ socket-start:
     {% else %}
 snapd-start:
   service.running:
+    - unless:   sudo systemctl status snapd.service
     - name:     snapd
     - enable:   True
     - init_delay: 10
@@ -64,6 +67,7 @@ snapd-start:
     {% endif %}
     {% if grains.os_family == 'RedHat' %}
   cmd.run:
+    - onlyif:   test -x /var/lib/snapd/snap
     - unless:   test -x /snap
     - name:     $(command -v sudo) ln -s /var/lib/snapd/snap /snap
     {% endif %}
