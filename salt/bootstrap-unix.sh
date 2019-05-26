@@ -42,6 +42,7 @@ curl -o install_salt.sh -L https://bootstrap.saltstack.com
 # -P Prevent failure by allowing the script to use pip as a dependency source
 # -X Do not start minion service
 ${sudo} sh install_salt.sh -P -X
+salt-call --version
 
 # Get salt states
 tmp=$(mktemp -d -t kevlar-repo.XXXXXX 2>/dev/null)

@@ -40,6 +40,7 @@ cd
 
 # Install saltstack
 brew install saltstack
+salt-call --version
 
 # Get salt states
 tmp=$(mktemp -d -t kevlar-repo.XXXXXX 2>/dev/null)
