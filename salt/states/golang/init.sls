@@ -2,21 +2,58 @@
 # Install vim-go plugin dependencies
 
 {% set installs = grains.cfg_golang.installs %}
+{% if installs and 'golang' in installs %}
+  {% set golang_pkg_name = 'go' %}
+  {% set golang_snap_install = True %}
+  {% set snapd_required = True %}
 
-{% if installs %}
-  {% if 'golang' in installs %}
+  {% if grains.os_family == 'MacOS' %}
+    {% set golang_snap_install = False %}
+  {% elif grains.os_family == 'Windows' %}
+    {% set golang_snap_install = False %}
+  {% endif %}
+
+  {% if golang_snap_install %}
+    {% if grains.cfg_golang.golang.version is defined %}
+      {% set golang_channel = grains.cfg_golang.golang.version + '/stable' %}
+    {% else %}
+      {% set golang_channel = 'stable' %}
+    {% endif %}
+  {% else %}
+    {% if not grains.os_family == 'Suse' %}
+      {% set golang_pkg_name = 'golang' %}
+    {% endif %}
+  {% endif %}
+
+  {% if golang_snap_install and snapd_required %}
+include:
+  - snapd
+  {% endif %}
+
 golang:
+  {% if golang_snap_install %}
+    {% if snapd_required %}
+  cmd.run:
+    - unless:   command -v go
+    - require:
+      - sls:    snapd
+    - unless:   snap list | grep go
+    - name:     $(command -v sudo) snap install go --channel {{ golang_channel }} --classic
+    {% else %}
+  snap.installed:
+    - unless:   command -v go
+    - name:     {{ golang_pkg_name }}
+    - channel:  {{ golang_channel }}
+    {% endif %}
+  {% else %}
   pkg.installed:
     - unless:   command -v go
-    {% if grains.os_family == 'Suse' %}
-    - name:     go
-    {% else %}
-    - name:     golang
-    {% endif %}
+    - name:     {{ golang_pkg_name }}
     {% if grains.cfg_golang.golang.version is defined %}
     - version:  {{ grains.cfg_golang.golang.version }}
     {% endif %}
   {% endif %}
+
 
   {% load_yaml as go_tools %}
   godep:        github.com/tools/godep
@@ -48,12 +85,15 @@ golang:
     {% if key in installs %}
 {{ key }}:
   cmd.run:
-    - name: go get {{ go_tools[key] }}
+    - name:     go get {{ go_tools[key] }}
     {% endif %}
   {% endfor %}
 {% endif %}
 
 {% if grains.cfg_golang.debug.enable %}
+golang-version:
+  cmd.run:
+    - name:     go version
 golang-test:
   file.managed:
     - name:     {{ grains.homedir }}/go/src/hello/hello.go
