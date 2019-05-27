@@ -2,6 +2,18 @@
 
 # Bootstrap saltstack on MacOS
 
+branch=
+
+while getopts "b:" opt; do
+  case ${opt} in
+    b ) branch="--branch ${OPTARG}"
+      ;;
+    \? ) echo "Usage: "$0" [-b <branch>]"
+        exit 1
+      ;;
+  esac-
+done
+
 set -o errexit -o errtrace
 
 function error_trap
@@ -44,9 +56,7 @@ salt-call --version
 
 # Get salt states
 tmp=$(mktemp -d -t kevlar-repo.XXXXXX 2>/dev/null)
-# git clone https://github.com/pavedroad-io/kevlar-repo.git ${tmp}
-# Temporarily clone from salt-init branch
-git clone -b salt-init https://github.com/pavedroad-io/kevlar-repo.git ${tmp}
+git clone ${branch} https://github.com/pavedroad-io/kevlar-repo.git ${tmp}
 
 # Apply salt states
 ${tmp}/salt/apply-state.sh
