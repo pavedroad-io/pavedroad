@@ -11,7 +11,7 @@ while getopts "b:" opt; do
     \? ) echo "Usage: "$0" [-b <branch>]"
         exit 1
       ;;
-  esac-
+  esac
 done
 
 set -o errexit -o errtrace
