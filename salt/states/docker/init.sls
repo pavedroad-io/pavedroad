@@ -1,5 +1,5 @@
 # Install docker
-#
+
 # Do not install docker in a docker container
 
 {% if grains.docker %}
@@ -16,8 +16,14 @@
     {% set docker_pkg_name = 'docker.io' %}
   {% endif %}
 
+# MacOS - brew cask installs /Applications/Docker.app (client and server)
+
 docker:
-  {% if docker_alt_install %}
+  {% if grains.os_family == 'MacOS' %}
+  cmd.run:
+    - unless:   test -x /Applications/Docker.app
+    - name:     brew cask install docker
+  {% elif docker_alt_install %}
   cmd.run:
     - unless:   command -v docker
     - name: |
@@ -31,6 +37,7 @@ docker:
     - version:  {{ grains.cfg_docker.docker.version }}
     {% endif %}
   {% endif %}
+
   {% if not grains.os_family == 'MacOS' %}
   group.present:
     - name:     docker
@@ -49,35 +56,37 @@ docker:
 {% if installs and 'compose' in installs %}
   {% set compose_pkg_name = 'docker-compose' %}
 
+# MacOS - brew cask install docker also installs compose
+
+  {% if not grains.os_family == 'MacOS' %}
 compose:
   pkg.installed:
     - unless:   command -v docker-compose
     - name:     {{ compose_pkg_name }}
-  {% if grains.cfg_docker.compose.version is defined %}
+    {% if grains.cfg_docker.compose.version is defined %}
     - version:  {{ grains.cfg_docker.compose.version }}
+    {% endif %}
   {% endif %}
 {% endif %}
 
+# MacOS - docker links in /usr/local/bin are created when the Docker app is first run
+
 {% if installs and grains.cfg_docker.debug.enable %}
+  {% if not grains.os_family == 'MacOS' %}
 docker-files:
   cmd.run:
-  {% if grains.os_family == 'MacOS' %}
-    - name:     ls -l /usr/local/bin/docker*
-  {% else %}
     - name:     ls -l /usr/bin/docker*
-  {% endif %}
 docker-version:
   cmd.run:
     - name:     docker --version
-compose-version:
-  cmd.run:
-    - name:     docker-compose --version
-  {% if not grains.os_family == 'MacOS' %}
 docker-group:
   cmd.run:
     - name:     grep docker /etc/group
-  {% endif %}
 docker-test:
   cmd.run:
     - name:     docker run hello-world
+compose-version:
+  cmd.run:
+    - name:     docker-compose --version
+  {% endif %}
 {% endif %}
