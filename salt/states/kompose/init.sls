@@ -23,7 +23,7 @@ kompose:
     - name: |
                 curl -Lo kompose https://github.com/kubernetes/kompose/releases/download/{{ version }}/kompose-linux-amd64
                 chmod +x kompose
-                $(command -v sudo) mv kompose /usr/local/bin/kompose
+                mv kompose /usr/local/bin/kompose
   {% else %}
   pkg.installed:
     - unless:   command -v kompose
@@ -31,5 +31,11 @@ kompose:
     {% if grains.cfg_kompose.kompose.version is defined %}
     - version:  {{ grains.cfg_kompose.kompose.version }}
     {% endif %}
+  {% endif %}
+
+  {% if grains.cfg_kompose.debug.enable %}
+kompose-version:
+  cmd.run:
+    - name:     kompose version
   {% endif %}
 {% endif %}

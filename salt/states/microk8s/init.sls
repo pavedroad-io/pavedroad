@@ -49,7 +49,7 @@ microk8s:
     - require:
       - sls:    snapd
     - unless:   snap list | grep microk8s
-    - name:     $(command -v sudo) snap install microk8s --classic
+    - name:     snap install microk8s --classic
   {% endif %}
 
   {% if grains.cfg_microk8s.debug.enable %}
@@ -73,10 +73,9 @@ microk8s-version:
 microk8s-test:
   cmd.run:
     - name: |
-                sudo=$(command -v sudo)
-                $sudo /snap/bin/microk8s.start
-                $sudo /snap/bin/microk8s.status
-                $sudo /snap/bin/microk8s.stop
+                /snap/bin/microk8s.start
+                /snap/bin/microk8s.status
+                /snap/bin/microk8s.stop
     {% endif %}
   {% endif %}
 {% endif %}

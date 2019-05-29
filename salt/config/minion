@@ -120,6 +120,8 @@ grains:
       - kompose
     kompose:
       version: latest
+    debug:
+      enable: True
   cfg_microk8s:
     installs:
       - microk8s
@@ -142,6 +144,8 @@ grains:
       - skaffold
     skaffold:
       version: latest
+    debug:
+      enable: True
   cfg_snapd:
     installs:
       - snapd
