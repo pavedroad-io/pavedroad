@@ -6,6 +6,7 @@
   {% set skaffold_pkg_name = 'skaffold' %}
   {% set skaffold_alt_install = False %}
   {% set skaffold_snap_install = True %}
+  {% set skaffold_path = '/snap/bin/' %}
 
   {% if grains.docker %}
     {% set skaffold_alt_install = True %}
@@ -14,6 +15,10 @@
     {% set skaffold_snap_install = False %}
   {% elif grains.os_family == 'Windows' %}
     {% set skaffold_snap_install = False %}
+  {% endif %}
+
+  {% if not skaffold_snap_install %}
+    {% set skaffold_path = '' %}
   {% endif %}
 
   {% if skaffold_snap_install %}
@@ -51,6 +56,6 @@ skaffold:
   {% if grains.cfg_skaffold.debug.enable %}
 skaffold-version:
   cmd.run:
-    - name:     skaffold version
+    - name:     {{ skaffold_path }}skaffold version
   {% endif %}
 {% endif %}

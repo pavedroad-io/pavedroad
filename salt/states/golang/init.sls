@@ -5,8 +5,8 @@
 {% if installs and 'golang' in installs %}
   {% set golang_pkg_name = 'go' %}
   {% set golang_snap_install = True %}
+  {% set golang_path = '/snap/bin/' %}
   {% set snapd_required = True %}
-  {% set snap_path = '/snap/bin/' %}
 
   {% if grains.docker %}
     {% set golang_snap_install = False %}
@@ -23,7 +23,7 @@
       {% set golang_channel = 'stable' %}
     {% endif %}
   {% else %}
-    {% set snap_path = '' %}
+    {% set golang_path = '' %}
     {% if not grains.os_family == 'Suse' %}
       {% set golang_pkg_name = 'golang' %}
     {% endif %}
@@ -89,7 +89,7 @@ golang:
     {% if key in installs %}
 {{ key }}:
   cmd.run:
-    - name:     {{ snap_path }}go get {{ go_tools[key] }}
+    - name:     {{ golang_path }}go get {{ go_tools[key] }}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -97,7 +97,7 @@ golang:
 {% if grains.cfg_golang.debug.enable %}
 golang-version:
   cmd.run:
-    - name:     {{ snap_path }}go version
+    - name:     {{ golang_path }}go version
 golang-test:
   file.managed:
     - name:     {{ grains.homedir }}/go/src/hello/hello.go
@@ -107,6 +107,6 @@ golang-test:
   cmd.run:
     - name: |
                 cd $HOME/go/src/hello
-                {{ snap_path }}go build
+                {{ golang_path }}go build
                 ./hello
 {% endif %}
