@@ -19,7 +19,8 @@
 include:
   {% if multipass_required %}
   - multipass
-  {% elif snapd_required %}
+  {% endif %}
+  {% if snapd_required %}
   - snapd
   {% endif %}
 
@@ -63,7 +64,8 @@ microk8s-status:
                 multipass exec microk8s-vm -- /snap/bin/microk8s.start
                 multipass exec microk8s-vm -- /snap/bin/microk8s.status
                 multipass exec microk8s-vm -- /snap/bin/microk8s.stop
-  {% elif snapd_required %}
+    {% endif %}
+    {% if snapd_required %}
 microk8s-files:
   cmd.run:
     - name:     ls -l /snap/bin/microk8s*
