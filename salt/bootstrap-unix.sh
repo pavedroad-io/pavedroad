@@ -22,7 +22,7 @@ while getopts "b:d" opt; do
       ;;
     d ) debug="-l debug"
       ;;
-    \? ) echo "Usage: "$0" [-b <branch>] [-d] [-s]"
+    \? ) echo "Usage: "$0" [-b <branch>] [-d]"
         echo "-b <branch> - git clone"
         echo "-d          - debug states"
         exit 1
