@@ -6,7 +6,7 @@
 firefox:
   {% if grains.os_family == 'MacOS' %}
   cmd.run:
-    - unless:   test -x /Applications/Firefox.app
+    - unless:   test -d /Applications/Firefox.app
     - name:     brew cask install firefox
   {% else %}
   pkg.installed:

@@ -21,7 +21,7 @@
 docker:
   {% if grains.os_family == 'MacOS' %}
   cmd.run:
-    - unless:   test -x /Applications/Docker.app
+    - unless:   test -d /Applications/Docker.app
     - name:     brew cask install docker
   {% elif docker_alt_install %}
   cmd.run:
