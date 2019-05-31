@@ -2,22 +2,24 @@
 # No redhat repos have vim 8
 
 {% if grains.os_family == 'RedHat' %}
-  {% set version_8_1 = "PATH=/usr/local/bin/:$PATH vim --version | head -1 | grep 8.1" %}
-  {% set vim_prefix = "/usr/local/bin" %}
+  {% set vim_version = 'Vi IMproved 8' %}
+  {% set get_version = 'PATH=/usr/local/bin/:$PATH vim --version | head -1' %}
+  {% set check_version = get_version + ' | grep "' + vim_version + '"' %}
+  {% set vim_prefix = '/usr/local' %}
 
 include:
   - redhat
 
 vim-source:
   git.latest:
-    - unless:   {{ version_8_1 }}
+    - unless:   {{ check_version }}
     - name:     https://github.com/vim/vim.git
     - rev:      master
     - target:   /tmp/vim
     - user:     {{ grains.username }}
     - force_clone: True
   pkg.installed:
-    - unless:   {{ version_8_1 }}
+    - unless:   {{ check_version }}
   {% if grains.os == 'CentOS' %}
     - pkgs:
       - ncurses-devel
@@ -42,7 +44,7 @@ vim-source:
     - makedirs: True
     - mode:     755
   cmd.run:
-    - unless:   {{ version_8_1 }}
+    - unless:   {{ check_version }}
     - require:
       - git:    vim-source
     - cwd:      /tmp/vim/src
