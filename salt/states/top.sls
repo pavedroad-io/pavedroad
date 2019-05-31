@@ -77,6 +77,10 @@
     - match: compound
     - microk8s
 
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:multipass':
+    - match: compound
+    - multipass
+
   'G@saltenv:dev and G@roles:pr-golang and G@tops:graphviz':
     - match: compound
     - graphviz
