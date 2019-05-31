@@ -5,10 +5,12 @@
 {% if installs and 'golang' in installs %}
   {% set golang_pkg_name = 'go' %}
   {% set golang_snap_install = True %}
-  {% set golang_path = '/snap/bin/' %}
+  {% set golang_path = '/snap/bin' %}
   {% set snapd_required = True %}
+  {% set golang_bin_install = False %}
 
   {% if grains.docker %}
+    {% set golang_bin_install = True %}
     {% set golang_snap_install = False %}
   {% elif grains.os_family == 'MacOS' %}
     {% set golang_snap_install = False %}
@@ -21,6 +23,18 @@
       {% set golang_channel = grains.cfg_golang.golang.version + '/stable' %}
     {% else %}
       {% set golang_channel = 'stable' %}
+    {% endif %}
+  {% elif golang_bin_install %}
+    {% if grains.cpuarch == 'x86_64' %}
+      {% set golang_vers = '1.12.5' %}
+      {% set golang_arch = 'amd64' %}
+      {% set golang_base = '/usr/local' %}
+      {% set golang_path = '/usr/local/go/bin' %}
+      {% set golang_file = 'go' + golang_vers + '.linux-' + golang_arch + '.tar.gz' %}
+      {% set golang_url = 'https://storage.googleapis.com/golang/' + golang_file %}
+      {% set golang_hash = 'aea86e3c73495f205929cfebba0d63f1382c8ac59be081b6351681415f4063cf' %}
+    {% else %}
+      {% set golang_bin_install = False %}
     {% endif %}
   {% else %}
     {% set golang_path = '' %}
@@ -35,7 +49,24 @@ include:
   {% endif %}
 
 golang:
-  {% if golang_snap_install %}
+  {% if false %}
+# salt barfs on the extraction with UnicodeEncodeError
+  archive.extracted:
+    - name:        {{ golang_base }}
+    - source:      {{ golang_url }}
+    - source_hash: {{ golang_hash }}
+    - archive_format: tar
+    - tar_options: xzf
+    - unless:      test -x {{ golang_path }}/go
+  {% elif golang_bin_install %}
+  cmd.run:
+    - name:        |
+                   curl -LO {{ golang_url }}
+                   tar xf {{ golang_file }}
+                   mv go {{ golang_base }}
+                   rm -f {{ golang_file }}
+    - unless:      test -x {{ golang_path }}/go
+  {% elif golang_snap_install %}
     {% if snapd_required %}
   cmd.run:
     - unless:   command -v go
@@ -89,7 +120,7 @@ golang:
     {% if key in installs %}
 {{ key }}:
   cmd.run:
-    - name:     {{ golang_path }}go get {{ go_tools[key] }}
+    - name:     {{ golang_path }}/go get {{ go_tools[key] }}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -97,7 +128,7 @@ golang:
 {% if grains.cfg_golang.debug.enable %}
 golang-version:
   cmd.run:
-    - name:     {{ golang_path }}go version
+    - name:     {{ golang_path }}/go version
 golang-test:
   file.managed:
     - name:     {{ grains.homedir }}/go/src/hello/hello.go
@@ -107,6 +138,6 @@ golang-test:
   cmd.run:
     - name: |
                 cd $HOME/go/src/hello
-                {{ golang_path }}go build
+                {{ golang_path }}/go build
                 ./hello
 {% endif %}
