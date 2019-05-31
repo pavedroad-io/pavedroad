@@ -46,6 +46,24 @@ export PYTHONWARNINGS=ignore
 
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 
+if (cat /proc/1/cgroup | grep docker) >& /dev/null ; then
+    docker=True
+else
+    docker=False
+fi
+
+if ! test -z "${GOPATH}"; then
+    gopath=$(echo $GOPATH | awk -F ":" '{print $1}')
+else
+    gopath=NONE
+fi
+
+if ! test -z "${GOROOT}"; then
+    goroot=${GOROOT}
+else
+    goroot=NONE
+fi
+
 salt-call \
     --config-dir "${saltdir}/config/" \
     grains.setval username $(whoami)
@@ -62,15 +80,17 @@ salt-call \
     --config-dir "${saltdir}/config/" \
     grains.setval saltenv dev
 
-if (cat /proc/1/cgroup | grep docker) >& /dev/null ; then
-    salt-call \
-        --config-dir "${saltdir}/config/" \
-        grains.setval docker True
-else
-    salt-call \
-        --config-dir "${saltdir}/config/" \
-        grains.setval docker False
-fi
+salt-call \
+    --config-dir "${saltdir}/config/" \
+    grains.setval docker ${docker}
+
+salt-call \
+    --config-dir "${saltdir}/config/" \
+    grains.setval gopath ${gopath}
+
+salt-call \
+    --config-dir "${saltdir}/config/" \
+    grains.setval goroot ${goroot}
 
 salt-call \
     --config-dir "${saltdir}/config/" \

@@ -3,47 +3,68 @@
 
 {% set installs = grains.cfg_golang.installs %}
 {% if installs and 'golang' in installs %}
-  {% set golang_pkg_name = 'go' %}
-  {% set golang_snap_install = True %}
-  {% set golang_path = '/snap/bin' %}
-  {% set snapd_required = True %}
-  {% set golang_bin_install = False %}
+  {% set golang_install = 'snap' %}
+  {% set snapd_build_required = False %}
 
   {% if grains.docker %}
-    {% set golang_bin_install = True %}
-    {% set golang_snap_install = False %}
+    {% set golang_install = 'binary' %}
   {% elif grains.os_family == 'MacOS' %}
-    {% set golang_snap_install = False %}
+    {% set golang_install = 'salt' %}
   {% elif grains.os_family == 'Windows' %}
-    {% set golang_snap_install = False %}
+    {% set golang_install = 'salt' %}
   {% endif %}
 
-  {% if golang_snap_install %}
+  {% if golang_install == 'snap' %}
+# Temporary until saltstack releases snapd support
+    {% set snapd_build_required = True %}
     {% if grains.cfg_golang.golang.version is defined %}
       {% set golang_channel = grains.cfg_golang.golang.version + '/stable' %}
     {% else %}
       {% set golang_channel = 'stable' %}
     {% endif %}
-  {% elif golang_bin_install %}
+  {% elif golang_install == 'binary' %}
     {% if grains.cpuarch == 'x86_64' %}
       {% set golang_vers = '1.12.5' %}
       {% set golang_arch = 'amd64' %}
-      {% set golang_base = '/usr/local' %}
-      {% set golang_path = '/usr/local/go/bin' %}
       {% set golang_file = 'go' + golang_vers + '.linux-' + golang_arch + '.tar.gz' %}
       {% set golang_url = 'https://storage.googleapis.com/golang/' + golang_file %}
       {% set golang_hash = 'aea86e3c73495f205929cfebba0d63f1382c8ac59be081b6351681415f4063cf' %}
     {% else %}
-      {% set golang_bin_install = False %}
-    {% endif %}
-  {% else %}
-    {% set golang_path = '' %}
-    {% if not grains.os_family == 'Suse' %}
-      {% set golang_pkg_name = 'golang' %}
+      {% set golang_install = 'salt' %}
     {% endif %}
   {% endif %}
 
-  {% if golang_snap_install and snapd_required %}
+  {% if golang_install == 'salt' and not grains.os_family == 'Suse' %}
+    {% set golang_pkg_name = 'golang' %}
+  {% else %}
+    {% set golang_pkg_name = 'go' %}
+  {% endif %}
+
+  {% if golang_install == 'snap' %}
+    {% set golang_root = '/snap/bin' %}
+  {% elif grains.os_family == 'MacOS' %}
+    {% set golang_root = '/usr/local/bin' %}
+  {% elif grains.goroot != 'NONE' %}
+    {% set golang_root = grains.goroot %}
+  {% elif golang_install == 'binary' %}
+    {% set golang_root = '/usr/local' %}
+  {% else %}
+    {% set golang_root = '/usr/bin' %}
+  {% endif %}
+
+  {% if grains.gopath != 'NONE' %}
+    {% set golang_path = grains.gopath %}
+  {% else %}
+    {% set golang_path = grains.homedir + '/go' %}
+  {% endif %}
+
+  {% if golang_root.endswith('/bin') %}
+    {% set golang_exec = golang_root %}
+  {% else %}
+    {% set golang_exec = golang_root + '/go/bin' %}
+  {% endif %}
+
+  {% if snapd_build_required %}
 include:
   - snapd
   {% endif %}
@@ -52,37 +73,51 @@ golang:
   {% if false %}
 # salt barfs on the extraction with UnicodeEncodeError
   archive.extracted:
-    - name:        {{ golang_base }}
+    - unless:      |
+                   test -d {{ golang_root }}/go
+                   test -x {{ golang_exec }}/go
+    - name:        {{ golang_root }}
     - source:      {{ golang_url }}
     - source_hash: {{ golang_hash }}
     - archive_format: tar
     - tar_options: xzf
-    - unless:      test -x {{ golang_path }}/go
-  {% elif golang_bin_install %}
+  {% elif golang_install == 'binary' %}
   cmd.run:
+    - unless:      |
+                   test -d {{ golang_root }}/go
+                   test -x {{ golang_exec }}/go
     - name:        |
                    curl -LO {{ golang_url }}
                    tar xf {{ golang_file }}
-                   mv go {{ golang_base }}
+                   mv go {{ golang_root }}
                    rm -f {{ golang_file }}
-    - unless:      test -x {{ golang_path }}/go
-  {% elif golang_snap_install %}
-    {% if snapd_required %}
+  {% elif golang_install == 'snap' %}
+    {% if snapd_build_required %}
+# Temporary until saltstack releases snapd support
   cmd.run:
-    - unless:   command -v go
+    - unless:   |
+                test -d {{ golang_root }}/go
+                test -x {{ golang_exec }}/go
+    - name:     snap install go --channel {{ golang_channel }} --classic
     - require:
       - sls:    snapd
-    - unless:   snap list | grep go
-    - name:     snap install go --channel {{ golang_channel }} --classic
     {% else %}
   snap.installed:
-    - unless:   command -v go
+    - unless:   |
+                test -d {{ golang_root }}/go
+                test -x {{ golang_exec }}/go
     - name:     {{ golang_pkg_name }}
     - channel:  {{ golang_channel }}
     {% endif %}
   {% else %}
   pkg.installed:
-    - unless:   command -v go
+    {% if grains.os_family == 'MacOS' %}
+    - unless:   test -h {{ golang_root }}/go
+    {% else %}
+    - unless:   |
+                test -d {{ golang_root }}/go
+                test -x {{ golang_exec }}/go
+    {% endif %}
     - name:     {{ golang_pkg_name }}
     {% if grains.cfg_golang.golang.version is defined %}
     - version:  {{ grains.cfg_golang.golang.version }}
@@ -98,8 +133,7 @@ golang:
   asmfmt:       github.com/klauspost/asmfmt/cmd/asmfmt
   errcheck:     github.com/kisielk/errcheck
   fillstruct:   github.com/davidrjenni/reftools/cmd/fillstruct
-  gocode:       github.com/mdempsky/gocode
-  gocode-gomod: github.com/stamblerre/gocode
+  gocode:       github.com/stamblerre/gocode
   godef:        github.com/rogpeppe/godef
   gogetdoc:     github.com/zmb3/gogetdoc
   goimports:    golang.org/x/tools/cmd/goimports
@@ -120,7 +154,8 @@ golang:
     {% if key in installs %}
 {{ key }}:
   cmd.run:
-    - name:     {{ golang_path }}/go get {{ go_tools[key] }}
+    - name:     {{ golang_exec }}/go get {{ go_tools[key] }}
+    - unless:   test -x {{ golang_path }}/bin/{{ key }}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -128,16 +163,16 @@ golang:
 {% if grains.cfg_golang.debug.enable %}
 golang-version:
   cmd.run:
-    - name:     {{ golang_path }}/go version
+    - name:     {{ golang_exec }}/go version
 golang-test:
   file.managed:
-    - name:     {{ grains.homedir }}/go/src/hello/hello.go
+    - name:     {{ golang_path }}/src/hello/hello.go
     - source:   {{ grains.stateroot }}/golang/hello.go
     - user:     {{ grains.username }}
     - makedirs: True
   cmd.run:
     - name: |
-                cd $HOME/go/src/hello
-                {{ golang_path }}/go build
+                cd {{ golang_path}}/src/hello
+                {{ golang_exec }}/go build
                 ./hello
 {% endif %}
