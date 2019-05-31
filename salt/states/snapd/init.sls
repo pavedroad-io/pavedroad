@@ -38,33 +38,14 @@ snapd:
     {% if grains.cfg_snapd.snapd.version is defined %}
     - version:  {{ grains.cfg_snapd.snapd.version }}
     {% endif %}
-    {% if grains.os_family == 'RedHat' %}
-service-stop:
-  service.dead:
-    - unless:   systemctl status snapd.service
-    - name:     snapd.service
-    - enable:   True
-    - init_delay: 10
-    - require:
-      - pkg:    snapd
-socket-start:
-  service.running:
-    - unless:   systemctl status snapd.service
-    - name:     snapd.socket
-    - reload:   True
-    - init_delay: 10
-    - require:
-      - pkg:    snapd
-    {% else %}
 snapd-start:
   service.running:
-    - unless:   systemctl status snapd.service
-    - name:     snapd
+    - unless:   systemctl status snapd.socket
+    - name:     snapd.socket
     - enable:   True
     - init_delay: 10
     - require:
       - pkg:    snapd
-    {% endif %}
     {% if grains.os_family == 'RedHat' %}
   file.symlink:
     - onlyif:   test -x /var/lib/snapd/snap
