@@ -28,9 +28,10 @@ pip3:
       - python2-pip
       - python3-pip
     {% endif %}
-  cmd.run:
+  file.symlink:
     - onlyif:   test -x /usr/bin/pip3.4
     - unless:   test -x /usr/bin/pip3
-    - name:     ln -s /usr/bin/pip3.4 /usr/bin/pip3
+    - name:     /usr/bin/pip3
+    - target:   /usr/bin/pip3.4
   {% endif %}
 {% endif %}

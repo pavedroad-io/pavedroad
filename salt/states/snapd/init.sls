@@ -66,10 +66,11 @@ snapd-start:
       - pkg:    snapd
     {% endif %}
     {% if grains.os_family == 'RedHat' %}
-  cmd.run:
+  file.symlink:
     - onlyif:   test -x /var/lib/snapd/snap
     - unless:   test -x /snap
-    - name:     ln -s /var/lib/snapd/snap /snap
+    - name:     /snap
+    - target:   /var/lib/snapd/snap
     {% endif %}
 snapd-wait:
   cmd.run:
