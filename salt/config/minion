@@ -17,6 +17,7 @@ grains:
     - graphviz
     - kompose
     - microk8s
+    - multipass
     - skaffold
     - vim
   cfg_base:
