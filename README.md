@@ -2,6 +2,12 @@
 project: PavedRoad
 ---
 
+{% for repo in site.github.public_repositories %}
+[{{ repo.full_name }}]({{ repo.html_url }})
+: {{ repo.description }}
+{% endfor %}
+{% assign project = "PavedRoad" %}
+
 # kevlar-repo
 States/Templates
 
