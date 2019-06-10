@@ -1,0 +1,7 @@
+project: .github
+repo_name: .github
+# conduct_link: https://github.com/pavedroad-io/.githib/CODE_OF_CONDUCT.md
+conduct_link: CODE_OF_CONDUCT.md
+clone_link: https://github.com/pavedroad-io/.githib.git
+pull_link: https://github.com/pavedroad-io/.github/pulls
+contributing: default
