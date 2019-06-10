@@ -15,7 +15,7 @@ if os.path.isabs(sys.argv[1]):
     paths = [os.path.dirname(sys.argv[1])]
 else:
     filename = sys.argv[1]
-    paths = []
+    paths = [os.getcwd()]
 
 paths += [os.path.dirname(os.getcwd())] + sys.argv[2:]
 # print 'paths', paths

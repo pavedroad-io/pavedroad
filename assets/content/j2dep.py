@@ -27,10 +27,6 @@ if os.path.isabs(sys.argv[2]):
 else:
     filename = sys.argv[2]
     paths = [os.getcwd(), os.path.dirname(os.getcwd())] + sys.argv[3:]
-    for path in paths:
-        fullname = os.path.join(path, filename)
-        if os.path.isfile(fullname):
-            break
 
 targetdir = sys.argv[1]
 targetname = os.path.splitext(filename)[0]+".md"
@@ -48,7 +44,6 @@ if not len(includes):
     print
     exit(0)
 
-print >> sys.stderr, "includes", includes
 for file in includes:
     for path in paths:
         fullname = os.path.join(path, file)
