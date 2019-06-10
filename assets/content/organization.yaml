@@ -1,5 +1,7 @@
-organization: PavedRoad.io
-github_org: pavedroad-io
+organization: PavedRoad
+org_long_name: PavedRoad.io
+org_github_name: pavedroad-io
+org_web_name: pavedroad.io
 agenda_link: https://agenda.com
 meeting_link: https://zoom.us
 recording_link: https://youtube.com
