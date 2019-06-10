@@ -1,3 +1,9 @@
+{% if project == '.github' %}
+# Readme for the {{organization}} {{project}} project
+Repository for default community health files
+
+[What the hell is this?](https://help.github.com/en/articles/creating-a-default-community-health-file-for-your-organization)
+{% else %}
 <p align="center"><img src="../../assets/images/banner.png" alt="PavedRoad.io"></p>
 
 ## Overview
@@ -16,7 +22,7 @@ In SaC, we first automate the entire tool chain by using Kubernetes Custom Resou
 
 ## Getting Started and Documentation
 
-For getting started guides, installation, deployment, and administration, see our [Documentation](https://{{project_name}/docs/latest).
+For getting started guides, installation, deployment, and administration, see our [Documentation](https://{{project}}/docs/latest).
 
 ## Contributing
 
@@ -58,4 +64,5 @@ The project is an early preview. We realize that it's going to take a village to
 ## Licensing
 
 PavedRoad.io is under the Apache 2.0 license.
-
+{% endif %}
+{% include 'do-not-edit.md' %}
