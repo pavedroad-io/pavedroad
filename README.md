@@ -1,7 +1,7 @@
 
 <p align="center"><img src="https://github.com/pavedroad-io/kevlar-repo/blob/master/assets/images/banner.png" alt="PavedRoad.io"></p>
 
-# Readme for the PavedRoad.io kevlar-repo project
+# Readme for the PavedRoad kevlar-repo project
 ## Overview
 PavedRoad.io is an OSS project for modeling the Software Development and Operations (SDO) lifecycle.  While Infrastrucutre as Code (IaC) gave us the ability to model our servcie, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encomples the entire tool network including library's, development tools, CI/CD, operations, and advance analytics using ML/AI. 
 
@@ -26,23 +26,23 @@ PavedRoad.io is a community driven project and we welcome contributions. See [Co
 
 ## Report a Bug
 
-For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/PavedRoad.io/kevlar-repo/issues).
+For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/PavedRoad/kevlar-repo/issues).
 
 ## Contact
 
 Please use the following to reach members of the community:
 
-- Slack: Join our [slack channel](https://slack.PavedRoad.io)
-- Forums: [PavedRoad.io-dev](https://groups.google.com/forum/#!forum/PavedRoad.io-dev)
-- Twitter: [@PavedRoad.io](https://twitter.com/PavedRoad.io)
-- Email: [info@PavedRoad.io](mailto:info@PavedRoad.io)
+- Slack: Join our [slack channel](https://slack.PavedRoad)
+- Forums: [PavedRoad-dev](https://groups.google.com/forum/#!forum/PavedRoad-dev)
+- Twitter: [@PavedRoad](https://twitter.com/PavedRoad)
+- Email: [info@PavedRoad](mailto:info@PavedRoad)
 
 ## Community Meeting
 
 A regular community meeting takes place every other [Tuesday at 9:00 AM PT (Pacific Time)](https://zoom.us/).
 Convert to your [local timezone](http://www.thetimezoneconverter.com/?t=9:00&tz=PT%20%28Pacific%20Time%29).
 
-Any changes to the meeting schedule will be added to the [agenda doc](https://agenda.com) and posted to [Slack #announcements](https://PavedRoad.io.slack.com/messages/CEFQCGW1H/) and the [PavedRoad.io-dev mailing list](https://groups.google.com/forum/#!forum/PavedRoad.io-dev).
+Any changes to the meeting schedule will be added to the [agenda doc](https://agenda.com) and posted to [Slack #announcements](https://PavedRoad.slack.com/messages/CEFQCGW1H/) and the [PavedRoad-dev mailing list](https://groups.google.com/forum/#!forum/PavedRoad-dev).
 
 Anyone who wants to discuss the direction of the project, design and implementation reviews, or general questions with the broader community is welcome and encouraged to join.
 
