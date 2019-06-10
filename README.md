@@ -1,5 +1,5 @@
 
-<p align="center"><img src="github.com/pavedroad-io/kevlar-repo/assets/images/banner.png" alt="PavedRoad.io"></p>
+<p align="center"><img src="https://github.com/pavedroad-io/kevlar-repo/assets/images/banner.png" alt="PavedRoad.io"></p>
 
 # Readme for the PavedRoad.io kevlar-repo project
 ## Overview
