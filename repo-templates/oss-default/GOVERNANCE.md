@@ -1,18 +1,18 @@
-# {{org}} Governance
+# {{organization}} Governance
 
-This document defines governance policies for the {{org}} project.
+This document defines governance policies for the {{organization}} project.
 
 ## Roles
 
-{{org}} uses a two-tiered system of maintainer roles:
+{{organization}} uses a two-tiered system of maintainer roles:
 
 * Senior Maintainers
-  * Have the most experience with the {{org}} project and are expected to have the knowledge and insight to lead the project's growth and improvement
-  * Represent their organization within the {{org}} community
+  * Have the most experience with the {{organization}} project and are expected to have the knowledge and insight to lead the project's growth and improvement
+  * Represent their organization within the {{organization}} community
   * Oversee the process for adding new maintainers and provides guidance for the standard maintainers
   * Receive **two votes** in the [conflict resolution and voting process](#conflict-resolution-and-voting) described below
 * Standard Maintainers
-  * Have less experience with the {{org}} project than senior maintainers, but are also expected to provide significant value to the project, helping it grow and improve
+  * Have less experience with the {{organization}} project than senior maintainers, but are also expected to provide significant value to the project, helping it grow and improve
   * Receive **one vote** in the voting process
 
 ## Becoming a maintainer
@@ -37,7 +37,7 @@ To become a maintainer you need to demonstrate the following:
 
 * Express interest to the [senior maintainers](OWNERS.md#senior-maintainers) directly that your
   organization is interested in becoming a maintainer. Becoming a maintainer generally means that
-  you are going to be spending substantial time (>25%) on {{org}} for the foreseeable future. You
+  you are going to be spending substantial time (>25%) on {{organization}} for the foreseeable future. You
   should have domain expertise and be extremely proficient with Kubernetes and Golang.  Ultimately
   your goal is to become a senior maintainer that will represent your organization.
 * You should likely have already been commenting on pull requests and issues with the intent of solving
@@ -79,7 +79,7 @@ the maintainers per the voting process below.
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
   The areas of specialization listed in [OWNERS.md](OWNERS.md) can be used to help with routing
   an issue/question to the right person.
-* During GitHub issue triage, apply all applicable [labels](https://github.com/{{org}}io/{{org}}/labels)
+* During GitHub issue triage, apply all applicable [labels]({{label_link}})
   to each new issue. Labels are extremely useful for future issue follow up. Which labels to apply
   is somewhat subjective so just use your best judgment. A few of the most important labels that are
   not self explanatory are:
@@ -92,7 +92,7 @@ the maintainers per the voting process below.
     can be promoted to other issue types once it's clear they are actionable (at which point the
     question label should be removed).
 * Make sure that ongoing PRs are moving forward at the right pace or closing them.
-* In general continue to be willing to spend at least 25% of ones time working on {{org}} (~1.25
+* In general continue to be willing to spend at least 25% of ones time working on {{organization}} (~1.25
   business days per week).
 
 ### Approving PRs
@@ -106,10 +106,10 @@ organization when appropriate.
 
 ### Github Project Administration
 
-Maintainers will be added to the {{org}} GitHub organization (if they are not already) and added to
+Maintainers will be added to the {{organization}} GitHub organization (if they are not already) and added to
 the GitHub Maintainers team.
 
-After 6 months, **senior** maintainers will be made an "owner" of the {{org}} GitHub organization.
+After 6 months, **senior** maintainers will be made an "owner" of the {{organization}} GitHub organization.
 
 ## Conflict resolution and voting
 
@@ -131,3 +131,5 @@ the voting process should be considered.
 
 Additions and removals of maintainers require a **2/3 majority**, while other decisions and changes
 require only a simple majority.
+
+{% include 'do-not-edit.md' %}

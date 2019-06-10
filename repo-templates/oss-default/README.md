@@ -1,13 +1,17 @@
 {% if project == '.github' %}
+
 # Readme for the {{organization}} {{project}} project
 Repository for default community health files
 
 [What the hell is this?](https://help.github.com/en/articles/creating-a-default-community-health-file-for-your-organization)
-{% else %}
-<p align="center"><img src="../../assets/images/banner.png" alt="PavedRoad.io"></p>
 
+{% else %}
+
+<p align="center"><img src="https://github.com/pavedroad-io/kevlar-repo/blob/master/assets/images/banner.png" alt="PavedRoad.io"></p>
+
+# Readme for the {{organization}} {{project}} project
 ## Overview
-PavedRoad.io is an OSS project for modeling the Software Development and Operations (OSD) lifecycle.  While Infrastrucutre as Code (IaC) gave us the ability to model our servcie, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encomples the entire tool network including library's, development tools, CI/CD, operations, and advance analytics using ML/AI. 
+PavedRoad.io is an OSS project for modeling the Software Development and Operations (SDO) lifecycle.  While Infrastrucutre as Code (IaC) gave us the ability to model our servcie, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encomples the entire tool network including library's, development tools, CI/CD, operations, and advance analytics using ML/AI. 
 
 ## What is a 'Paved Road'?
 The term "Paved Road" was coined by the Netflix tools teams which created several fully integrated end-to-end tool networks for writing, testing, deploying, and operating their streaming video service. For each support execution framework such as Java, Python, or Go, an integrated working CI/CD tool network was created.  This method of pre-integrated and tested tool networks converts a bumpy and difficult road into a delightfully smooth road which dramatically increases the velocity of development teams
@@ -65,4 +69,5 @@ The project is an early preview. We realize that it's going to take a village to
 
 PavedRoad.io is under the Apache 2.0 license.
 {% endif %}
+
 {% include 'do-not-edit.md' %}
