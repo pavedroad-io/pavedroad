@@ -2,6 +2,8 @@
 # Install vim-go plugin dependencies
 
 {% set installs = grains.cfg_golang.installs %}
+{% set completion = grains.cfg_golang.completion %}
+
 {% if installs and 'golang' in installs %}
   {% set golang_install = 'snap' %}
   {% set snapd_build_required = False %}
@@ -64,12 +66,23 @@
     {% set golang_exec = golang_root + '/go/bin' %}
   {% endif %}
 
-  {% if snapd_build_required %}
+  {% if snapd_build_required or completion and 'bash' in completion %}
 include:
+    {% if snapd_build_required %}
   - snapd
+    {% endif %}
+    {% if completion and 'bash' in completion %}
+  - bash
+    {% endif %}
   {% endif %}
 
 golang:
+  file.directory:
+    - name:     {{ grains.homedir }}/.cache/go-build
+    - makedirs: True
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     755
   {% if false %}
 # salt barfs on the extraction with UnicodeEncodeError
   archive.extracted:
@@ -134,6 +147,7 @@ golang:
   errcheck:     github.com/kisielk/errcheck
   fillstruct:   github.com/davidrjenni/reftools/cmd/fillstruct
   gocode:       github.com/stamblerre/gocode
+  gocomplete:   github.com/posener/complete/gocomplete
   godef:        github.com/rogpeppe/godef
   gogetdoc:     github.com/zmb3/gogetdoc
   goimports:    golang.org/x/tools/cmd/goimports
@@ -155,24 +169,70 @@ golang:
 {{ key }}:
   cmd.run:
     - name:     {{ golang_exec }}/go get {{ go_tools[key] }}
+    - runas:    {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
     - unless:   test -x {{ golang_path }}/bin/{{ key }}
     {% endif %}
   {% endfor %}
+{% endif %}
+
+{# Fix for Centos ignoring "runas" above leaving files with owner/group == root/root #}
+{% if grains.os_family == 'RedHat' %}
+chown-go-path:
+  file.directory:
+    - name:     {{ golang_path }}
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - recurse:
+      - user
+      - group
+    - require:
+      - cmd:    iferr
+{% endif %}
+
+# Uses gocomplete package installed above
+{% if completion and 'bash' in completion %}
+golang-bash-completion:
+  cmd.run:
+  {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
+  {% if grains.os_family == 'RedHat' %}
+    - name:     sudo -u {{ grains.realuser }} {{ golang_path }}/bin/gocomplete --install -y
+  {% else %}
+    - name:     {{ golang_path }}/bin/gocomplete --install -y
+  {% endif %}
+    - runas:    {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+  {# gocomplete returns exit code 3 if already installed #}
+  {# Suse has version 2018.3.0 of salt without success_retcodes #}
+  {% if grains.os_family == 'Suse' %}
+    - check_cmd:
+      - /bin/true
+  {% else %}
+    - success_retcodes: 3
+  {% endif %}
+    - require:
+      - sls:    bash
 {% endif %}
 
 {% if grains.cfg_golang.debug.enable %}
 golang-version:
   cmd.run:
     - name:     {{ golang_exec }}/go version
+golang-files:
+  cmd.run:
+    - name:     ls -l {{ golang_path }}/bin
 golang-test:
   file.managed:
     - name:     {{ golang_path }}/src/hello/hello.go
     - source:   {{ grains.stateroot }}/golang/hello.go
-    - user:     {{ grains.username }}
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
     - makedirs: True
   cmd.run:
     - name: |
                 cd {{ golang_path}}/src/hello
                 {{ golang_exec }}/go build
                 ./hello
+    - runas:    {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
 {% endif %}

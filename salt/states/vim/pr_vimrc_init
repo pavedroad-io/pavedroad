@@ -6,7 +6,6 @@ let g:go_info_mode='gopls'
 let g:deoplete#enable_at_startup = 1
 
 " Tell deoplete.nvim when to call omnifunc
-set rtp+=~/.vim/plugged/deoplete.nvim
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " neocomplete like
@@ -18,4 +17,6 @@ set completeopt+=noselect
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 

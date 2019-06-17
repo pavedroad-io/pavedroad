@@ -49,7 +49,16 @@ microk8s:
     - require:
       - sls:    snapd
     - unless:   snap list | grep microk8s
+    {# SELinux is blocking microk8s install hook on Centos #}
+    {# TODO: remove this when no longer needed #}
+    {% if grains.os_family == 'RedHat' %}
+    - name:     |
+                sudo setenforce 0
+                snap install microk8s --classic
+                sudo setenforce 1
+    {% else %}
     - name:     snap install microk8s --classic
+    {% endif %}
   {% endif %}
 
   {% if grains.cfg_microk8s.debug.enable %}

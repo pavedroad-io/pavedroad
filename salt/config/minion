@@ -56,12 +56,14 @@ grains:
     putty:
       version: latest
   cfg_bash:
+    packages:
+      - completion
     files:
-      - profile
       - bashrc
-    profile:
-      append: True
+      - completion
     bashrc:
+      append: True
+    completion:
       append: True
   cfg_docker:
     installs:
@@ -73,14 +75,21 @@ grains:
     compose:
       version: latest
       service: True
+    completion:
+      - bash
     debug:
       enable: True
       host: tcp://host.docker.internal:2375
   cfg_git:
     installs:
       - git
+      - prompt
     git:
       version: latest
+    completion:
+      - bash
+    prompt:
+      append: True
   cfg_golang:
     installs:
       - golang
@@ -92,7 +101,7 @@ grains:
       - errcheck
       - fillstruct
       - gocode
-      - gocode-gomod
+      - gocomplete
       - godef
       - gogetdoc
       - goimports
@@ -109,6 +118,8 @@ grains:
       - iferr
     golang:
       version: latest
+    completion:
+      - bash
     debug:
       enable: True
   cfg_graphviz:
@@ -121,6 +132,8 @@ grains:
       - kompose
     kompose:
       version: latest
+    completion:
+      - bash
     debug:
       enable: True
   cfg_microk8s:
@@ -135,6 +148,8 @@ grains:
       - multipass
     multipass:
       version: latest
+    completion:
+      - bash
     debug:
       enable: True
   cfg_pip3:
@@ -145,6 +160,8 @@ grains:
       - skaffold
     skaffold:
       version: latest
+    completion:
+      - bash
     debug:
       enable: True
   cfg_snapd:
@@ -157,7 +174,7 @@ grains:
   cfg_vim:
     installs:
       - vim
-      - vim-go
+      - go-plugins
     vim:
       version: latest
     files:
@@ -165,8 +182,6 @@ grains:
       - vimrc-go
     vimrc:
       append: True
-    vimrc_go:
-      prepend: True
     debug:
       enable: True
 

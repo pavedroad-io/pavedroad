@@ -1,5 +1,5 @@
-# Install vim and vim-go plugin
-# Copy and source vimrc and vimrc-go files
+# Install vim and go plugins
+# Copy and source vimrc and plugin init files
 
 {% set installs = grains.cfg_vim.installs %}
 {% set files = grains.cfg_vim.files %}
@@ -37,80 +37,119 @@ vim:
     - unless:   command -v vim
     {% endif %}
   {% endif %}
+viminfo:
+  file.managed:
+    - name:     {{ grains.homedir }}/.viminfo
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+    - replace:  False
 {% endif %}
 
-{% if installs and 'vim-go' in installs %}
-plug-vim:
-  cmd.run:
-    - unless:   test -e {{ grains.homedir }}/.vim/autoload/plug.vim
-    - name:     curl -fLo {{ grains.homedir }}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+{% if installs and 'go-plugins' in installs %}
+vim-autoload:
+  file.managed:
+    - name:     {{ grains.homedir }}/.vim/autoload/plug.vim
+    - source:   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    - makedirs: True
+    - skip_verify: True
+    - replace:  False
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+vim-plugged:
   file.directory:
     - name:     {{ grains.homedir }}/.vim/plugged
-    - user:     {{ grains.username }}
     - makedirs: True
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
     - mode:     755
 vimrc-plug:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_vimrc_plug
     - source:   {{ grains.stateroot }}/vim/pr_vimrc_plug
-    - user:     {{ grains.username }}
-vimrc-go:
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+vimrc-init:
   file.managed:
-    - name:     {{ grains.homedir }}/.pr_vimrc_go
-    - source:   {{ grains.stateroot }}/vim/pr_vimrc_go
-    - user:     {{ grains.username }}
-vim-plugin-deps:
+    - name:     {{ grains.homedir }}/.pr_vimrc_init
+    - source:   {{ grains.stateroot }}/vim/pr_vimrc_init
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+pynvim-dep:
   cmd.run:
     - unless:   pip3 list | grep pynvim
-    - name:     pip3 install --user pynvim
+    - name:     pip3 install pynvim
     - require:
       - sls:    pip3
+neovim-dep:
+  cmd.run:
+    - unless:   pip3 list | grep neovim
+    - name:     pip3 install neovim
+    - require:
+      - cmd:    pynvim-dep
 vim-plugins:
   cmd.run:
+    {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
+    {% if grains.os_family == 'RedHat' %}
+    - name:     sudo -u {{ grains.realuser }} {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    {% else %}
     - name:     {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    {% endif %}
+    - runas:    {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
     - timeout:  120
     - use_vt:   True
     - require:
-      - cmd:    plug-vim
-      - file:   plug-vim
+      - file:   vim-autoload
+      - file:   vim-plugged
       - file:   vimrc-plug
-      - cmd:    vim-plugin-deps
+      - cmd:    neovim-dep
     - unless:
-      -         test -e {{ grains.homedir }}/.vim/plugged/deoplete-go
-      -         test -e {{ grains.homedir }}/.vim/plugged/deoplete.nvim
-      -         test -e {{ grains.homedir }}/.vim/plugged/nvim-yarp
-      -         test -e {{ grains.homedir }}/.vim/plugged/vim-go
-      -         test -e {{ grains.homedir }}/.vim/plugged/vim-hug-neovim-rpc
-  {% if grains.cfg_vim.vimrc_go.prepend %}
-prepend-source-vimrc-go:
-  file.prepend:
-    - name:     {{ grains.homedir }}/.vimrc
-    - text:     source $HOME/.pr_vimrc_go
+      -         test -d {{ grains.homedir }}/.vim/plugged/deoplete-go
+      -         test -d {{ grains.homedir }}/.vim/plugged/deoplete.nvim
+      -         test -d {{ grains.homedir }}/.vim/plugged/nvim-yarp
+      -         test -d {{ grains.homedir }}/.vim/plugged/vim-go
+      -         test -d {{ grains.homedir }}/.vim/plugged/vim-hug-neovim-rp
+
+# Centos ignores "runas" above so owner/group == root/root must be fixed
+  {% if grains.os_family == 'RedHat' %}
+chown-vim-tree:
+  file.directory:
+    - name:     {{ grains.homedir }}/.vim
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - recurse:
+      - user
+      - group
     - require:
-      - file:   vimrc-go
-prepend-source-vimrc-plug:
-  file.prepend:
-    - name:     {{ grains.homedir }}/.vimrc
-    - text:     source $HOME/.pr_vimrc_plug
-    - require:
-      - file:   vimrc-plug
+      - cmd:    vim-plugins
   {% endif %}
 {% endif %}
 
 {% if files and 'vimrc' in files %}
 vimrc:
   file.managed:
-    - name:     {{ grains.homedir }}/.pr_vimrc
-    - source:   {{ grains.stateroot }}/vim/pr_vimrc
-    - user:     {{ grains.username }}
+    - name:     {{ grains.homedir }}/.vimrc
+    - source:   https://raw.githubusercontent.com/vim/vim/master/runtime/vimrc_example.vim
+    - skip_verify: True
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+    - replace:  False
 
   {% if grains.cfg_vim.vimrc.append %}
 append-source-vimrc:
   file.append:
     - name:     {{ grains.homedir }}/.vimrc
-    - text:     source $HOME/.pr_vimrc
+    - text:     |
+                source $HOME/.pr_vimrc_plug
+                source $HOME/.pr_vimrc_init
     - require:
-      - file:   vimrc
+      - file:   vimrc-plug
+      - file:   vimrc-init
   {% endif %}
   {% if grains.cfg_vim.debug.enable %}
 vim-version:

@@ -16,8 +16,6 @@ vim-source:
     - name:     https://github.com/vim/vim.git
     - rev:      master
     - target:   /tmp/vim
-    - user:     {{ grains.username }}
-    - force_clone: True
   pkg.installed:
     - unless:   {{ check_version }}
   {% if grains.os == 'CentOS' %}
@@ -40,7 +38,6 @@ vim-source:
   {% endif %}
   file.directory:
     - name:     /tmp/vim/src
-    - user:     {{ grains.username }}
     - makedirs: True
     - mode:     755
   cmd.run:
@@ -48,9 +45,9 @@ vim-source:
     - require:
       - git:    vim-source
     - cwd:      /tmp/vim/src
-    - user:     {{ grains.username }}
+    - umask:    022
     - name:     |
                 ./configure  --prefix={{ vim_prefix }} --enable-multibyte  --with-tlib=ncurses  --enable-cscope  --enable-terminal  --with-compiledby=PavedRoad.io  --enable-perlinterp=yes  --enable-rubyinterp=yes  --enable-python3interp=yes  --enable-gui=no  --without-x  --enable-luainterp=yes --with-python3-config-dir=/usr/lib64/python3.4/config-3.4m --with-python3-command=python3.4
                 make
-                make install
+                make install_normal
 {% endif %}

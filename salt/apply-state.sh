@@ -53,44 +53,32 @@ else
 fi
 
 if ! test -z "${GOPATH}"; then
-    gopath=$(echo $GOPATH | awk -F ":" '{print $1}')
+    gopath=$(echo ${GOPATH} | awk -F ":" '{print $1}')
 else
     gopath=NONE
 fi
 
 if ! test -z "${GOROOT}"; then
-    goroot=${GOROOT}
+    goroot="${GOROOT}"
 else
     goroot=NONE
 fi
 
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval username $(whoami)
+declare -A grains
+grains[realuser]="$(id -un ${SUDO_UID})"
+grains[realgroup]="$(id -gn ${SUDO_UID})"
+grains[homedir]="$(eval echo ~$(id -un ${SUDO_UID}))"
+grains[stateroot]="${saltdir}/states"
+grains[saltenv]=dev
+grains[docker]="${docker}"
+grains[gopath]="${gopath}"
+grains[goroot]="${goroot}"
 
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval homedir $HOME
-
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval stateroot ${saltdir}/states
-
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval saltenv dev
-
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval docker ${docker}
-
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval gopath ${gopath}
-
-salt-call \
-    --config-dir "${saltdir}/config/" \
-    grains.setval goroot ${goroot}
+for key in "${!grains[@]}"; do
+    salt-call \
+        --config-dir "${saltdir}/config/" \
+        grains.setval ${key} "${grains[${key}]}"
+done
 
 salt-call \
     --config-dir "${saltdir}/config/" \
