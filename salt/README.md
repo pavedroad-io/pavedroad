@@ -29,16 +29,12 @@ Provide clear examples of how the project may be used. For large projects with e
 If the user will be building or deploying the project, add any useful guidance.
 
 ## Getting Help
-
 Support options [can be found here](/SUPPORT.md).
 ## How to Contribute
-
 Contributing guidelines [can be found here](/CONTRIBUTING.md).
 ## Code of Conduct
-
 This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 ## License
-
 pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0](/LICENSE).
 ### Do Not Edit
 This file is generated so do not edit it directly.
