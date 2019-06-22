@@ -81,7 +81,10 @@ Include instructions for setting up the development environment, code standards,
 Open Source projects should follow a code of conduct. Provide a link to the Code of Conduct for your project. I recommend using the Contributor Covenant: http://contributor-covenant.org/
 ## License
 
-Include a license for your project. If you need help choosing a license, use this guide: https://choosealicense.com/
+pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0][license]
+[license]: /LICENSE
+
+[link](/LICENSE)
 ### Do Not Edit
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.
