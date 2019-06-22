@@ -30,5 +30,5 @@ The macOS bootstrap script does the following:
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.
 
-[Edit the template file here.](repo_templates/salt/INSTALL.md)
+[Edit the template file here.](repo-templates/salt/INSTALL.md)
 [See build instructions here.](assets/README.md)

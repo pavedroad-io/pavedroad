@@ -48,5 +48,5 @@ Include a license for your project. If you need help choosing a license, use thi
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.
 
-[Edit the template file here.](repo_templates/salt/README.md)
+[Edit the template file here.](repo-templates/salt/README.md)
 [See build instructions here.](assets/README.md)
