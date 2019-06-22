@@ -40,6 +40,8 @@ recurse(env, filename, includes)
 templates = env.list_templates()
 
 print targetfile + ": \\"
+print "\tproject.yaml \\"
+print "\t../organization.yaml \\"
 if not len(includes):
     print
     exit(0)

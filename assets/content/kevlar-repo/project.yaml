@@ -1,8 +1,3 @@
-project: kevlar-repo
+project: Kevlar
 repo_name: kevlar-repo
-# conduct_link: https://github.com/pavedroad-io/.githib/CODE_OF_CONDUCT.md
-conduct_link: CODE_OF_CONDUCT.md
-clone_link: https://github.com/pavedroad-io/kevlar-repo.git
-label_link: https://github.com/pavedroad-io/kevlar-repo/labels
-pull_link: https://github.com/pavedroad-io/kevlar-repo/pulls
-contributing: contrib-cncf
+template_path: repo-templates/oss-default

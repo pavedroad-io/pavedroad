@@ -7,7 +7,7 @@
 
 current_repo_top := $(shell git rev-parse --show-toplevel)
 organization_dir := $(abspath $(current_repo_top)/..)
-target_dir:= $(organization_dir)/kevlar_repo
-template_dir := $(organization_dir)/kevlar-repo/repo-templates/oss-default
+target_dir:= $(organization_dir)/kevlar-repo/salt
+template_dir := $(organization_dir)/kevlar-repo/repo-templates/salt
 
 include ../jinja2.mk

@@ -2,5 +2,5 @@
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.
 
-[Edit template files here.]({{templates_link}})
-[See build instructions here.]({{content_readme}})
+[Edit the template file here.]({{template_path + '/' + template_file}})
+[See build instructions here.]({{assets_readme}})

@@ -9,18 +9,16 @@ slack_link: https://slack.com
 groups_link: https://groups.com
 twitter_link: https://twitter.com
 mailto_link: https://gmail.com
-templates_link: https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default
-content_readme: https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default/README.md
 security_email: security@pavedroad.io
 support_email: support@pavedroad.io
-
-code_of_conduct: conduct-cncf
-# code_of_conduct: conduct-citizen
-# code_of_conduct: conduct-contributor
-contributing: contrib-cncf
-# contributing: contrib-guide
-# contributing: contrib-flow
-security: security-standard
-# security: security-k8s
-support: support-links
-# support: support-k8s
+templates_link: repo-templates/oss-default
+assets_readme: assets/README.md
+conduct: CODE_OF_CONDUCT.md
+contrib: CONTRIBUTING.md
+govern: GOVERNANCE.md
+install: INSTALL.md
+owners: OWNERS.md
+readme: README.md
+roadmap: ROADMAP.md
+security: SECURITY.md
+support: SUPPORT.md
