@@ -12,7 +12,7 @@ mailto_link: https://gmail.com
 security_email: security@pavedroad.io
 support_email: support@pavedroad.io
 templates_link: repo-templates/oss-default
-assets_readme: assets/README.md
+assets_readme: /assets/README.md
 conduct: CODE_OF_CONDUCT.md
 contrib: CONTRIBUTING.md
 govern: GOVERNANCE.md
