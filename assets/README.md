@@ -68,16 +68,16 @@ The second will be how to set up a new target and template directory form scratc
 
 ## Getting Help
 
-Support options for pavedroad-io/kevlar-repo [can be found here](/SUPPORT.md)
-## Contributing
+Support options [can be found here](/SUPPORT.md).
+## How to Contribute
 
-Contributing guidelines for pavedroad-io/kevlar-repo [can be found here](/CONTRIBUTING.md)
+Contributing guidelines [can be found here](/CONTRIBUTING.md).
 ## Code of Conduct
 
-This project from pavedroad-io follows the [CNCF Code of Conduct](/CODE_OF_CONDUCT.md)
+This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 ## License
 
-pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0](/LICENSE)
+pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0](/LICENSE).
 ### Do Not Edit
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.
