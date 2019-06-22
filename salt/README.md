@@ -30,20 +30,16 @@ If the user will be building or deploying the project, add any useful guidance.
 
 ## Getting Help
 
-What should users do and expect when they encounter bugs or get stuck using your project? Set expectations for support, link to the issue tracker and roadmap, if applicable.
+Support options [can be found here](/SUPPORT.md).
+## How to Contribute
 
-Where should users go if they have a question? (Stack Overflow, Gitter, IRC, mailing list, etc.)
-
-If desired, you may also provide links to core contributor email addresses.
-## Contributing Guidelines
-
-Include instructions for setting up the development environment, code standards, running tests, and submitting pull requests. Aim to be inclusive and welcoming. It may be useful to link to a seperate CONTRIBUTING.md file. See this example from the Hoodie project as an exemplar: https://github.com/hoodiehq/hoodie/blob/master/CONTRIBUTING.md
+Contributing guidelines [can be found here](/CONTRIBUTING.md).
 ## Code of Conduct
 
-Open Source projects should follow a code of conduct. Provide a link to the Code of Conduct for your project. I recommend using the Contributor Covenant: http://contributor-covenant.org/
+This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 ## License
 
-Include a license for your project. If you need help choosing a license, use this guide: https://choosealicense.com/
+pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0](/LICENSE).
 ### Do Not Edit
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.

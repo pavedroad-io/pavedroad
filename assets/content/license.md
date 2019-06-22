@@ -1,3 +1,3 @@
 ## License
 
-Include a license for your project. If you need help choosing a license, use this guide: https://choosealicense.com/
+{{org_github_name}}/{{repo_name}} is licensed under the [Apache License 2.0]({{license}}).
