@@ -68,23 +68,16 @@ The second will be how to set up a new target and template directory form scratc
 
 ## Getting Help
 
-What should users do and expect when they encounter bugs or get stuck using your project? Set expectations for support, link to the issue tracker and roadmap, if applicable.
+Support options for pavedroad-io/kevlar-repo [can be found here](/SUPPORT.md)
+## Contributing
 
-Where should users go if they have a question? (Stack Overflow, Gitter, IRC, mailing list, etc.)
-
-If desired, you may also provide links to core contributor email addresses.
-## Contributing Guidelines
-
-Include instructions for setting up the development environment, code standards, running tests, and submitting pull requests. Aim to be inclusive and welcoming. It may be useful to link to a seperate CONTRIBUTING.md file. See this example from the Hoodie project as an exemplar: https://github.com/hoodiehq/hoodie/blob/master/CONTRIBUTING.md
+Contributing guidelines for pavedroad-io/kevlar-repo [can be found here](/CONTRIBUTING.md)
 ## Code of Conduct
 
-Open Source projects should follow a code of conduct. Provide a link to the Code of Conduct for your project. I recommend using the Contributor Covenant: http://contributor-covenant.org/
+This project from pavedroad-io follows the [CNCF Code of Conduct](/CODE_OF_CONDUCT.md)
 ## License
 
-pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0][license]
-[license]: /LICENSE
-
-[link](/LICENSE)
+pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0](/LICENSE)
 ### Do Not Edit
 This file is generated so do not edit it directly.
 Template files for this documentation may be edited.
