@@ -37,7 +37,7 @@ As an example here are the directories and files associated with the
 [Developer Kit README file](/salt/README.md).
 
 |Directory Type|Example Files|
-|-|-|
+|:-|:-|
 |template|kevlar-repo/repo-templates/salt/README.md|
 |target|kevlar-repo/salt/README.md|
 |makefile|kevlar-repo/assets/content/salt/Makefile|
@@ -61,7 +61,7 @@ Note that all three directories have the same last element name of *assets* in t
 
 ### The Content Directory
 
-All of the makefile directories reside in *kevlar-repo/assets/content* and this directory has a top level makefile that can start makes in all of its sub directories.
+All of the makefile directories reside in *kevlar-repo/assets/content* and this directory has a top level Makefile that can start makes in all of its sub directories.
 Typing _make_ in this directory will thus build all of the target markdown files that are out of date in each target directory.
 
 ### Template Variables
@@ -72,21 +72,22 @@ Two types of template variables are defined: organization and project.
 Only one organization variable file exits and multiple project variable files exist.
 
 |Variable Type|Directory|File Name|Applies To|
-|-|-|-|-|
-|Organization|kevlar-repo/assets/content|organization.yaml|All target templates
-|Project|kevlar-repo/assets/content/_target_|project.yaml|One target templates
+|:-|:-|:-|:-|
+|Organization|kevlar-repo/assets/content|organization.yaml|All target directory templates
+|Project|kevlar-repo/assets/content/_target_|project.yaml|Single target directory templates
 
 Continuing the example above here are the variable files associated with the
-[Developer Kit README file](/salt/README.md) file:
+[Developer Kit README file](/salt/README.md).
 
 |Variable Type|Example Files|
-|-|-|
+|:-|:-|
 |Organization|kevlar-repo//assets/content/organization.yaml|
 |Project|kevlar-repo/assets/content/salt/project.yaml|
 
 ## More to Come
 
-Two more files will be added to go into more detail. The first will be how to add a file to an existing target directory
+Two more documents will be added to go into more detail.
+The first will be how to add a file to an existing target directory.
 The second will be how to set up a new target and template directory form scratch.
 
 ## Links to More Information
