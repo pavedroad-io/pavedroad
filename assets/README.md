@@ -9,14 +9,14 @@ After the generated file is ready for prime time both it and the template should
 ## Getting Started
 
 If the template file and the target file already exist the process for updating a file is fairly simple.
-Edit the template file and go to the directory *kevlar-repo/assets/content* and type _make_.
+Edit the template file and go to the directory *kevlar-repo/assets/build* and type _make_.
 All target files that have had any dependencies modified will be rebuilt.
 
 ## Directory Layout
 
     |-- kevlar-repo
     |   |-- assets
-    |   |   |-- content
+    |   |   |-- build
     |   |   |   |-- assets
     |   |   |   |-- github
     |   |   |   |-- kevlar-repo
@@ -40,7 +40,7 @@ Developer Kit [README](/salt/README.md) file:
 |:-|:-|
 |template|kevlar-repo/repo-templates/salt/README.md|
 |target|kevlar-repo/salt/README.md|
-|makefile|kevlar-repo/assets/content/salt/Makefile|
+|makefile|kevlar-repo/assets/build/salt/Makefile|
 
 ### The Target Directory
 
@@ -55,13 +55,13 @@ If possible it is good practice to give them the same name.
 
 ### The Makefile Directory
 
-A makefile directory must reside in *kevlar-repo/assets/content* and usually would have the same last element directory name as the target and template directories.
+A makefile directory must reside in *kevlar-repo/assets/build* and usually would have the same last element directory name as the target and template directories.
 Typing _make_ in this directory will build all of its target markdown files that are out of date.
 Note that all three directories have the same last element name of *assets* in the example of this README file.
 
 ### The Content Directory
 
-All of the makefile directories reside in *kevlar-repo/assets/content* and this directory has a top level Makefile that can start makes in all of its sub directories.
+All of the makefile directories reside in *kevlar-repo/assets/build* and this directory has a top level Makefile that can start makes in all of its sub directories.
 Typing _make_ in this directory will thus build all of the target markdown files that are out of date in each target directory.
 
 ### Template Variables
@@ -73,16 +73,16 @@ Only one organization variable file exits and multiple project variable files ex
 
 |Variable Type|Directory|File Name|Applies To|
 |:-|:-|:-|:-|
-|Organization|kevlar-repo/assets/content|organization.yaml|All target directory templates
-|Project|kevlar-repo/assets/content/_target_|project.yaml|Single target directory templates
+|Organization|kevlar-repo/assets/build|organization.yaml|All target directory templates
+|Project|kevlar-repo/assets/build/_target_|project.yaml|Single target directory templates
 
 Continuing the example above here are the variable files associated with the
 Developer Kit [README](/salt/README.md) file:
 
 |Variable Type|Example Files|
 |:-|:-|
-|Organization|kevlar-repo/assets/content/organization.yaml|
-|Project|kevlar-repo/assets/content/salt/project.yaml|
+|Organization|kevlar-repo/assets/build/organization.yaml|
+|Project|kevlar-repo/assets/build/salt/project.yaml|
 
 ## More to Come
 
