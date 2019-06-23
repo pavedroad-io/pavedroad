@@ -41,7 +41,7 @@ This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
 ### License
 This project is licensed under the following [License](/LICENSE).
 ### Do Not Edit
-This file is generated so any edits made to it directly will be lost.
+This file is generated so edits made to it will be lost.
 The template for this file may be edited:
 [README.md](/repo-templates/salt/README.md).
 

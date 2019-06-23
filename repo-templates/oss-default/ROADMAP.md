@@ -12,6 +12,8 @@ are subject to change but should give a general idea of what we are planning.
 We use the [{{milestones_name}}]({{milestones_link}})
 feature in Github so look there for the most up-to-date and issue plan.
 
-## Initial planning for {{organization}} 1.0
+## Initial Planning for {{organization}} Release 1.0
 
 ## Future Improvements
+
+{% include 'do-not-edit.md' %}

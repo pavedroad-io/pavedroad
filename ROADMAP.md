@@ -12,6 +12,14 @@ are subject to change but should give a general idea of what we are planning.
 We use the [Roadmap Milestones](https://github.com/pavedroad-io/kevlar-repo/milestoness)
 feature in Github so look there for the most up-to-date and issue plan.
 
-## Initial planning for PavedRoad 1.0
+## Initial Planning for PavedRoad Release 1.0
 
 ## Future Improvements
+
+### Do Not Edit
+This file is generated so edits made to it will be lost.
+The template for this file may be edited:
+[ROADMAP.md](/repo-templates/oss-default/ROADMAP.md).
+
+For complete instructions on editing templates and processing them see:
+[Document Generation](/assets/README.md).

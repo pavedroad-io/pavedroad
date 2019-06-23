@@ -48,3 +48,5 @@ A regular meeting of the {{organizarion}} community takes place regularly:
 For {{organization}} getting started guides, installation, deployment,
 and administration, see our [{{documentation_name}}]({{documentation_link}}).
 {# endif #}
+
+{% include 'do-not-edit.md' %}

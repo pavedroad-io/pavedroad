@@ -27,7 +27,7 @@ They typically help out with technical, code and design reviews and also with su
 Feel free to loop them in as needed.
 
 ### Do Not Edit
-This file is generated so any edits made to it directly will be lost.
+This file is generated so edits made to it will be lost.
 The template for this file may be edited:
 [OWNERS.md](/repo-templates/oss-default/OWNERS.md).
 

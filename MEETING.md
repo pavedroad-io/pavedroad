@@ -14,7 +14,7 @@ Anyone who wants to discuss the direction of the project, design and implementat
 * [Past meeting recordings](https://youtube.com)
 
 ### Do Not Edit
-This file is generated so any edits made to it directly will be lost.
+This file is generated so edits made to it will be lost.
 The template for this file may be edited:
 [MEETING.md](/repo-templates/oss-default/MEETING.md).
 

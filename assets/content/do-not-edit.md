@@ -1,5 +1,5 @@
 ### Do Not Edit
-This file is generated so any edits made to it directly will be lost.
+This file is generated so edits made to it will be lost.
 The template for this file may be edited:
 [{{template_file}}]({{template_path + '/' + template_file}}).
 

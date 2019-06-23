@@ -29,7 +29,7 @@ The MacOS bootstrap script does the following:
 6) runs apply-state.sh to install the PavedRoad development environment
 
 ### Do Not Edit
-This file is generated so any edits made to it directly will be lost.
+This file is generated so edits made to it will be lost.
 The template for this file may be edited:
 [INSTALL.md](/repo-templates/salt/INSTALL.md).
 

@@ -133,7 +133,7 @@ Additions and removals of maintainers require a **2/3 majority**, while other de
 require only a simple majority.
 
 ### Do Not Edit
-This file is generated so any edits made to it directly will be lost.
+This file is generated so edits made to it will be lost.
 The template for this file may be edited:
 [GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md).
 

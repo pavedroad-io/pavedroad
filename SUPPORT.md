@@ -35,3 +35,10 @@ A regular meeting of the  community takes place regularly:
 For PavedRoad getting started guides, installation, deployment,
 and administration, see our [TBD Documentation](https://github.com/pavedroad-io/kevlar-repo/blob/master/docs).
 
+### Do Not Edit
+This file is generated so edits made to it will be lost.
+The template for this file may be edited:
+[SUPPORT.md](/repo-templates/oss-default/SUPPORT.md).
+
+For complete instructions on editing templates and processing them see:
+[Document Generation](/assets/README.md).
