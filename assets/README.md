@@ -88,7 +88,7 @@ Developer Kit [README](/salt/README.md) file:
 
 Two more documents will be added to go into more detail.
 The first will be how to add a file to an existing target directory.
-The second will be how to set up a new target and template directory form scratch.
+The second will be how to set up a new target and template directory from scratch.
 
 ## Links to More Information
 
