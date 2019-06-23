@@ -28,19 +28,22 @@ Provide clear examples of how the project may be used. For large projects with e
 
 If the user will be building or deploying the project, add any useful guidance.
 
+## Links to More Information
+
 ### Community Meeting
-This project meets on a regular basis: [Community Meeting](/MEETING).
+This project meets on a regular basis: [TBD Community Meeting](https://zoom.us/j/7886774843).
 ### Getting Help
 For contact information or to report a bug see [Support](/SUPPORT.md).
 ### How to Contribute
 For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
-### CNCF Code of Conduct
-This project follows this [CNCF Code of Conduct](/CODE_OF_CONDUCT.md).
+### Code of Conduct
+This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
 ### License
-pavedroad-io/kevlar-repo is licensed under the following [License](/LICENSE).
+This project is licensed under the following [License](/LICENSE).
 ### Do Not Edit
 This file is generated so any edits made to it directly will be lost.
-The template file for this document may be edited.
+The template for this file may be edited:
+[README.md](/repo-templates/salt/README.md).
 
-Edit the template file: [README.md](/repo-templates/salt/README.md)
-How to generate this document: [Document Generation README](/assets/README.md)
+For complete instructions on editing templates and processing them see:
+[Document Generation](/assets/README.md).

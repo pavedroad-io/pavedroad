@@ -23,7 +23,7 @@ The {{organization}} team has helpful community members that are willing to poin
 |Join our Slack workspace:|[Registration]({{slack_join}})|
 |Check out past conversations:|[Archive]({{slack_archive}})|
 
-The {{slack_channels}} channels are the usual places where people offer support.
+The {{slack_name}} channels {{slack_channels}}are the usual places where people offer support.
 {# endif #}
 
 {# if stack #}
@@ -40,11 +40,11 @@ The {{organization}} community is active on {{stack_name}}.
 {# if comm_meeting #}
 ## {{comm_meeting_name}} 
 A regular meeting of the {{organizarion}} community takes place regularly:
-[{{comm_meeting_name}}]({{meeting}})
+[{{comm_meeting_name}}]({{meeting}}).
 {# endif #}
 
 {# if documentation #}
 ## {{documentation_name}} 
 For {{organization}} getting started guides, installation, deployment,
-and administration, see our [{{documentation_name}}]({{documentation_link}})
+and administration, see our [{{documentation_name}}]({{documentation_link}}).
 {# endif #}

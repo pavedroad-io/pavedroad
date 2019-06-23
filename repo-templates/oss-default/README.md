@@ -1,6 +1,6 @@
 <p align="center"><img src="https://github.com/pavedroad-io/kevlar-repo/blob/master/assets/images/banner.png" alt="PavedRoad.io"></p>
 
-# Readme for {{organization}}
+# Read Me for {{organization}}
 ## Overview
 PavedRoad.io is an OSS project for modeling the Software Development and Operations (SDO) life cycle.  While Infrastructure as Code (IaC) gave us the ability to model our service, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encompass the entire tool network including library's, development tools, CI/CD, operations, and advance analytics using ML/AI. 
 
@@ -19,7 +19,7 @@ In SaC, we first automate the entire tool chain by using Kubernetes Custom Resou
 
 The project is an early preview. We realize that it's going to take a village to arrive at the vision of a multi-cloud control plane, and we wanted to open this up early to get your help and feedback. Please see the [Roadmap]({{roadmap}}) for details on what we are planning for future releases. 
 
-### Official Releases
+## Official Releases
 
 Official releases of {{organization}} can be found here:
 [{{releases_name}}]({{releases_link}}).
@@ -30,5 +30,3 @@ Builds from the master branch can have functionality changed and even removed
 at any time without compatibility support and without prior notice.
 
 {% include 'readme-trailer.md' %}
-
-{% include 'do-not-edit.md' %}

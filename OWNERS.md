@@ -28,7 +28,8 @@ Feel free to loop them in as needed.
 
 ### Do Not Edit
 This file is generated so any edits made to it directly will be lost.
-The template file for this document may be edited.
+The template for this file may be edited:
+[OWNERS.md](/repo-templates/oss-default/OWNERS.md).
 
-Edit the template file: [OWNERS.md](/repo-templates/oss-default/OWNERS.md)
-How to generate this document: [Document Generation README](/assets/README.md)
+For complete instructions on editing templates and processing them see:
+[Document Generation](/assets/README.md).

@@ -1,11 +1,13 @@
-{% include 'meeting.md' %}
+## Links to More Information
 
-{% include 'support.md' %}
+{% include 'link-meeting.md' %}
 
-{% include 'contrib.md' %}
+{% include 'link-support.md' %}
 
-{% include 'conduct.md' %}
+{% include 'link-contrib.md' %}
 
-{% include 'license.md' %}
+{% include 'link-conduct.md' %}
+
+{% include 'link-license.md' %}
 
 {% include 'do-not-edit.md' %}

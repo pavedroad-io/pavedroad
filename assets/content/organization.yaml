@@ -3,21 +3,21 @@ org_long_name: PavedRoad.io
 org_github_name: pavedroad-io
 org_web_name: pavedroad.io
 comm_meeting: False
-comm_meeting_name: Community Meeting
+comm_meeting_name: TBD Community Meeting
 comm_meeting_time: TBD Every other Tuesday at 9:00 AM PST
 comm_meeting_zone: http://www.thetimezoneconverter.com/?t=9:00&tz=PT%20%28Pacific%20Time%29
 comm_meeting_link: https://zoom.us/j/7886774843
 agenda: False
-agenda_name: Agenda
+agenda_name: TBD Agenda
 agenda_link: https://agenda.com
 recording: False
-recording_name: Recording
+recording_name: TBD Recording
 recording_link: https://youtube.com
 documentation: False
-documentation_name: Documentation
+documentation_name: TBD Documentation
 documentation_link: https://github.com/pavedroad-io/kevlar-repo/blob/master/docs
 slack: False
-slack_name: Slack
+slack_name: TBD Slack
 slack_org: pavedroad.io
 slack_join: https://slack.pavedroad.io
 slack_link: https://pavedroadio.slack.com
@@ -25,18 +25,18 @@ slack_archive: https://pavedroadio.slackarchive.com
 slack_channels: "#user, #novice, and #announce"
 slack_announce: https://pavedroadio.slack.com/messages/TBD/
 forum: False
-forum_name: Forum
+forum_name: TBD Forum
 forum_org: pavedroad-dev
 forum_link: https://groups.google.com/forum/#!forum/pavedroad-dev
 twitter: False
-twitter_name: Twitter
+twitter_name: TBD Twitter
 twitter_org: pavedroad-io
 twitter_link: https://twitter.com/pavedroad_io
 stack: False
-stack_name: Stack Overflow
+stack_name: TBD Stack Overflow
 stack_link: http://stackoverflow.com/questions/tagged/pavedroad
 mailto: False
-mailto_name: Email
+mailto_name: TBD Email
 mailto_org: info@pavedroad.io
 mailto_link: mailto:info@pavedroad.io
 security_email: security@pavedroad.io
@@ -53,9 +53,9 @@ milestones_name: Roadmap Milestones
 milestones_link: https://github.com/pavedroad-io/kevlar-repo/milestoness
 releases_name: Official Releases
 releases_link: https://github.com/pavedroad-io/kevlar-repo/releases
-assets_name: Document Generation README
+assets_name: Document Generation
 assets_readme: /assets/README.md
-salt_name: Developer Kit README
+salt_name: Developer Kit
 salt_readme: /salt/README.md
 salt_install: /salt/INSTALL.md
 templates_link: repo-templates/oss-default

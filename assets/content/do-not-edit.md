@@ -1,6 +1,7 @@
 ### Do Not Edit
 This file is generated so any edits made to it directly will be lost.
-The template file for this document may be edited.
+The template for this file may be edited:
+[{{template_file}}]({{template_path + '/' + template_file}}).
 
-Edit the template file: [{{template_file}}]({{template_path + '/' + template_file}})
-How to generate this document: [{{assets_name}}]({{assets_readme}})
+For complete instructions on editing templates and processing them see:
+[{{assets_name}}]({{assets_readme}}).

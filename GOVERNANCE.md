@@ -75,7 +75,7 @@ the maintainers per the voting process below.
 
 * Monitor email aliases.
 * Monitor Slack (delayed response is perfectly acceptable).
-* Attend the regularly recurring [Community Meeting](/MEETING).
+* Attend the regularly recurring [TBD Community Meeting](/MEETING).
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
   The areas of specialization listed in [OWNERS.md](/OWNERS.md) can be used to help with routing
   an issue/question to the right person.
@@ -134,7 +134,8 @@ require only a simple majority.
 
 ### Do Not Edit
 This file is generated so any edits made to it directly will be lost.
-The template file for this document may be edited.
+The template for this file may be edited:
+[GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md).
 
-Edit the template file: [GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md)
-How to generate this document: [Document Generation README](/assets/README.md)
+For complete instructions on editing templates and processing them see:
+[Document Generation](/assets/README.md).

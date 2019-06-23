@@ -41,7 +41,7 @@ request and branch commits.
 ## Getting Started
 
 - Fork the repository on GitHub
-- Read the [Developer Kit README]() for build and test instructions
+- Read the [Developer Kit]() for build and test instructions
 - Play with the project, submit bugs, submit patches!
 
 ## Contribution Flow
@@ -57,7 +57,7 @@ This is a rough outline of what a contributor's workflow looks like:
 
 ## Building
 
-Details about building the project can be found in [Developer Kit README]().
+Details about building the project can be found in [Developer Kit]().
 
 ## Coding Style and Linting
 
