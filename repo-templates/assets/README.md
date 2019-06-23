@@ -33,26 +33,29 @@ The source template file for each generated file has the same base name.
 In addition a third directory is associated with each pair of template and target directories.
 This third directory contains the Makefile used to generate this set of target markdown files.
 Generally the last element of all of these directory names would be the same.
-As an example here are the files associated with this README file:
+As an example here are the directories and files associated with the
+[{{salt_name}} README file]({{salt_readme}}) file:
 
-    template: kevlar-repo/repo-templates/assets/README.md
-    target:   kevlar-repo/assets/README.md
-    makefile: kevlar-repo/assets/content/assets/Makefile
+|Directory Type|Example Files|
+|-|-|
+|template|kevlar-repo/repo-templates/salt/README.md|
+|target|kevlar-repo/salt/README.md|
+|makefile|kevlar-repo/assets/content/salt/Makefile|
 
 ### The Target Directory
 
-The target directory may reside anywhere on GitHub but target file generation is much simpler if it is in the same repo or the same organization.
+A target directory may reside anywhere on GitHub but target file generation is much simpler if it is in the same repo or the same organization.
 Note that all three directories are in the same repo for the example of this README file.
 
 ### The Template Directory
 
-The template directory generally resides in *kevlar-repo/repo-templates* and usually would have the same last element directory name.
+A template directory generally resides in *kevlar-repo/repo-templates* and usually would have the same last element directory name.
 However different target directories could share the same template directory so having the same name is not a requirement.
 If possible it is good practice to give them the same name.
 
 ### The Makefile Directory
 
-The makefile directory must reside in *kevlar-repo/assets/content* and usually would have the same last element directory name as the target and template directories.
+A makefile directory must reside in *kevlar-repo/assets/content* and usually would have the same last element directory name as the target and template directories.
 Typing _make_ in this directory will build all of its target markdown files that are out of date.
 Note that all three directories have the same last element name of *assets* in the example of this README file.
 
@@ -60,6 +63,26 @@ Note that all three directories have the same last element name of *assets* in t
 
 All of the makefile directories reside in *kevlar-repo/assets/content* and this directory has a top level makefile that can start makes in all of its sub directories.
 Typing _make_ in this directory will thus build all of the target markdown files that are out of date in each target directory.
+
+### Template Variables
+
+Template variable files define the substitutions that are made to jinja
+variables when the template files are processed.
+Two types of template variables are defined: organization and project.
+Only one organization variable file exits and multiple project variable files exist.
+
+|Variable Type|Directory|File Name|Applies To|
+|-|-|-|-|
+|Organization|kevlar-repo/assets/content|organization.yaml|All templates
+|Project|kevlar-repo/assets/content/<project>|project.yaml|Project templates
+
+Continuing the example above here are the variable files associated with the
+[{{salt_name}} README file]({{salt_readme}}) file:
+
+|Variable Type|Example Files|
+|-|-|
+|Organization|kevlar-repo//assets/content/organization.yaml|
+|Project|kevlar-repo/assets/content/salt/project.yaml|
 
 ## More to Come
 
