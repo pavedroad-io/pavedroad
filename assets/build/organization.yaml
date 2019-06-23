@@ -58,7 +58,7 @@ assets_readme: /assets/README.md
 salt_name: Developer Kit
 salt_readme: /salt/README.md
 salt_install: /salt/INSTALL.md
-templates_link: repo-templates/oss-default
+templates_link: assets/templates/oss-default
 conduct: /CODE_OF_CONDUCT.md
 contrib: /CONTRIBUTING.md
 dco: /DCO

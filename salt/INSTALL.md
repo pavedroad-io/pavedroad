@@ -31,7 +31,7 @@ The MacOS bootstrap script does the following:
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[INSTALL.md](/repo-templates/salt/INSTALL.md)
+[INSTALL.md](/assets/templates/salt/INSTALL.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

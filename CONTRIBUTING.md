@@ -112,7 +112,7 @@ git tools.
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[CONTRIBUTING.md](/repo-templates/oss-default/CONTRIBUTING.md)
+[CONTRIBUTING.md](/assets/templates/oss-default/CONTRIBUTING.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

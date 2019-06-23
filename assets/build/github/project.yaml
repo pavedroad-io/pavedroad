@@ -1,6 +1,6 @@
 project: .github
 repo_name: .github
-template_path: https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default
+template_path: https://github.com/pavedroad-io/kevlar-repo/blob/master/assets/templates/oss-default
 # conduct_link: https://github.com/pavedroad-io/.githib/CODE_OF_CONDUCT.md
 conduct_link: CODE_OF_CONDUCT.md
 clone_link: https://github.com/pavedroad-io/.githib.git

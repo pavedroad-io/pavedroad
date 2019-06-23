@@ -38,7 +38,7 @@ and administration, see our [TBD Documentation](https://github.com/pavedroad-io/
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[SUPPORT.md](/repo-templates/oss-default/SUPPORT.md)
+[SUPPORT.md](/assets/templates/oss-default/SUPPORT.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

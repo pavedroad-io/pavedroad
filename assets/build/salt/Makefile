@@ -8,6 +8,6 @@
 current_repo_top := $(shell git rev-parse --show-toplevel)
 organization_dir := $(abspath $(current_repo_top)/..)
 target_dir:= $(organization_dir)/kevlar-repo/salt
-template_dir := $(organization_dir)/kevlar-repo/repo-templates/salt
+template_dir := $(organization_dir)/kevlar-repo/assets/templates/salt
 
 include ../jinja2.mk

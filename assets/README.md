@@ -15,18 +15,18 @@ All target files that have had any dependencies modified will be rebuilt.
 ## Directory Layout
 
     |-- kevlar-repo
-    |   |-- assets
-    |   |   |-- build
-    |   |   |   |-- assets
-    |   |   |   |-- github
-    |   |   |   |-- kevlar-repo
-    |   |   |   `-- salt
-    |   |   `-- images
-    |   |-- repo-templates
-    |   |   |-- assets
-    |   |   |-- oss-default
-    |   |   `-- salt
-    |   `-- salt
+        |-- assets
+        |   |-- build
+        |   |   |-- assets
+        |   |   |-- github
+        |   |   |-- kevlar-repo
+        |   |   `-- salt
+        |   |-- images
+        |   |-- templates
+        |       |-- assets
+        |       |-- oss-default
+        |       |-- salt
+        |-- salt
 
 Each set of generated markdown files in a target directory have an associated template directory where the source templates reside.
 The source template file for each generated file has the same base name.
@@ -38,7 +38,7 @@ Developer Kit [README](/salt/README.md) file:
 
 |Directory Type|Example Files|
 |:-|:-|
-|template|kevlar-repo/repo-templates/salt/README.md|
+|template|kevlar-repo/assets/templates/salt/README.md|
 |target|kevlar-repo/salt/README.md|
 |makefile|kevlar-repo/assets/build/salt/Makefile|
 
@@ -49,7 +49,7 @@ Note that all three directories are in the same repo for the example of this REA
 
 ### The Template Directory
 
-A template directory generally resides in *kevlar-repo/repo-templates* and usually would have the same last element directory name.
+A template directory generally resides in *kevlar-repo/assets/templates* and usually would have the same last element directory name.
 However different target directories could share the same template directory so having the same name is not a requirement.
 If possible it is good practice to give them the same name.
 
@@ -105,7 +105,7 @@ This project is licensed under the following [License](/LICENSE).
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[README.md](/repo-templates/assets/README.md)
+[README.md](/assets/templates/assets/README.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

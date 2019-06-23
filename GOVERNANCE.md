@@ -135,7 +135,7 @@ require only a simple majority.
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md)
+[GOVERNANCE.md](/assets/templates/oss-default/GOVERNANCE.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)
