@@ -2,8 +2,8 @@
 
 This page lists all active maintainers and their areas of expertise. This can be used for routing PRs, questions, etc. to the right place.
 
-* See [CONTRIBUTING.md](CONTRIBUTING.md) for general contribution guidelines.
-* See [GOVERNANCE.md](GOVERNANCE.md) for governance guidelines and maintainer responsibilities.
+* See [CONTRIBUTING.md](/CONTRIBUTING.md) for general contribution guidelines.
+* See [GOVERNANCE.md](/GOVERNANCE.md) for governance guidelines and maintainer responsibilities.
 
 ## Senior maintainers
 
@@ -14,11 +14,11 @@ Here's the current list of senior maintainers:
 
 ## Maintainers
 
-There are currently no maintainers. Maintainers will be added according to the [process for adding a maintainer](GOVERNANCE.md#becoming-a-maintainer) in the [governance](GOVERNANCE.md).
+There are currently no maintainers. Maintainers will be added according to the [process for adding a maintainer](/GOVERNANCE.md#becoming-a-maintainer) in the [governance](/GOVERNANCE.md).
 
 ## Emeritus maintainers
 
-There are currently no emeritus maintainers.  This list will be updated according to the [process for removing a maintainer](GOVERNANCE.md#removing-a-maintainer) in the [governance](GOVERNANCE.md).
+There are currently no emeritus maintainers.  This list will be updated according to the [process for removing a maintainer](/GOVERNANCE.md#removing-a-maintainer) in the [governance](/GOVERNANCE.md).
 
 ## Friends of PavedRoad
 
@@ -27,8 +27,8 @@ They typically help out with technical, code and design reviews and also with su
 Feel free to loop them in as needed.
 
 ### Do Not Edit
-This file is generated so do not edit it directly.
-Template files for this documentation may be edited.
+This file is generated so any edits made to it directly will be lost.
+The template file for this document may be edited.
 
-[Edit template files here.](https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default)
-[See build instructions here.](https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default/README.md)
+Edit the template file: [OWNERS.md](/repo-templates/oss-default/OWNERS.md)
+How to generate this document: [Document Generation README](/assets/README.md)

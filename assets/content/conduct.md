@@ -1,2 +1,2 @@
-## Code of Conduct
-This project follows the [CNCF Code of Conduct]({{conduct}}).
+### {{conduct_name}}
+This project follows this [{{conduct_name}}]({{conduct}}).

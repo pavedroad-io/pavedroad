@@ -1,2 +1,2 @@
-## How to Contribute
-Contributing guidelines [can be found here]({{contrib}}).
+### How to Contribute
+For guidelines on contributions see [Contributing]({{contrib}}).

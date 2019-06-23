@@ -16,7 +16,7 @@ The PavedRoad team has helpful community members that are willing to point you i
 |Join our Slack workspace:|[Registration](https://slack.pavedroad.io)|
 |Check out past conversations:|[Archive](https://pavedroadio.slackarchive.com)|
 
-The #user and #novice channels are the usual places where people offer support.
+The #user, #novice, and #announce channels are the usual places where people offer support.
 
 ## Stack Overflow
 The PavedRoad community is active on Stack Overflow.
@@ -27,7 +27,11 @@ The PavedRoad community is active on Stack Overflow.
 |What can be asked about:|[Topics](http://stackoverflow.com/help/on-topic)|
 |How to ask good questions:|[Tips](http://stackoverflow.com/help/how-to-ask)|
 
+## Community Meeting 
+A regular meeting of the  community takes place regularly:
+[Community Meeting](/MEETING)
+
 ## Documentation 
-Additional information on installing or using PavedRoad is available here:
-[Documentation](https://github.com/pavedroad-io/kevlar-repo/blob/master/docs)
+For PavedRoad getting started guides, installation, deployment,
+and administration, see our [Documentation](https://github.com/pavedroad-io/kevlar-repo/blob/master/docs)
 

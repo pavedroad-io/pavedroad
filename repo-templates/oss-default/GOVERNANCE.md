@@ -1,6 +1,6 @@
 # {{organization}} Governance
 
-This document defines governance policies for the {{organization}} project.
+This document defines governance policies for this project.
 
 ## Roles
 
@@ -17,7 +17,7 @@ This document defines governance policies for the {{organization}} project.
 
 ## Becoming a maintainer
 
-The current list of maintainers is published and updated in [OWNERS.md](OWNERS.md).
+The current list of maintainers is published and updated in [OWNERS.md]({{owners}}).
 
 ### Maintainer Pre-requisites
 
@@ -35,7 +35,7 @@ To become a maintainer you need to demonstrate the following:
 
 ### Your organization is not yet a maintainer
 
-* Express interest to the [senior maintainers](OWNERS.md#senior-maintainers) directly that your
+* Express interest to the [senior maintainers]({{owners}}#senior-maintainers) directly that your
   organization is interested in becoming a maintainer. Becoming a maintainer generally means that
   you are going to be spending substantial time (>25%) on {{organization}} for the foreseeable future. You
   should have domain expertise and be extremely proficient with Kubernetes and Golang.  Ultimately
@@ -75,9 +75,9 @@ the maintainers per the voting process below.
 
 * Monitor email aliases.
 * Monitor Slack (delayed response is perfectly acceptable).
-* Attend the regularly recurring [community meetings](README.md#community-meeting).
+* Attend the regularly recurring [{{comm_meeting_name}}]({{meeting}}).
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
-  The areas of specialization listed in [OWNERS.md](OWNERS.md) can be used to help with routing
+  The areas of specialization listed in [OWNERS.md]({{owners}}) can be used to help with routing
   an issue/question to the right person.
 * During GitHub issue triage, apply all applicable [labels]({{label_link}})
   to each new issue. Labels are extremely useful for future issue follow up. Which labels to apply
@@ -100,7 +100,7 @@ the maintainers per the voting process below.
 PRs may be merged after receiving at least **1 approval from a maintainer** (either senior or standard)
 that is **not the author** of the PR, and preferably from a **different organization** than the PR author.
 As complexity of a PR increases, such as design changes or major PRs, the need for an approval from
-a different organization also increases.  This should be a judgement call from the maintainers,
+a different organization also increases.  This should be a judgment call from the maintainers,
 and it is expected that all maintainers act in good faith to seek approval from a different
 organization when appropriate.
 

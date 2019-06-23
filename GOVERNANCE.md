@@ -75,11 +75,11 @@ the maintainers per the voting process below.
 
 * Monitor email aliases.
 * Monitor Slack (delayed response is perfectly acceptable).
-* Attend the regularly recurring [Community Meeting](True).
+* Attend the regularly recurring [Community Meeting](/MEETING).
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
   The areas of specialization listed in [OWNERS.md](/OWNERS.md) can be used to help with routing
   an issue/question to the right person.
-* During GitHub issue triage, apply all applicable [labels](/labels)
+* During GitHub issue triage, apply all applicable [labels](https://github.com/pavedroad-io/kevlar-repo/labels)
   to each new issue. Labels are extremely useful for future issue follow up. Which labels to apply
   is somewhat subjective so just use your best judgment. A few of the most important labels that are
   not self explanatory are:
@@ -100,7 +100,7 @@ the maintainers per the voting process below.
 PRs may be merged after receiving at least **1 approval from a maintainer** (either senior or standard)
 that is **not the author** of the PR, and preferably from a **different organization** than the PR author.
 As complexity of a PR increases, such as design changes or major PRs, the need for an approval from
-a different organization also increases.  This should be a judgement call from the maintainers,
+a different organization also increases.  This should be a judgment call from the maintainers,
 and it is expected that all maintainers act in good faith to seek approval from a different
 organization when appropriate.
 

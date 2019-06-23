@@ -6,8 +6,7 @@
 # template_dir is the template directory with the source templates
 
 current_repo_top := $(shell git rev-parse --show-toplevel)
-organization_dir := $(abspath $(current_repo_top)/..)
-target_dir:= $(organization_dir)/kevlar_repo
-template_dir := $(organization_dir)/kevlar-repo/repo-templates/oss-default
+target_dir:= $(current_repo_top)
+template_dir := $(current_repo_top)/repo-templates/oss-default
 
 include ../jinja2.mk

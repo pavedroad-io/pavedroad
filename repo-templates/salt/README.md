@@ -1,4 +1,4 @@
-# Project Title
+# About the {{organization}} {{project}}
 
 Provide a brief (1 paragraph or less), meaningful description of the project and what it does. If the project has a UI, include a screenshot as well.
 

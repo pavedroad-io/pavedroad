@@ -1,4 +1,4 @@
-# Security Policies and Procedures for {{organization}}
+# Security Policies and Procedures for PavedRoad
 
 This document outlines security procedures and general policies for the project.
 
@@ -13,7 +13,7 @@ Thank you for improving the security of the project. We appreciate your efforts 
 responsible disclosure and will make every effort to acknowledge your
 contributions.
 
-Report security bugs by emailing our security team at {{security_email}}.
+Report security bugs by emailing our security team at security@pavedroad.io.
 
 The lead maintainer will acknowledge your email within 48 hours, and will send a
 more detailed response within 48 hours indicating the next steps in handling

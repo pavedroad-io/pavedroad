@@ -1,4 +1,4 @@
-# Project Title
+# About the PavedRoad Deveopment Kit
 
 Provide a brief (1 paragraph or less), meaningful description of the project and what it does. If the project has a UI, include a screenshot as well.
 
@@ -28,17 +28,19 @@ Provide clear examples of how the project may be used. For large projects with e
 
 If the user will be building or deploying the project, add any useful guidance.
 
-## Getting Help
-Support options [can be found here](/SUPPORT.md).
-## How to Contribute
-Contributing guidelines [can be found here](/CONTRIBUTING.md).
-## Code of Conduct
-This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
-## License
-pavedroad-io/kevlar-repo is licensed under the [Apache License 2.0](/LICENSE).
+### Community Meeting
+This project meets on a regular basis: [Community Meeting](/MEETING).
+### Getting Help
+For contact information or to report a bug see [Support](/SUPPORT.md).
+### How to Contribute
+For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
+### CNCF Code of Conduct
+This project follows this [CNCF Code of Conduct](/CODE_OF_CONDUCT.md).
+### License
+pavedroad-io/kevlar-repo is licensed under the following [License](/LICENSE).
 ### Do Not Edit
-This file is generated so do not edit it directly.
-Template files for this documentation may be edited.
+This file is generated so any edits made to it directly will be lost.
+The template file for this document may be edited.
 
-[Edit the template file here.](/repo-templates/salt/README.md)
-[See build instructions here.](/assets/README.md)
+Edit the template file: [README.md](/repo-templates/salt/README.md)
+How to generate this document: [Document Generation README](/assets/README.md)
