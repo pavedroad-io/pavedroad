@@ -75,7 +75,7 @@ the maintainers per the voting process below.
 
 * Monitor email aliases.
 * Monitor Slack (delayed response is perfectly acceptable).
-* Attend the regularly recurring [TBD Community Meeting](/MEETING).
+* Attend the regularly recurring [TBD Community Meeting](/MEETING.md).
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
   The areas of specialization listed in [OWNERS.md](/OWNERS.md) can be used to help with routing
   an issue/question to the right person.

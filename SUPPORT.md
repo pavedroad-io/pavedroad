@@ -29,7 +29,7 @@ The PavedRoad community is active on TBD Stack Overflow.
 
 ## TBD Community Meeting 
 A regular meeting of the  community takes place regularly:
-[TBD Community Meeting](/MEETING).
+[TBD Community Meeting](/MEETING.md).
 
 ## TBD Documentation 
 For PavedRoad getting started guides, installation, deployment,

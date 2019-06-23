@@ -65,7 +65,7 @@ dco: /DCO
 govern: /GOVERNANCE.md
 install: /INSTALL.md
 license: /LICENSE
-meeting: /MEETING
+meeting: /MEETING.md
 owners: /OWNERS.md
 readme: /README.md
 roadmap: /ROADMAP.md
