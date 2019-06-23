@@ -50,7 +50,7 @@ lint_link: https://github.com/golangci/golangci-lint
 label_name: Issue Labels
 label_link: https://github.com/pavedroad-io/kevlar-repo/labels
 milestones_name: Roadmap Milestones
-milestones_link: https://github.com/pavedroad-io/kevlar-repo/milestoness
+milestones_link: https://github.com/pavedroad-io/kevlar-repo/milestones
 releases_name: Official Releases
 releases_link: https://github.com/pavedroad-io/kevlar-repo/releases
 assets_name: Document Generation
