@@ -1,6 +1,6 @@
 # PavedRoad Governance
 
-This document defines governance policies for the PavedRoad project.
+This document defines governance policies for this project.
 
 ## Roles
 
@@ -17,7 +17,7 @@ PavedRoad uses a two-tiered system of maintainer roles:
 
 ## Becoming a maintainer
 
-The current list of maintainers is published and updated in [OWNERS.md](OWNERS.md).
+The current list of maintainers is published and updated in [OWNERS.md](/OWNERS.md).
 
 ### Maintainer Pre-requisites
 
@@ -35,7 +35,7 @@ To become a maintainer you need to demonstrate the following:
 
 ### Your organization is not yet a maintainer
 
-* Express interest to the [senior maintainers](OWNERS.md#senior-maintainers) directly that your
+* Express interest to the [senior maintainers](/OWNERS.md#senior-maintainers) directly that your
   organization is interested in becoming a maintainer. Becoming a maintainer generally means that
   you are going to be spending substantial time (>25%) on PavedRoad for the foreseeable future. You
   should have domain expertise and be extremely proficient with Kubernetes and Golang.  Ultimately
@@ -75,11 +75,11 @@ the maintainers per the voting process below.
 
 * Monitor email aliases.
 * Monitor Slack (delayed response is perfectly acceptable).
-* Attend the regularly recurring [community meetings](README.md#community-meeting).
+* Attend the regularly recurring [Community Meeting](True).
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
-  The areas of specialization listed in [OWNERS.md](OWNERS.md) can be used to help with routing
+  The areas of specialization listed in [OWNERS.md](/OWNERS.md) can be used to help with routing
   an issue/question to the right person.
-* During GitHub issue triage, apply all applicable [labels](https://github.com/pavedroad-io/kevlar-repo/labels)
+* During GitHub issue triage, apply all applicable [labels](/labels)
   to each new issue. Labels are extremely useful for future issue follow up. Which labels to apply
   is somewhat subjective so just use your best judgment. A few of the most important labels that are
   not self explanatory are:
@@ -133,8 +133,8 @@ Additions and removals of maintainers require a **2/3 majority**, while other de
 require only a simple majority.
 
 ### Do Not Edit
-This file is generated so do not edit it directly.
-Template files for this documentation may be edited.
+This file is generated so any edits made to it directly will be lost.
+The template file for this document may be edited.
 
-[Edit template files here.](https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default)
-[See build instructions here.](https://github.com/pavedroad-io/kevlar-repo/blob/master/repo-templates/oss-default/README.md)
+Edit the template file: [GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md)
+How to generate this document: [Document Generation README](/assets/README.md)
