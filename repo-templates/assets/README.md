@@ -34,7 +34,7 @@ In addition a third directory is associated with each pair of template and targe
 This third directory contains the Makefile used to generate this set of target markdown files.
 Generally the last element of all of these directory names would be the same.
 As an example here are the directories and files associated with the
-[{{salt_name}} README file]({{salt_readme}}).
+{{salt_name}} [README]({{salt_readme}}) file:
 
 |Directory Type|Example Files|
 |:-|:-|
@@ -77,11 +77,11 @@ Only one organization variable file exits and multiple project variable files ex
 |Project|kevlar-repo/assets/content/_target_|project.yaml|Single target directory templates
 
 Continuing the example above here are the variable files associated with the
-[{{salt_name}} README file]({{salt_readme}}).
+{{salt_name}} [README]({{salt_readme}}) file:
 
 |Variable Type|Example Files|
 |:-|:-|
-|Organization|kevlar-repo//assets/content/organization.yaml|
+|Organization|kevlar-repo/assets/content/organization.yaml|
 |Project|kevlar-repo/assets/content/salt/project.yaml|
 
 ## More to Come

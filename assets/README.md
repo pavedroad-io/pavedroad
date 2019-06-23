@@ -1,4 +1,4 @@
-# Document Generation from Templates
+# Document Generation
 
 Markdown documentation files provided by PavedRoad such as README.md files are generated from templates using jinja2.
 The template files may be edited with any editor including the GitHub GUI editor available on repository web pages.
@@ -34,7 +34,7 @@ In addition a third directory is associated with each pair of template and targe
 This third directory contains the Makefile used to generate this set of target markdown files.
 Generally the last element of all of these directory names would be the same.
 As an example here are the directories and files associated with the
-[Developer Kit README file](/salt/README.md).
+Developer Kit [README](/salt/README.md) file:
 
 |Directory Type|Example Files|
 |:-|:-|
@@ -77,11 +77,11 @@ Only one organization variable file exits and multiple project variable files ex
 |Project|kevlar-repo/assets/content/_target_|project.yaml|Single target directory templates
 
 Continuing the example above here are the variable files associated with the
-[Developer Kit README file](/salt/README.md).
+Developer Kit [README](/salt/README.md) file:
 
 |Variable Type|Example Files|
 |:-|:-|
-|Organization|kevlar-repo//assets/content/organization.yaml|
+|Organization|kevlar-repo/assets/content/organization.yaml|
 |Project|kevlar-repo/assets/content/salt/project.yaml|
 
 ## More to Come

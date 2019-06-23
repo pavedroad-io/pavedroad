@@ -1,6 +1,6 @@
 <p align="center"><img src="https://github.com/pavedroad-io/kevlar-repo/blob/master/assets/images/banner.png" alt="PavedRoad.io"></p>
 
-# Read Me for {{organization}}
+# {{organization}}
 ## Overview
 PavedRoad.io is an OSS project for modeling the Software Development and Operations (SDO) life cycle.  While Infrastructure as Code (IaC) gave us the ability to model our service, networks, storage, and compute resources.  PavedRoad.io introduces Stacks as Code (SaC) which encompass the entire tool network including libraries, development tools, CI/CD, operations, and advance analytics using ML/AI. 
 

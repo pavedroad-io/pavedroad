@@ -1,4 +1,4 @@
-# About the PavedRoad Deveopment Kit
+# Deveopment Kit
 
 Provide a brief (1 paragraph or less), meaningful description of the project and what it does. If the project has a UI, include a screenshot as well.
 
@@ -28,22 +28,4 @@ Provide clear examples of how the project may be used. For large projects with e
 
 If the user will be building or deploying the project, add any useful guidance.
 
-## Links to More Information
-
-### Community Meeting
-This project meets on a regular basis: [TBD Community Meeting](https://zoom.us/j/7886774843).
-### Getting Help
-For contact information or to report a bug see [Support](/SUPPORT.md).
-### How to Contribute
-For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
-### Code of Conduct
-This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
-### License
-This project is licensed under the following [License](/LICENSE).
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The template for this file may be edited:
-[README.md](/repo-templates/salt/README.md)
-
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)
+% include 'readme-trailer.md' %}

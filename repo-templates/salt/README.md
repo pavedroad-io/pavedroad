@@ -1,4 +1,4 @@
-# About the {{organization}} {{project}}
+# {{project}}
 
 Provide a brief (1 paragraph or less), meaningful description of the project and what it does. If the project has a UI, include a screenshot as well.
 
@@ -28,4 +28,4 @@ Provide clear examples of how the project may be used. For large projects with e
 
 If the user will be building or deploying the project, add any useful guidance.
 
-{% include 'readme-trailer.md' %}
+% include 'readme-trailer.md' %}
