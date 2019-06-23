@@ -28,10 +28,10 @@ The MacOS bootstrap script does the following:
 5) uses git to download the salt states
 6) runs apply-state.sh to install the PavedRoad development environment
 
-### Do Not Edit
-This file is generated so edits made to it will be lost.
+#### Do Not Edit
+This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[INSTALL.md](/repo-templates/salt/INSTALL.md).
+[INSTALL.md](/repo-templates/salt/INSTALL.md)
 
 For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md).
+[Document Generation](/assets/README.md)

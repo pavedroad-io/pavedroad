@@ -26,10 +26,10 @@ This section lists people that are not currently maintainers but have demonstrat
 They typically help out with technical, code and design reviews and also with support and troubleshooting.
 Feel free to loop them in as needed.
 
-### Do Not Edit
-This file is generated so edits made to it will be lost.
+#### Do Not Edit
+This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[OWNERS.md](/repo-templates/oss-default/OWNERS.md).
+[OWNERS.md](/repo-templates/oss-default/OWNERS.md)
 
 For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md).
+[Document Generation](/assets/README.md)

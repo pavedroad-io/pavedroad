@@ -132,10 +132,10 @@ the voting process should be considered.
 Additions and removals of maintainers require a **2/3 majority**, while other decisions and changes
 require only a simple majority.
 
-### Do Not Edit
-This file is generated so edits made to it will be lost.
+#### Do Not Edit
+This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md).
+[GOVERNANCE.md](/repo-templates/oss-default/GOVERNANCE.md)
 
 For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md).
+[Document Generation](/assets/README.md)

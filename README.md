@@ -41,10 +41,10 @@ For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
 This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
 ### License
 This project is licensed under the following [License](/LICENSE).
-### Do Not Edit
-This file is generated so edits made to it will be lost.
+#### Do Not Edit
+This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[README.md](/repo-templates/oss-default/README.md).
+[README.md](/repo-templates/oss-default/README.md)
 
 For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md).
+[Document Generation](/assets/README.md)

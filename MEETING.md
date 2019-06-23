@@ -13,10 +13,10 @@ Anyone who wants to discuss the direction of the project, design and implementat
 * [Current agenda and past meeting notes](https://agenda.com)
 * [Past meeting recordings](https://youtube.com)
 
-### Do Not Edit
-This file is generated so edits made to it will be lost.
+#### Do Not Edit
+This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[MEETING.md](/repo-templates/oss-default/MEETING.md).
+[MEETING.md](/repo-templates/oss-default/MEETING.md)
 
 For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md).
+[Document Generation](/assets/README.md)
