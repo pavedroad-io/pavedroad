@@ -43,7 +43,7 @@ The {{organization}} community is active on {{stack_name}}.
 
 {# if comm_meeting #}
 ## {{comm_meeting_name}} 
-A regular meeting of the {{organization}} community takes place regularly:
+A meeting of the {{organization}} community takes place regularly:
 [{{comm_meeting_name}}]({{meeting}}).
 
 {# endif #}
