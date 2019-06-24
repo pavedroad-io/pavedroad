@@ -117,3 +117,7 @@ Session.vim
 
 # mypy
 .mypy_cache/
+
+# aspell backups
+*.bak
+

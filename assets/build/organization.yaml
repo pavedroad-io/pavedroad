@@ -1,0 +1,87 @@
+organization: PavedRoad
+org_long_name: PavedRoad.io
+org_github_name: pavedroad-io
+org_web_name: pavedroad.io
+comm_meeting: False
+comm_meeting_name: TBD Community Meeting
+comm_meeting_time: TBD Every other Tuesday at 9:00 AM PST
+comm_meeting_zone: http://www.thetimezoneconverter.com/?t=9:00&tz=PT%20%28Pacific%20Time%29
+comm_meeting_link: https://zoom.us/j/7886774843
+agenda: False
+agenda_name: TBD Agenda
+agenda_link: https://agenda.com
+recording: False
+recording_name: TBD Recording
+recording_link: https://youtube.com
+documentation: False
+documentation_name: TBD Documentation
+documentation_link: https://github.com/pavedroad-io/kevlar-repo/blob/master/docs
+slack: False
+slack_name: TBD Slack
+slack_org: pavedroad.io
+slack_join: https://slack.pavedroad.io
+slack_link: https://pavedroadio.slack.com
+slack_archive: https://pavedroadio.slackarchive.com
+slack_channels: "#user, #novice, and #announce"
+slack_announce: https://pavedroadio.slack.com/messages/TBD/
+forum: False
+forum_name: TBD Forum
+forum_org: pavedroad-dev
+forum_link: https://groups.google.com/forum/#!forum/pavedroad-dev
+twitter: False
+twitter_name: TBD Twitter
+twitter_org: pavedroad-io
+twitter_link: https://twitter.com/pavedroad_io
+stack: False
+stack_name: TBD Stack Overflow
+stack_link: http://stackoverflow.com/questions/tagged/pavedroad
+mailto: False
+mailto_name: TBD Email
+mailto_org: info@pavedroad.io
+mailto_link: mailto:info@pavedroad.io
+security_email: security@pavedroad.io
+support_email: support@pavedroad.io
+conduct_name: CNCF Code of Conduct
+conduct_link: https://github.com/cncf/foundation/blob/master/code-of-conduct.md
+dco_bot_name: DCO Bot
+dco_bot_link: https://github.com/apps/dco
+lint_name: golangci-lint
+lint_link: https://github.com/golangci/golangci-lint
+label_name: Issue Labels
+label_link: https://github.com/pavedroad-io/kevlar-repo/labels
+milestones_name: Roadmap Milestones
+milestones_link: https://github.com/pavedroad-io/kevlar-repo/milestones
+releases_name: Official Releases
+releases_link: https://github.com/pavedroad-io/kevlar-repo/releases
+assets_name: Document Generation
+assets_readme: /assets/README.md
+salt_name: Developer Kit
+salt_readme: /salt/README.md
+salt_install: /salt/INSTALL.md
+salt_devsoftware: /salt/BOM_DEV_SOFTWARE.md
+salt_gopackages: /salt/BOM_GO_PACKAGES.md
+salt_vimplugins: /salt/BOM_VIM_PLUGINS.md
+salt_bashcomps: /salt/BOM_BASH_COMPS.md
+templates_link: assets/templates/oss-default
+conduct: /CODE_OF_CONDUCT.md
+contrib: /CONTRIBUTING.md
+dco: /DCO
+govern: /GOVERNANCE.md
+install: /INSTALL.md
+license: /LICENSE
+meeting: /MEETING.md
+owners: /OWNERS.md
+readme: /README.md
+roadmap: /ROADMAP.md
+security: /SECURITY.md
+support: /SUPPORT.md
+
+# debug
+twitter: True
+forun: True
+mailto: True
+slack: True
+stack: True
+documentation: True
+comm_meeting: True
+
