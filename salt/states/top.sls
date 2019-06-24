@@ -1,41 +1,94 @@
 #
-# Read the saltenv and then execute states based on that environment
-# saltenv = dev|stag|test|prod
+# Execute states based on the following grains:
+# saltenv = dev|stage|test|prod
+# os_family = debian|redhat|suse|macos|windows
+# roles = pr-golang
+# tops = base|bash|git|golang|vim
 #
 
 {{ saltenv }}:
 
-    #
-    # Things that get installed on all boxes regardless of 
-    # their role
-    #
+#
+# Packages that get installed on all boxes regardless
+#
 
-    'G@saltenv:dev':
-        - match: compound
-        - bash
+  'G@tops:base':
+    - match: compound
+    - base
 
-    #
-    # Role specific packages
-    #
+#
+# OS specific packages
+#
 
-    'G@saltenv:dev and G@roles:pr-golang':
-        - match: compound
-        - git
-        - golang
-        - vim
+# Debian
+  'G@os_family:Debian and G@tops:debian':
+    - match: compound
+    - debian
 
-    #
-    # OS specific packages
-    #
+# RedHat
+  'G@os_family:RedHat and G@tops:redhat':
+    - match: compound
+    - redhat
 
-    # Debian
-    'G@os:Debian':
-        - debian
+# Suse
+  'G@os_family:Suse and G@tops:suse':
+    - match: compound
+    - suse
 
-    # MacOS
-    'G@os:MacOS':
-        - macos
+# MacOS
+  'G@os_family:MacOS and G@tops:macos':
+    - match: compound
+    - macos
 
-    # Windows
-    'G@os:Windows':
-        - windows
+# Windows
+  'G@os_family:Windows and G@tops.windows':
+    - match: compound
+    - windows
+
+#
+# Environment specific packages
+#
+
+  'G@saltenv:dev and G@tops:bash':
+    - match: compound
+    - bash
+
+#
+# Role specific packages
+#
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:docker':
+    - match: compound
+    - docker
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:git':
+    - match: compound
+    - git
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:golang':
+    - match: compound
+    - golang
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:vim':
+    - match: compound
+    - vim
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:microk8s':
+    - match: compound
+    - microk8s
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:multipass':
+    - match: compound
+    - multipass
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:graphviz':
+    - match: compound
+    - graphviz
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:kompose':
+    - match: compound
+    - kompose
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
+    - match: compound
+    - skaffold

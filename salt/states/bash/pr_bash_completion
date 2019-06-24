@@ -1,0 +1,17 @@
+# Sourced by .bash_profile
+
+# Return if not interactive
+[ -z "$PS1" ] && return
+
+case $OSTYPE in
+    darwin*)
+        [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
+            "/usr/local/etc/profile.d/bash_completion.sh"
+    ;;
+    linux*)
+        [[ -f /usr/share/bash-completion/bash_completion ]] && \
+            . /usr/share/bash-completion/bash_completion
+    ;;
+    *)
+    ;;
+esac

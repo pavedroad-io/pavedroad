@@ -1,5 +1,188 @@
 file_client: local
-root_dir: root
+root_dir: pr-root
 grains:
   roles:
     - pr-golang
+  tops:
+    - base
+    - debian
+    - redhat
+    - suse
+    - macos
+    - windows
+    - bash
+    - docker
+    - git
+    - golang
+    - graphviz
+    - kompose
+    - microk8s
+    - multipass
+    - skaffold
+    - vim
+  cfg_base:
+    installs:
+      - firefox
+    firefox:
+      version: latest
+  cfg_debian:
+    installs:
+      - devtools
+    devtools:
+      version: latest
+  cfg_redhat:
+    installs:
+      - devtools
+    devtools:
+      version: latest
+  cfg_suse:
+    installs:
+      - devtools
+    devtools:
+      version: latest
+  cfg_macos:
+    commands:
+      - show-all-files
+      - show-all-extensions
+  cfg_windows:
+    installs:
+      - devtools
+      - cygwin
+      - putty
+    devtools:
+      version: latest
+    cygwin:
+      version: latest
+    putty:
+      version: latest
+  cfg_bash:
+    packages:
+      - completion
+    files:
+      - bashrc
+      - completion
+    bashrc:
+      append: True
+    completion:
+      append: True
+  cfg_docker:
+    installs:
+      - docker
+      - compose
+    docker:
+      version: latest
+      service: True
+    compose:
+      version: latest
+      service: True
+    completion:
+      - bash
+    debug:
+      enable: True
+      host: tcp://host.docker.internal:2375
+  cfg_git:
+    installs:
+      - git
+      - prompt
+    git:
+      version: latest
+    completion:
+      - bash
+    prompt:
+      append: True
+  cfg_golang:
+    installs:
+      - golang
+      - godep
+      - dlv
+      - golint
+      - gosec
+      - asmfmt
+      - errcheck
+      - fillstruct
+      - gocode
+      - gocomplete
+      - godef
+      - gogetdoc
+      - goimports
+      - gopls
+      - gometalinter
+      - golangci-lint
+      - gomodifytags
+      - gorename
+      - gotags
+      - guru
+      - impl
+      - keyify
+      - motion
+      - iferr
+    golang:
+      version: latest
+    completion:
+      - bash
+    debug:
+      enable: True
+  cfg_graphviz:
+    installs:
+      - graphviz
+    graphviz:
+      version: latest
+  cfg_kompose:
+    installs:
+      - kompose
+    kompose:
+      version: latest
+    completion:
+      - bash
+    debug:
+      enable: True
+  cfg_microk8s:
+    installs:
+      - microk8s
+    microk8s:
+      version: latest
+    debug:
+      enable: True
+  cfg_multipass:
+    installs:
+      - multipass
+    multipass:
+      version: latest
+    completion:
+      - bash
+    debug:
+      enable: True
+  cfg_pip3:
+    installs:
+      - pip3
+  cfg_skaffold:
+    installs:
+      - skaffold
+    skaffold:
+      version: latest
+    completion:
+      - bash
+    debug:
+      enable: True
+  cfg_snapd:
+    installs:
+      - snapd
+    snapd:
+      version: latest
+    debug:
+      enable: True
+  cfg_vim:
+    installs:
+      - vim
+      - go-plugins
+    vim:
+      version: latest
+    files:
+      - vimrc
+      - vimrc-go
+    vimrc:
+      append: True
+    debug:
+      enable: True
+
+# vim: filetype=yaml

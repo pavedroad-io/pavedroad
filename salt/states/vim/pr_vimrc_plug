@@ -1,0 +1,9 @@
+set nocompatible
+
+call plug#begin('~/.vim/plugged')
+Plug 'Shougo/deoplete.nvim',
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'zchee/deoplete-go'
+Plug 'fatih/vim-go'
+call plug#end()
