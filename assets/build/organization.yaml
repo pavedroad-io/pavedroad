@@ -58,6 +58,10 @@ assets_readme: /assets/README.md
 salt_name: Developer Kit
 salt_readme: /salt/README.md
 salt_install: /salt/INSTALL.md
+salt_devsoftware: /salt/BOM_DEV_SOFTWARE.md
+salt_gopackages: /salt/BOM_GO_PACKAGES.md
+salt_vimplugis: /salt/BOM_VIM_PLUGINS.md
+salt_bashcomps: /salt/BOM_BASH_COMPS.md
 templates_link: assets/templates/oss-default
 conduct: /CODE_OF_CONDUCT.md
 contrib: /CONTRIBUTING.md

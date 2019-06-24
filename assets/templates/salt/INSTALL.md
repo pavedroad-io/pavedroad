@@ -1,10 +1,14 @@
 # Bootstrapping the {{organization}} {{project}}
 
+## Bootstrap Scripts
+
 In order to bootstrap the {{organization}} development environment
 run one of the following scripts:
 
-    bootstrap-unix.sh
-    bootstrap-macos.sh
+    - bootstrap-unix.sh
+    - bootstrap-macos.sh
+
+## Unix Bootstrap
 
 The unix bootstrap script does the following:
 
@@ -13,6 +17,8 @@ The unix bootstrap script does the following:
 3) uses salt bootstrap script to install SaltStack
 4) uses git to download the salt states
 5) runs apply-state.sh to install the {{organization}} development environment
+
+## MacOS Bootstrap
 
 The MacOS bootstrap script does the following:
 

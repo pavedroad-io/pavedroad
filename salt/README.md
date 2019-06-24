@@ -1,31 +1,100 @@
 # Deveopment Kit
 
-Provide a brief (1 paragraph or less), meaningful description of the project and what it does. If the project has a UI, include a screenshot as well.
-
-If more comprehensive documentation exists, link to it here.
+This project provides the tools to install a cloud native software development environment.
+The development environment supports an enhanced _bash_ shell and _vim_ editor plus
+the _go_ language along with the _git_ package and other minimally necessary software.
 
 ## Features
 
-Describe the core features of the project (what does it do?) in the form of a bulleted list:
+These are the core features of the Deveopment Kit:
 
-- Feature #1
-- Feature #2
-- Feature #3
+- It can be bootstrapped by downloading a single shell script and running it
+- It supports most Linux environments and MacOS
+- It runs on bare metal, on laptops, in a container or in a virtual machine
 
 ## Getting Started
 
-Provide installation instructions, general usage guidance, API examples, and build and deployment information. Assume as little prior knowledge as possible, describing everything in clear and coherent steps. Avoid words such as "just" and "simple," which can be off putting to users who do not understand the instructions.
+A bash bootstrap script must be downloaded to the target device
+and run to install the Deveopment Kit.
+This script first installs _curl_, _git_ and _salt_ on the target device and then
+clones the PavedRoad Deveopment Kit repository.
+SaltStack in master less mode is used to install the development environment.
+Thus the bootstrap script runs _salt-call_ to apply the salt states in the cloned
+repository to the target device.
+Running the bootstrap script installs the complete development environment.
 
-### Installation/Dependencies
+Information needed to perform this installation is here: [Install](/salt/INSTALL.md).
 
-How does a user get up and running with your project? What dependencies does the project have? Aim to describe these in clear and simple steps. Provide external links
+## Development Environment
 
-### Usage
+The first release provides a bare bones environment with the following:
 
-Provide clear examples of how the project may be used. For large projects with external documentation, provide a few examples and link to the full docs here.
+- Tools to enhance the usage of the bash shell
+- The vim editor and tools to enhance its usage
+- The go language along a number of relevant go packages
+- The git package and other minimally necessary software.
 
-### Build/Deployment
+Future releases will add new curated software as it makes sense.
 
-If the user will be building or deploying the project, add any useful guidance.
+### Bash
+
+The _bash_ shell, bash aliases and bash completions are integral parts
+of any reasonable development environment.
+It is assumed that bash is already installed in any Unix environment.
+However it is not assumed that bash-completion is installed and it
+will be installed if it is missing.
+Each individual completion file will only be installed if it is missing from the
+bash-completions directory.
+
+Completion of commands is especially important in a development environment
+as there are commands like _git_ that have may sub commands and options.
+In addition to completion capability for development commands two sets of aliases
+are installed.
+One set is for the go language and he other is for the git system.
+
+See the complete list of completions installed: [Bash Completions](/salt/BOM_BASH_COMPS.md).
+
+### Vim
+
+The _vim_ editor can be enhanced to become a complete IDE in its own right.
+One way this is usually accomplished is by word completion that is either based on the 
+programming language of the file being edited or statistical usage of words in the file.
+Another way is by adding development related shell commands that can be run
+inside of vim with the output going into vim buffers.
+Further these commands can be mapped to one or two keystrokes for execution.
+This allows one to work without ever leaving vim and this is what turns
+vim into an IDE.
+If the version of vim on the target device is not vim 8.0 or later then
+we install the latest version of vim.
+
+See the complete list of plugins installed: [Vim Plugins]().
+
+### Golang
+
+The _go_ language has become popular for developing microservices for the
+cloud native environment.
+Many go packages are available either as development tools or as base
+libraries that can be incorporated into development projects.
+Some of these go tools may have been developed as bash completions or vim plugins.
+This project installs go package tools as well as completions and plugins.
+
+See the complete list of packages installed: [Go Packages](/salt/BOM_GO_PACKAGES.md).
+
+### Software
+
+One of the most important software packages in a development is the _git_ system.
+Two package installers that are not fully supported by SaltStack are installed
+and used by this project, _pip3_ and _snap_.
+This project installs several systems for running cloud native applications
+such as _docker_, _microk8s_, and _multipass_.
+Other cloud native applications include _docker-compose_, _kompose_ and _skaffold_.
+
+See the complete list of software installed: [Development Software](/salt/BOM_DEV_SOFTWARE.md).
+
+## Testing
+
+- Docker containers with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
+- VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
+- MacOS 10.14 on a MacBook Pro
 
 % include 'readme-trailer.md' %}
