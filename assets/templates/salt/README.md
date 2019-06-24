@@ -1,8 +1,10 @@
 # {{project}}
 
 This project provides the tools to install a cloud native software development environment.
-The development environment supports an enhanced _bash_ shell and _vim_ editor plus
-the _go_ language along with the _git_ package and other minimally necessary software.
+The development environment supports versions of the _bash_ shell and the _vim_ editor that
+have been enhanced through completions and plugins to supprt a cloud native environmant.
+In addition the project installs the _go_ language and relevant packages along with
+the _git_ command and other minimally neede development software.
 
 ## Features
 
@@ -32,7 +34,7 @@ The first release provides a bare bones environment with the following:
 - Tools to enhance the usage of the bash shell
 - The vim editor and tools to enhance its usage
 - The go language along a number of relevant go packages
-- The git package and other minimally necessary software
+- The git command and other minimally necessary software
 
 Future releases will add new curated software as it makes sense.
 
@@ -50,7 +52,7 @@ Completion of commands is especially important in a development environment
 as there are commands like _git_ that have many sub commands and options.
 In addition to completion capability for development commands two sets of aliases
 are installed.
-One set is for the go language and the other is for the git system.
+One set is for the go language and the other is for the git command.
 
 See the complete list of completions installed: [Bash Completions]({{salt_bashcomps}}).
 
@@ -82,7 +84,7 @@ See the complete list of packages installed: [Go Packages]({{salt_gopackages}}).
 
 ### Software
 
-One of the most important software packages in a development is the _git_ system.
+One of the most important pieces of development software is the _git_ command.
 Two package installers that are not fully supported by SaltStack are installed
 and used by this project, _pip3_ and _snap_.
 This project installs several systems for running cloud native applications
