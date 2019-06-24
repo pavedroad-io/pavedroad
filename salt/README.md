@@ -1,4 +1,4 @@
-# Deveopment Kit
+# Development Kit
 
 This project provides the tools to install a cloud native software development environment.
 The development environment supports an enhanced _bash_ shell and _vim_ editor plus
@@ -6,7 +6,7 @@ the _go_ language along with the _git_ package and other minimally necessary sof
 
 ## Features
 
-These are the core features of the Deveopment Kit:
+These are the core features of the Development Kit:
 
 - It can be bootstrapped by downloading a single shell script and running it
 - It supports most Linux environments and MacOS
@@ -15,15 +15,15 @@ These are the core features of the Deveopment Kit:
 ## Getting Started
 
 A bash bootstrap script must be downloaded to the target device
-and run to install the Deveopment Kit.
+and run to install the Development Kit.
 This script first installs _curl_, _git_ and _salt_ on the target device and then
-clones the PavedRoad Deveopment Kit repository.
+clones the PavedRoad Development Kit repository.
 SaltStack in master less mode is used to install the development environment.
 Thus the bootstrap script runs _salt-call_ to apply the salt states in the cloned
 repository to the target device.
 Running the bootstrap script installs the complete development environment.
 
-Information needed to perform this installation is here: [Install](/salt/INSTALL.md).
+See the information needed to perform this bootstrap: [Install](/salt/INSTALL.md).
 
 ## Development Environment
 
@@ -32,7 +32,7 @@ The first release provides a bare bones environment with the following:
 - Tools to enhance the usage of the bash shell
 - The vim editor and tools to enhance its usage
 - The go language along a number of relevant go packages
-- The git package and other minimally necessary software.
+- The git package and other minimally necessary software
 
 Future releases will add new curated software as it makes sense.
 
@@ -47,10 +47,10 @@ Each individual completion file will only be installed if it is missing from the
 bash-completions directory.
 
 Completion of commands is especially important in a development environment
-as there are commands like _git_ that have may sub commands and options.
+as there are commands like _git_ that have many sub commands and options.
 In addition to completion capability for development commands two sets of aliases
 are installed.
-One set is for the go language and he other is for the git system.
+One set is for the go language and the other is for the git system.
 
 See the complete list of completions installed: [Bash Completions](/salt/BOM_BASH_COMPS.md).
 
@@ -62,12 +62,12 @@ programming language of the file being edited or statistical usage of words in t
 Another way is by adding development related shell commands that can be run
 inside of vim with the output going into vim buffers.
 Further these commands can be mapped to one or two keystrokes for execution.
-This allows one to work without ever leaving vim and this is what turns
+This allows one to work without ever having to leave vim and this is what turns
 vim into an IDE.
 If the version of vim on the target device is not vim 8.0 or later then
-we install the latest version of vim.
+the latest version of vim is installed.
 
-See the complete list of plugins installed: [Vim Plugins]().
+See the complete list of plugins installed: [Vim Plugins](/salt/BOM_VIM_PLUGINS.md).
 
 ### Golang
 
@@ -97,4 +97,22 @@ See the complete list of software installed: [Development Software](/salt/BOM_DE
 - VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
 - MacOS 10.14 on a MacBook Pro
 
-% include 'readme-trailer.md' %}
+## Links to More Information
+
+### Community Meeting
+This project meets on a regular basis: [TBD Community Meeting](https://zoom.us/j/7886774843).
+### Getting Help
+For contact information or to report a bug see [Support](/SUPPORT.md).
+### How to Contribute
+For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
+### Code of Conduct
+This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
+### License
+This project is licensed under the following [License](/LICENSE).
+#### Do Not Edit
+This file is generated so edits made to it will be overwritten.
+The template for this file may be edited:
+[README.md](/assets/templates/salt/README.md)
+
+For complete instructions on editing templates and processing them see:
+[Document Generation](/assets/README.md)

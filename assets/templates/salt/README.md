@@ -23,7 +23,7 @@ Thus the bootstrap script runs _salt-call_ to apply the salt states in the clone
 repository to the target device.
 Running the bootstrap script installs the complete development environment.
 
-Information needed to perform this installation is here: [Install]({{salt_install}}).
+See the information needed to perform this bootstrap: [Install]({{salt_install}}).
 
 ## Development Environment
 
@@ -32,7 +32,7 @@ The first release provides a bare bones environment with the following:
 - Tools to enhance the usage of the bash shell
 - The vim editor and tools to enhance its usage
 - The go language along a number of relevant go packages
-- The git package and other minimally necessary software.
+- The git package and other minimally necessary software
 
 Future releases will add new curated software as it makes sense.
 
@@ -47,10 +47,10 @@ Each individual completion file will only be installed if it is missing from the
 bash-completions directory.
 
 Completion of commands is especially important in a development environment
-as there are commands like _git_ that have may sub commands and options.
+as there are commands like _git_ that have many sub commands and options.
 In addition to completion capability for development commands two sets of aliases
 are installed.
-One set is for the go language and he other is for the git system.
+One set is for the go language and the other is for the git system.
 
 See the complete list of completions installed: [Bash Completions]({{salt_bashcomps}}).
 
@@ -62,10 +62,10 @@ programming language of the file being edited or statistical usage of words in t
 Another way is by adding development related shell commands that can be run
 inside of vim with the output going into vim buffers.
 Further these commands can be mapped to one or two keystrokes for execution.
-This allows one to work without ever leaving vim and this is what turns
+This allows one to work without ever having to leave vim and this is what turns
 vim into an IDE.
 If the version of vim on the target device is not vim 8.0 or later then
-we install the latest version of vim.
+the latest version of vim is installed.
 
 See the complete list of plugins installed: [Vim Plugins]({{salt_vimplugins}}).
 
@@ -97,4 +97,4 @@ See the complete list of software installed: [Development Software]({{salt_devso
 - VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
 - MacOS 10.14 on a MacBook Pro
 
-% include 'readme-trailer.md' %}
+{% include 'readme-trailer.md' %}

@@ -1,4 +1,4 @@
-# Bootstrapping the PavedRoad Deveopment Kit
+# Bootstrapping the PavedRoad Development Kit
 
 ## Bootstrap Scripts
 
