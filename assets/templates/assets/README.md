@@ -9,24 +9,24 @@ After the generated file is ready for prime time both it and the template should
 ## Getting Started
 
 If the template file and the target file already exist the process for updating a file is fairly simple.
-Edit the template file and go to the directory *kevlar-repo/assets/build* and run _make_.
+Edit the template file and go to the directory *{{repo_name}}{{assets_build}}* and run _make_.
 All target files that have had any dependencies modified will be rebuilt.
 
 ## Directory Layout
 
-    |-- kevlar-repo
+    |-- {{repo_name}}
         |-- assets
         |   |-- build
         |   |   |-- assets
         |   |   |-- github
-        |   |   |-- kevlar-repo
-        |   |   `-- salt
+        |   |   |-- {{repo_name}}
+        |   |   `-- devkit
         |   |-- images
-        |   |-- templates
+        |   `-- templates
         |       |-- assets
-        |       |-- oss-default
-        |       |-- salt
-        |-- salt
+        |       |-- -default
+        |       `-- devkit
+        `-- devkit
 
 Each set of generated markdown files in a target directory have an associated template directory where the source templates reside.
 The source template file for each generated file has the same base name.
@@ -34,13 +34,13 @@ In addition a third directory is associated with each pair of template and targe
 This third directory contains the Makefile used to generate this set of target markdown files.
 Generally the last element of all of these directory names would be the same.
 As an example here are the directories and files associated with the
-salt directory README.md file:
+devkit directory README.md file:
 
 |Directory Type|Example Files|
 |:-|:-|
-|template|kevlar-repo/assets/templates/salt/README.md|
-|target|kevlar-repo/salt/README.md|
-|makefile|kevlar-repo/assets/build/salt/Makefile|
+|template|{{repo_name}}{{assets_templates}}/devkit/README.md|
+|target|{{repo_name}}/devkit/README.md|
+|makefile|{{repo_name}}{{assets_build}}/devkit/Makefile|
 
 ### The Target Directory
 
@@ -49,22 +49,22 @@ Note that all three directories are in the same repo for the example of this REA
 
 ### The Template Directory
 
-A template directory generally resides in *kevlar-repo/assets/templates* and usually would have the same last element directory name.
+A template directory generally resides in *{{repo_name}}{{assets_templates}}* and usually would have the same last element directory name.
 However different target directories could share the same template directory so having the same name is not a requirement.
 If possible it is good practice to give them the same name.
 
 ### The Makefile Directory
 
-A makefile directory must reside in *kevlar-repo/assets/build* and usually would have the same last element directory name as the target and template directories.
+A makefile directory must reside in *{{repo_name}}{{assets_build}}* and usually would have the same last element directory name as the target and template directories.
 Running _make_ in this directory will build all of its target markdown files that are out of date.
 Note that all three directories have the same last element name of *assets* in the example of this README file.
 
 ### The Build Directory
 
-All of the makefile directories reside in *kevlar-repo/assets/build* and this directory has a top level Makefile that can start makes in all of its sub directories.
+All of the makefile directories reside in *{{repo_name}}{{assets_build}}* and this directory has a top level Makefile that can start makes in all of its sub directories.
 Running _make_ or _make all_ in this directory will build all of the target markdown files that are out of date in each target directory.
 To make only the targets on one or more sub directories run _make_ with the names of the target directories.
-In the above example for the salt directory README.md file one would run _make salt_ in the build directory.
+In the above example for the devkit directory README.md file one would run _make devkit_ in the build directory.
 
 ### Template Variables
 
@@ -75,16 +75,16 @@ Only one organization variable file exits and multiple project variable files ex
 
 |Variable Type|Directory|File Name|Applies To|
 |:-|:-|:-|:-|
-|Organization|kevlar-repo/assets/build|organization.yaml|All target directory templates
-|Project|kevlar-repo/assets/build/_target_|project.yaml|Single target directory templates
+|Organization|{{repo_name}}{{assets_build}}|organization.yaml|All target directory templates
+|Project|{{repo_name}}{{assets_build}}/_target_|project.yaml|Single target directory templates
 
 Continuing the example above here are the variable files associated with the
-salt directory README.md file:
+devkit directory README.md file:
 
 |Variable Type|Example Files|
 |:-|:-|
-|Organization|kevlar-repo/assets/build/organization.yaml|
-|Project|kevlar-repo/assets/build/salt/project.yaml|
+|Organization|{{repo_name}}{{assets_build}}/organization.yaml|
+|Project|{{repo_name}}{{assets_build}}/devkit/project.yaml|
 
 ## More to Come
 

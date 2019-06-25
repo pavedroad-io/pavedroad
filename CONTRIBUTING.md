@@ -41,7 +41,7 @@ request and branch commits.
 ## Getting Started
 
 - Fork the repository on GitHub
-- Read the [Developer Kit]() for build and test instructions
+- Read the []() for build and test instructions
 - Play with the project, submit bugs, submit patches!
 
 ## Contribution Flow
@@ -57,7 +57,7 @@ This is a rough outline of what a contributor's workflow looks like:
 
 ## Building
 
-Details about building the project can be found in [Developer Kit]().
+Details about building the project can be found in []().
 
 ## Coding Style and Linting
 
@@ -112,7 +112,7 @@ git tools.
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[CONTRIBUTING.md](/assets/templates/oss-default/CONTRIBUTING.md)
+[CONTRIBUTING.md](/assets/templates/default/CONTRIBUTING.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

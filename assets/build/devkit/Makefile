@@ -6,7 +6,7 @@
 # template_dir is the template directory with the source templates
 
 current_repo_top := $(shell git rev-parse --show-toplevel)
-target_dir:= $(current_repo_top)/salt
-template_dir := $(current_repo_top)/assets/templates/salt
+target_dir:= $(current_repo_top)/devkit
+template_dir := $(current_repo_top)/assets/templates/devkit
 
 include ../jinja2.mk

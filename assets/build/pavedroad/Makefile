@@ -7,6 +7,6 @@
 
 current_repo_top := $(shell git rev-parse --show-toplevel)
 target_dir:= $(current_repo_top)
-template_dir := $(current_repo_top)/assets/templates/oss-default
+template_dir := $(current_repo_top)/assets/templates/default
 
 include ../jinja2.mk
