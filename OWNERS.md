@@ -29,7 +29,7 @@ Feel free to loop them in as needed.
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[OWNERS.md](/assets/templates/oss-default/OWNERS.md)
+[OWNERS.md](/assets/templates/default/OWNERS.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

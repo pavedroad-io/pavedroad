@@ -9,7 +9,7 @@ to keep PavedRoad progressing and shipping exciting and valuable features.
 
 Any dates listed below and the specific issues that will ship in a given milestone
 are subject to change but should give a general idea of what we are planning.
-We use the [Roadmap Milestones](https://github.com/pavedroad-io/kevlar-repo/milestones)
+We use the [Roadmap Milestones](https://github.com/pavedroad-io/pavedroad/milestones)
 feature in Github so look there for the most up-to-date and issue plan.
 
 ## Initial Planning for PavedRoad Release 1.0
@@ -19,7 +19,7 @@ feature in Github so look there for the most up-to-date and issue plan.
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[ROADMAP.md](/assets/templates/oss-default/ROADMAP.md)
+[ROADMAP.md](/assets/templates/default/ROADMAP.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

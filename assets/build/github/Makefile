@@ -8,6 +8,6 @@
 current_repo_top := $(shell git rev-parse --show-toplevel)
 organization_dir := $(abspath $(current_repo_top)/..)
 target_dir:= $(organization_dir)/.github
-template_dir := $(organization_dir)/kevlar-repo/assets/templates/oss-default
+template_dir := $(organization_dir)/pavedroad/assets/templates/default
 
 include ../jinja2.mk

@@ -22,7 +22,7 @@ The project is an early preview. We realize that it's going to take a village to
 ## Official Releases
 
 Official releases of PavedRoad can be found here:
-[Official Releases](https://github.com/pavedroad-io/kevlar-repo/releases).
+[Official Releases](https://github.com/pavedroad-io/pavedroad/releases).
 Please note that it is **strongly recommended** that you use the official releases
 of PavedRoad, as unreleased versions from the master branch are subject to
 changes and incompatibilities that will not be supported in the official releases.
@@ -44,7 +44,7 @@ This project is licensed under the following [License](/LICENSE).
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[README.md](/assets/templates/oss-default/README.md)
+[README.md](/assets/templates/default/README.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

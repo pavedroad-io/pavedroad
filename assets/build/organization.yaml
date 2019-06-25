@@ -2,6 +2,7 @@ organization: PavedRoad
 org_long_name: PavedRoad.io
 org_github_name: pavedroad-io
 org_web_name: pavedroad.io
+repo_name: pavedroad
 comm_meeting: False
 comm_meeting_name: TBD Community Meeting
 comm_meeting_time: TBD Every other Tuesday at 9:00 AM PST
@@ -15,7 +16,7 @@ recording_name: TBD Recording
 recording_link: https://youtube.com
 documentation: False
 documentation_name: TBD Documentation
-documentation_link: https://github.com/pavedroad-io/kevlar-repo/blob/master/docs
+documentation_link: https://github.com/pavedroad-io/pavedroad/blob/master/docs
 slack: False
 slack_name: TBD Slack
 slack_org: pavedroad.io
@@ -48,21 +49,23 @@ dco_bot_link: https://github.com/apps/dco
 lint_name: golangci-lint
 lint_link: https://github.com/golangci/golangci-lint
 label_name: Issue Labels
-label_link: https://github.com/pavedroad-io/kevlar-repo/labels
+label_link: https://github.com/pavedroad-io/pavedroad/labels
 milestones_name: Roadmap Milestones
-milestones_link: https://github.com/pavedroad-io/kevlar-repo/milestones
+milestones_link: https://github.com/pavedroad-io/pavedroad/milestones
 releases_name: Official Releases
-releases_link: https://github.com/pavedroad-io/kevlar-repo/releases
+releases_link: https://github.com/pavedroad-io/pavedroad/releases
 assets_name: Document Generation
 assets_readme: /assets/README.md
-salt_name: Developer Kit
-salt_readme: /salt/README.md
-salt_install: /salt/INSTALL.md
-salt_devsoftware: /salt/BOM_DEV_SOFTWARE.md
-salt_gopackages: /salt/BOM_GO_PACKAGES.md
-salt_vimplugins: /salt/BOM_VIM_PLUGINS.md
-salt_bashcomps: /salt/BOM_BASH_COMPS.md
-templates_link: assets/templates/oss-default
+assets_build: /assets/build
+assets_templates: /assets/templates
+devkit_name: Developer Kit
+devkit_readme: /devkit/README.md
+devkit_install: /devkit/INSTALL.md
+devkit_devsoftware: /devkit/BOM_DEV_SOFTWARE.md
+devkit_gopackages: /devkit/BOM_GO_PACKAGES.md
+devkit_vimplugins: /devkit/BOM_VIM_PLUGINS.md
+devkit_bashcomps: /devkit/BOM_BASH_COMPS.md
+templates_link: assets/templates/default
 conduct: /CODE_OF_CONDUCT.md
 contrib: /CONTRIBUTING.md
 dco: /DCO

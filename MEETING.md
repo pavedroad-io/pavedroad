@@ -16,7 +16,7 @@ Anyone who wants to discuss the direction of the project, design and implementat
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The template for this file may be edited:
-[MEETING.md](/assets/templates/oss-default/MEETING.md)
+[MEETING.md](/assets/templates/default/MEETING.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)

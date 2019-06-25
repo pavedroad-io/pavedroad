@@ -25,7 +25,7 @@ Thus the bootstrap script runs _salt-call_ to apply the salt states in the clone
 repository to the target device.
 Running the bootstrap script installs the complete development environment.
 
-See the information needed to perform this bootstrap: [Install](/salt/INSTALL.md).
+See the information needed to perform this bootstrap: [Install](/devkit/INSTALL.md).
 
 ## Development Environment
 
@@ -54,7 +54,7 @@ In addition to completion capability for development commands two sets of aliase
 are installed.
 One set is for the go language and the other is for the git command.
 
-See the complete list of completions installed: [Bash Completions](/salt/BOM_BASH_COMPS.md).
+See the complete list of completions installed: [Bash Completions](/devkit/BOM_BASH_COMPS.md).
 
 ### Vim
 
@@ -69,7 +69,7 @@ vim into an IDE.
 If the version of vim on the target device is not vim 8.0 or later then
 the latest version of vim is installed.
 
-See the complete list of plugins installed: [Vim Plugins](/salt/BOM_VIM_PLUGINS.md).
+See the complete list of plugins installed: [Vim Plugins](/devkit/BOM_VIM_PLUGINS.md).
 
 ### Golang
 
@@ -80,7 +80,7 @@ libraries that can be incorporated into development projects.
 Some of these go tools may have been developed as bash completions or vim plugins.
 This project installs go package tools as well as completions and plugins.
 
-See the complete list of packages installed: [Go Packages](/salt/BOM_GO_PACKAGES.md).
+See the complete list of packages installed: [Go Packages](/devkit/BOM_GO_PACKAGES.md).
 
 ### Software
 
@@ -91,7 +91,7 @@ This project installs several systems for running cloud native applications
 such as _docker_, _microk8s_, and _multipass_.
 Other cloud native applications include _docker-compose_, _kompose_ and _skaffold_.
 
-See the complete list of software installed: [Development Software](/salt/BOM_DEV_SOFTWARE.md).
+See the complete list of software installed: [Development Software](/devkit/BOM_DEV_SOFTWARE.md).
 
 ## Testing
 
