@@ -4,7 +4,7 @@ This project provides the tools to install a cloud native software development e
 The development environment supports versions of the _bash_ shell and the _vim_ editor that
 have been enhanced through completions and plugins to supprt a cloud native environment.
 In addition the project installs the _go_ language and relevant packages along with
-the _git_ command and other minimally neede development software.
+the _git_ command and other minimally needed development software.
 
 ## Features
 
