@@ -96,8 +96,8 @@ salt-call --version
 
 # Clone salt states
 echo Cloning salt states
-tmpdir=$(mktemp -d -t kevlar-repo.XXXXXX 2>/dev/null)
-git clone ${branch} https://github.com/pavedroad-io/kevlar-repo.git ${tmpdir}
+tmpdir=$(mktemp -d -t pavedroad.XXXXXX 2>/dev/null)
+git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
 # Apply salt states
 echo Applying salt states
