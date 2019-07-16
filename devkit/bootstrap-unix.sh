@@ -102,5 +102,5 @@ git clone ${branch} https://github.com/pavedroad-io/kevlar-repo.git ${tmpdir}
 # Apply salt states
 echo Applying salt states
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
-${sudo} ${tmpdir}/salt/apply-state.sh ${debug}
+${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
