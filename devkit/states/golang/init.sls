@@ -169,8 +169,11 @@ golang:
 {{ key }}:
   cmd.run:
     - name:     {{ golang_exec }}/go get {{ go_tools[key] }}
+      {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
+      {% if not grains.os_family == 'MacOS' %}
     - runas:    {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
+      {% endif %}
     - unless:   test -x {{ golang_path }}/bin/{{ key }}
     {% endif %}
   {% endfor %}
@@ -200,8 +203,11 @@ golang-bash-completion:
   {% else %}
     - name:     {{ golang_path }}/bin/gocomplete --install -y
   {% endif %}
+  {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
+  {% if not grains.os_family == 'MacOS' %}
     - runas:    {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
+  {% endif %}
   {# gocomplete returns exit code 3 if already installed #}
   {# Suse has version 2018.3.0 of salt without success_retcodes #}
   {% if grains.os_family == 'Suse' %}
@@ -233,6 +239,9 @@ golang-test:
                 cd {{ golang_path}}/src/hello
                 {{ golang_exec }}/go build
                 ./hello
+  {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
+  {% if not grains.os_family == 'MacOS' %}
     - runas:    {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
+  {% endif %}
 {% endif %}

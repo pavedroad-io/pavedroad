@@ -98,8 +98,11 @@ vim-plugins:
     {% else %}
     - name:     {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
     {% endif %}
+    {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
+    {% if not grains.os_family == 'MacOS' %}
     - runas:    {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
+    {% endif %}
     - timeout:  120
     - use_vt:   True
     - require:
