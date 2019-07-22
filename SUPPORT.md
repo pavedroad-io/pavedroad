@@ -43,7 +43,7 @@ and administration, see our [TBD Documentation](https://github.com/pavedroad-io/
 
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
-The template for this file may be edited:
+The source template may be edited:
 [SUPPORT.md](/assets/templates/default/SUPPORT.md)
 
 For complete instructions on editing templates and processing them see:

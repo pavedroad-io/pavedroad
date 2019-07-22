@@ -2,11 +2,21 @@
 
 ## Bootstrap Scripts
 
-In order to bootstrap the {{organization}} development environment
-run one of the following scripts:
+In order to bootstrap the {{organization}} {{project}}
+download and run one of the following scripts:
 
     - bootstrap-unix.sh
     - bootstrap-macos.sh
+
+## sudo Permissions
+
+In order to run bootstrap-unix.sh the user must have sudo set up with the correct permission
+set up to install packages.
+The script checks the sudo permission for the user and prompts for a password if necessary.
+
+In order to run bootstrap-macos.sh the user must have sudo set up with the correct permission
+set up to create directories in /usr/local and to change ownership of directories in /usr/local.
+The script prompts for a sudo password if necessary.
 
 ## Unix Bootstrap
 
@@ -17,6 +27,11 @@ The unix bootstrap script does the following:
 3) uses salt bootstrap script to install SaltStack
 4) uses git to download the salt states
 5) runs apply-state.sh to install the {{organization}} development environment
+
+The command to download and run the bootstrap script for Unix:
+
+curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-unix.sh |\
+/bin/bash
 
 ## MacOS Bootstrap
 
@@ -33,5 +48,10 @@ The MacOS bootstrap script does the following:
 4) uses Homebrew to install SaltStack
 5) uses git to download the salt states
 6) runs apply-state.sh to install the {{organization}} development environment
+
+The command to download and run the bootstrap script for MacOS:
+
+curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh |\
+/bin/bash
 
 {% include 'do-not-edit.md' %}

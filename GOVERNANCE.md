@@ -134,7 +134,7 @@ require only a simple majority.
 
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
-The template for this file may be edited:
+The source template may be edited:
 [GOVERNANCE.md](/assets/templates/default/GOVERNANCE.md)
 
 For complete instructions on editing templates and processing them see:

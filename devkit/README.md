@@ -2,9 +2,9 @@
 
 This project provides the tools to install a cloud native software development environment.
 The development environment supports versions of the _bash_ shell and the _vim_ editor that
-have been enhanced through completions and plugins to supprt a cloud native environmant.
+have been enhanced through completions and plugins to support a cloud native environment.
 In addition the project installs the _go_ language and relevant packages along with
-the _git_ command and other minimally neede development software.
+the _git_ command and other minimally needed development software.
 
 ## Features
 
@@ -113,7 +113,7 @@ This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
 This project is licensed under the following [License](/LICENSE).
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
-The template for this file may be edited:
+The source template may be edited:
 [README.md](/assets/templates/salt/README.md)
 
 For complete instructions on editing templates and processing them see:
