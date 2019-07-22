@@ -42,8 +42,7 @@ function error_trap
 }
 trap 'error_trap' ERR
 
-# export PYTHONWARNINGS="ignore::DeprecationWarning"
-ENV PYTHONWARNINGS="ignore::DeprecationWarning"
+export PYTHONWARNINGS="ignore::DeprecationWarning"
 
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 
