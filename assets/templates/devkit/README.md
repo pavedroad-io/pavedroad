@@ -20,7 +20,7 @@ A bash bootstrap script must be downloaded to the target device
 and run to install the {{project}}.
 This script first installs _curl_, _git_ and _salt_ on the target device and then
 clones the {{organization}} {{project}} repository.
-SaltStack in master less mode is used to install the development environment.
+SaltStack (in masterless mode) is used to install the development environment.
 Thus the bootstrap script runs _salt-call_ to apply the salt states in the cloned
 repository to the target device.
 Running the bootstrap script installs the complete development environment.
