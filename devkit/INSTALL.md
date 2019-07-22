@@ -30,7 +30,7 @@ The unix bootstrap script does the following:
 
 The command to download and run the bootstrap script for Unix:
 
-curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-unix.sh |\
+curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-unix.sh |
 /bin/bash
 
 ## MacOS Bootstrap
@@ -50,7 +50,7 @@ The MacOS bootstrap script does the following:
 
 The command to download and run the bootstrap script for MacOS:
 
-curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh |\
+curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh |
 /bin/bash
 
 #### Do Not Edit
