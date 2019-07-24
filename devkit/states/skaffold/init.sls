@@ -5,21 +5,25 @@
 
 {% if installs and 'skaffold' in installs %}
   {% set skaffold_pkg_name = 'skaffold' %}
-  {% set skaffold_alt_install = False %}
-  {% set skaffold_snap_install = True %}
-  {% set skaffold_path = '/snap/bin/' %}
+  {% set skaffold_binary_install = True %}
+  {% set skaffold_snap_install = False %}
+  {% set skaffold_path = '/usr/local/bin/' %}
 
-  {% if grains.docker %}
-    {% set skaffold_alt_install = True %}
-    {% set skaffold_snap_install = False %}
-  {% elif grains.os_family == 'MacOS' %}
-    {% set skaffold_snap_install = False %}
-  {% elif grains.os_family == 'Windows' %}
-    {% set skaffold_snap_install = False %}
-  {% endif %}
-
-  {% if not skaffold_snap_install %}
-    {% set skaffold_path = '/usr/local/bin/' %}
+  {% if skaffold_binary_install %}
+    {% if grains.cfg_skaffold.skaffold.version is defined %}
+      {% set version = grains.cfg_skaffold.skaffold.version %}
+    {% else %}
+      {% set version = 'latest' %}
+    {% endif %}
+    {% set skaffold_prefix = 'https://storage.googleapis.com/skaffold/releases' %}
+    {% if grains.os_family == 'MacOS' %}
+      {% set skaffold_version = version + '/skaffold-darwin-amd64' %}
+    {% else %}
+      {% set skaffold_version = version + '/skaffold-linux-amd64' %}
+    {% endif %}
+    {% set skaffold_url = skaffold_prefix + '/' + skaffold_version %}
+  {% elif skaffold_snap_install %}
+    {% set skaffold_path = '/snap/bin/' %}
   {% endif %}
 
   {% if skaffold_snap_install or completion and 'bash' in completion %}
@@ -33,14 +37,7 @@ include:
   {% endif %}
 
 skaffold:
-  {% if skaffold_alt_install %}
-    {% set version = 'latest' %}
-    {% if grains.cfg_skaffold.skaffold.version is defined %}
-      {% set version = grains.cfg_skaffold.skaffold.version %}
-    {% endif %}
-    {% set skaffold_prefix = 'https://storage.googleapis.com/skaffold/releases' %}
-    {% set skaffold_version = version + '/skaffold-linux-amd64' %}
-    {% set skaffold_url = skaffold_prefix + '/' + skaffold_version %}
+  {% if skaffold_binary_install %}
   file.managed:
     - name:     {{ skaffold_path }}skaffold
     - source:   {{ skaffold_url }}
@@ -64,11 +61,15 @@ skaffold:
   {% endif %}
 
 # brew install skaffold also installs bash completion for skaffold
+# so we do not overwrite completion file
 
   {% if completion and 'bash' in completion %}
-    {% if not grains.os_family == 'MacOS' %}
+    {% if grains.os_family == 'MacOS' %}
+      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
+    {% else %}
       {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
-      {% set bash_comp_file = bash_comp_dir + 'skaffold' %}
+    {% endif %}
+    {% set bash_comp_file = bash_comp_dir + 'skaffold' %}
 skaffold-bash-completion:
   cmd.run:
     - name:     {{ skaffold_path }}skaffold completion bash > {{ bash_comp_file }}
@@ -76,7 +77,6 @@ skaffold-bash-completion:
     - onlyif:   test -x {{ skaffold_path }}skaffold
     - require:
       - sls:    bash
-    {% endif %}
   {% endif %}
 
   {% if grains.cfg_skaffold.debug.enable %}
