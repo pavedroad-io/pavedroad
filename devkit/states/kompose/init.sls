@@ -5,17 +5,18 @@
 
 {% if installs and 'kompose' in installs %}
   {% set kompose_pkg_name = 'kompose' %}
-  {% set kompose_linux_install = True %}
+  {% set kompose_binary_install = True %}
   {% set kompose_path = '/usr/local/bin/' %}
 
-  {% if grains.os_family == 'MacOS' %}
-    {% set kompose_linux_install = False %}
-  {% elif grains.os_family == 'Windows' %}
-    {% set kompose_linux_install = False %}
-  {% endif %}
-
-  {% if not kompose_linux_install %}
-    {% set kompose_path = '' %}
+  {% if kompose_binary_install %}
+    {% set kompose_prefix = 'https://github.com/kubernetes/kompose/releases/download/' %}
+    {% set version = 'v1.18.0' %}
+    {% if grains.os_family == 'MacOS' %}
+      {% set kompose_version = version + '/kompose-darwin-amd64' %}
+    {% else %}
+      {% set kompose_version = version + '/kompose-linux-amd64' %}
+    {% endif %}
+    {% set kompose_url = kompose_prefix + '/' + kompose_version %}
   {% endif %}
 
   {% if completion and 'bash' in completion %}
@@ -24,14 +25,7 @@ include:
   {% endif %}
 
 kompose:
-  {% if kompose_linux_install %}
-    {% set version = 'v1.18.0' %}
-    {% if grains.cfg_kompose.kompose.linux_version is defined %}
-      {% set version = grains.cfg_kompose.kompose.linux_version %}
-    {% endif %}
-    {% set kompose_prefix = 'https://github.com/kubernetes/kompose/releases/download/' %}
-    {% set kompose_version = version + '/kompose-linux-amd64' %}
-    {% set kompose_url = kompose_prefix + '/' + kompose_version %}
+  {% if kompose_binary_install %}
   file.managed:
     - name:     {{ kompose_path }}kompose
     - source:   {{ kompose_url }}
@@ -49,11 +43,15 @@ kompose:
   {% endif %}
 
 # brew install kompose also installs bash completion for kompose
+# so we do not overwrite completion file
 
   {% if completion and 'bash' in completion %}
-    {% if not grains.os_family == 'MacOS' %}
+    {% if grains.os_family == 'MacOS' %}
+      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
+    {% else %}
       {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
-      {% set bash_comp_file = bash_comp_dir + 'kompose' %}
+    {% endif %}
+    {% set bash_comp_file = bash_comp_dir + 'kompose' %}
 kompose-bash-completion:
   cmd.run:
     - name:     {{ kompose_path }}kompose completion bash > {{ bash_comp_file }}
@@ -61,7 +59,6 @@ kompose-bash-completion:
     - onlyif:   test -x {{ kompose_path }}kompose
     - require:
       - sls:    bash
-    {% endif %}
   {% endif %}
 
   {% if grains.cfg_kompose.debug.enable %}
