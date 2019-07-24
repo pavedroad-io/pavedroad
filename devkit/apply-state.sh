@@ -92,7 +92,7 @@ salt-call \
     --config-dir "${saltdir}/config/" \
     --file-root  "${saltdir}/states/" \
     ${loglevel} ${output} ${verbose} \
-    state.highstate ${dryrun}
+    state.highstate ${dryrun} 2>/dev/null
 
 if [ ${showgrains} ]; then
     salt-call \

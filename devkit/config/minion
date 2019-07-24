@@ -1,6 +1,6 @@
 file_client: local
 root_dir: pr-root
-# log_level: info
+log_level: info
 grains:
   roles:
     - pr-golang
