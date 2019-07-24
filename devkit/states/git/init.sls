@@ -12,6 +12,7 @@ include:
 {# Should not be needed as bootstrap installs git #}
 git:
   pkg.installed:
+    - unless:   command -v git
     - name:     git
   {% if grains.cfg_git.git.version is defined %}
     - version:  {{ grains.cfg_git.git.version }}
