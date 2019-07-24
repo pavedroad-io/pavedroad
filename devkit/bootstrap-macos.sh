@@ -140,16 +140,21 @@ if command -v salt-call >& /dev/null; then
 else
     echo Installing SaltStack
     brew install saltstack
+    echo SaltStack installation complete
 fi
 salt-call --version
 
 # Clone salt states
-echo Cloning salt states
+echo Cloning the devlopment kit repository
 tmpdir=$(mktemp -d -t pavedroad 2>/dev/null)
 git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
 # Apply salt states
-echo Applying salt states
+echo Installing the devlopment kit
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
+echo Development kit installation complete
+
+echo Opening the getting started page for the devlopment kit
+open http://www.pavedroad.io/Tooling.html
