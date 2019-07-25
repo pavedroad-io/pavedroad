@@ -111,7 +111,7 @@ git tools.
 
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
-The template for this file may be edited:
+The source template may be edited:
 [CONTRIBUTING.md](/assets/templates/default/CONTRIBUTING.md)
 
 For complete instructions on editing templates and processing them see:

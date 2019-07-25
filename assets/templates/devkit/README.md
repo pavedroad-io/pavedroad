@@ -2,9 +2,9 @@
 
 This project provides the tools to install a cloud native software development environment.
 The development environment supports versions of the _bash_ shell and the _vim_ editor that
-have been enhanced through completions and plugins to supprt a cloud native environmant.
+have been enhanced through completions and plugins to support a cloud native environment.
 In addition the project installs the _go_ language and relevant packages along with
-the _git_ command and other minimally neede development software.
+the _git_ command and other minimally needed development software.
 
 ## Features
 
@@ -20,7 +20,7 @@ A bash bootstrap script must be downloaded to the target device
 and run to install the {{project}}.
 This script first installs _curl_, _git_ and _salt_ on the target device and then
 clones the {{organization}} {{project}} repository.
-SaltStack in master less mode is used to install the development environment.
+SaltStack (in masterless mode) is used to install the development environment.
 Thus the bootstrap script runs _salt-call_ to apply the salt states in the cloned
 repository to the target device.
 Running the bootstrap script installs the complete development environment.
@@ -89,7 +89,7 @@ Two package installers that are not fully supported by SaltStack are installed
 and used by this project, _pip3_ and _snap_.
 This project installs several systems for running cloud native applications
 such as _docker_, _microk8s_, and _multipass_.
-Other cloud native applications include _docker-compose_, _kompose_ and _skaffold_.
+Other cloud native applications include _docker-compose_, _kompose_, _kubectl_, and _skaffold_.
 
 See the complete list of software installed: [Development Software]({{devkit_devsoftware}}).
 

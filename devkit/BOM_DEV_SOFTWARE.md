@@ -7,6 +7,7 @@
 | go             | https://golang.org                        |
 | graphviz       | https://www.graphviz.org                  |
 | kompose        | https://kompose.io                        |
+| kubectl        | https://kubernetes.io                     |
 | multipass      | https://github.com/CanonicalLtd/multipass |
 | pip3           | https://pip.pypa.io/en/stable/            |
 | skaffold       | https://skaffold.dev                      |
