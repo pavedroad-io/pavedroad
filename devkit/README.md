@@ -89,7 +89,7 @@ Two package installers that are not fully supported by SaltStack are installed
 and used by this project, _pip3_ and _snap_.
 This project installs several systems for running cloud native applications
 such as _docker_, _microk8s_, and _multipass_.
-Other cloud native applications include _docker-compose_, _kompose_ and _skaffold_.
+Other cloud native applications include _docker-compose_, _kompose_, _kubectl_, and _skaffold_.
 
 See the complete list of software installed: [Development Software](/devkit/BOM_DEV_SOFTWARE.md).
 

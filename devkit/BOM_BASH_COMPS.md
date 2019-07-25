@@ -7,6 +7,7 @@
 | go              | https://github.com/posener/complete                                           | website  | website  |
 | graphviz        | No                                                                            | No       | No       |
 | kompose         | kompose completion bash > kompose-completion.bash                             | command  | command  |
+| kubectl         | kubectl completion bash > kubectl-completion.bash                           | command  | command  |
 | microks8        | microk8s.istioctl, microk8s.kubectl                                           | snap     | No       |
 | multipass       | https://github.com/CanonicalLtd/multipass/tree/master/completions/bash        | snap     | website  |
 | pip3 (pip)      | No                                                                            | No       | homebrew |
