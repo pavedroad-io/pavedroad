@@ -74,7 +74,7 @@ grains[docker]="${docker}"
 grains[gopath]="${gopath}"
 grains[goroot]="${goroot}"
 
-echo Configuring grains for the development kit salt states.
+echo Configuring grains for the development kit salt states
 
 for key in "${!grains[@]}"; do
     salt-call \
@@ -82,16 +82,16 @@ for key in "${!grains[@]}"; do
         grains.setval ${key} "${grains[${key}]}"
 done
 
-echo
-echo Applying salt states for the developemt kit now.
-echo Please be patient as this process may take 5 to 10 minutes.
+echo Applying salt states for the developemt kit now
+echo Please be patient as this process may take 5 to 10 minutes
 echo To see progress: tail -f pr-root/var/log/salt/minion
+echo Running in masterless mode: Ignore [ERROR   ] Got insufficient arguments ...
 
 salt-call \
     --config-dir "${saltdir}/config/" \
     --file-root  "${saltdir}/states/" \
     ${loglevel} ${output} ${verbose} \
-    state.highstate ${dryrun}
+    state.highstate ${dryrun} 2>/dev/null
 
 if [ ${showgrains} ]; then
     salt-call \

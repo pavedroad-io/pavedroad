@@ -17,6 +17,7 @@ grains:
     - golang
     - graphviz
     - kompose
+    - kubectl
     - microk8s
     - multipass
     - skaffold
@@ -132,6 +133,15 @@ grains:
     installs:
       - kompose
     kompose:
+      version: latest
+    completion:
+      - bash
+    debug:
+      enable: True
+  cfg_kubectl:
+    installs:
+      - kubectl
+    kubectl:
       version: latest
     completion:
       - bash

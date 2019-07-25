@@ -102,24 +102,32 @@ else
 fi
 
 # Install developer tools if needed, newer versions of homebrew already do this
-if xcode-select --version >& /dev/null; then
+if xcode-select -p >& /dev/null; then
     echo Command Line Tools are installed
 else
     sw_vers=$(sw_vers -productVersion | awk -F "." '{print $2}')
     if [[ "${sw_vers}" -ge 9 ]]; then
+        # Temporary file causes softwareupdate to list the Command Line Tools
+        clt_file="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+        touch "${clt_file}"
         if clt_update=$(softwareupdate -l | grep "\*.*Command Line"); then
             echo Installing update to Command Line Tools
-            clt_name=$(echo ${clt_update} | head -n 1 | awk -F"*" '{print $2}')
-            clt_pkg=$(echo ${clt_name} | sed -e 's/^ *//' | tr -d '\n')
-            clt_file="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
-            touch ${clt_file}
-            softwareupdate --install --verbose "${clt_pkg}"
-            rm -f ${clt_file}
+            clt_pkg=$(echo "${clt_update}" | head -n 1 | awk -F"* " '{print $2}')
+            if ! softwareupdate --install --verbose "${clt_pkg}" ; then
+                echo Install of Command Line Tools failed
+                echo Try running command "xcode-select --install" before running this script
+                exit
+            fi
         else
             echo Update to Command Line Tools not found
+            echo Try running command "xcode-select --install" before running this script
+            exit
         fi
+        rm -f "${clt_file}"
     else
-        echo Not updating Command Line Tools for MacOS prior to version 10.9
+        echo Not installing Command Line Tools for MacOS prior to version 10.9
+        echo Try running command "xcode-select --install" before running this script
+        exit
     fi
 fi
 
@@ -132,16 +140,21 @@ if command -v salt-call >& /dev/null; then
 else
     echo Installing SaltStack
     brew install saltstack
+    echo SaltStack installation complete
 fi
 salt-call --version
 
 # Clone salt states
-echo Cloning salt states
-tmpdir=$(mktemp -d -t kevlar-repo 2>/dev/null)
-git clone ${branch} https://github.com/pavedroad-io/kevlar-repo.git ${tmpdir}
+echo Cloning the devlopment kit repository
+tmpdir=$(mktemp -d -t pavedroad 2>/dev/null)
+git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
 # Apply salt states
-echo Applying salt states
+echo Installing the devlopment kit
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
-${tmpdir}/salt/apply-state.sh ${debug}
+${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
+echo Development kit installation complete
+
+echo Opening the getting started page for the devlopment kit
+open http://www.pavedroad.io/Tooling.html
