@@ -56,7 +56,7 @@ curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/b
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The source template may be edited:
-[INSTALL.md](/assets/templates/salt/INSTALL.md)
+[INSTALL.md](/assets/templates/devkit/INSTALL.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)
