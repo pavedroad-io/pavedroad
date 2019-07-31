@@ -38,7 +38,7 @@ template directory where the source templates reside.
 The source template file for each generated file has the same base name.
 In addition a third directory is associated with each pair of template and target directories.
 This third directory contains the Makefile used to generate this set of target markdown files.
-Generally the last element of all of these directory names would be the same.
+Generally the last path element of all of these directory names would be the same.
 As an example here are the directories and files associated with the
 devkit directory README.md file:
 
@@ -57,24 +57,33 @@ Note that all three directories are in the same repo for the example of this REA
 ### The Template Directory
 
 A template directory generally resides in *{{repo_name}}{{assets_templates}}* and usually
-would have the same last element directory name.
-However different target directories could share the same template directory so having
-the same name is not a requirement.
-If possible it is good practice to give them the same name.
+would have the same last path element directory name.
+However, different target directories could share the same template directory so
+both of these directories are not required to have the same name.
+If all of the template files in a template directory are used to generate
+markdown files in one specific target directory
+it is good practice to give the directories the same name.
 
 ### The Makefile Directory
 
 A makefile directory must reside in *{{repo_name}}{{assets_build}}* and usually would have
-the same last element directory name as the target and template directories.
+the same last path element directory name as the target and template directories.
 Running _make_ in this directory will build all of its target markdown files that are out of date.
-Note that all three directories have the same last element name of *assets* in
+Note that all three directories have the same last path element name of *assets* in
 the example of this README file.
 
-The required makefile directory files are _Makefile_ and _project.yaml_.
-The makefile must have the two directory variables set: *target_dir* and *template_dir*
+The required files in a makefile directory are _Makefile_ and _project.yaml_.
+The Makefile must have the two directory variables set: *target_dir* and *template_dir*
 in order to find the target and template markdown files.
 The _project.yaml_ file must contain any project specific jinja variable settings.
 All other files in the directory are dependency files created by running _make_.
+
+Generally all of the template files in a template directory are used to generate
+markdown files in one specific target directory.
+However, different target directories could share the same template directory.
+Each Makefile determines a specific target directory and a specific template directory.
+This allows template files to be used to generate multiple target files using
+different values for the jinja variables.
 
 ### The Build Directory
 
@@ -114,9 +123,9 @@ and the associated template and makefile directories.
 To add a mew markdown file it is as simple as adding two new files.
 An empty target file must be created in the target directory and the source
 template file with the same name must be created in the template directory.
-This file name must have the _md_ extension as the makefile attempts to build
+This file name must have the _md_ extension as the Makefile attempts to build
 all of the markdown files in the target directory based on the _md_ extension.
-No changes need to be made to any make files.
+No changes need to be made to any Makefile.
 
 ## Adding New Markdown Directories
 
@@ -129,8 +138,8 @@ The simplest way to do this is to copy these two files from the _devkit_ directo
 and edit them.
 The _project.yaml_ file must contain any project specific jinja variable settings.
 See the makefile section above for the descriptions of these files.
-No changes need to be made to the makefile in the build directory.
-The makefile in the build directory runs the make files in all sub directories of
+No changes need to be made to the Makefile in the build directory.
+The Makefile in the build directory runs the Makefile in all sub directories of
 the build directory.
 
 {% include 'readme-trailer.md' %}
