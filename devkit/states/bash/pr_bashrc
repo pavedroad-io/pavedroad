@@ -55,7 +55,7 @@ EOF
 
 alias gad="git add"
 alias gbi="git bisect"
-alias gbir="git branch"
+alias gbr="git branch"
 alias gch="git checkout"
 alias gcl="git clone"
 alias gco="git commit"
