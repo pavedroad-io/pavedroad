@@ -4,7 +4,7 @@ template_path: https://github.com/pavedroad-io/pavedroad/master/blob/assets/temp
 clone_link: https://github.com/pavedroad-io/.githib.git
 pull_link: https://github.com/pavedroad-io/.github/pulls
 assets_readme: https://github.com/pavedroad-io/pavedroad/master/blob/assets/README.md
-salt_readme: https://github.com/pavedroad-io/pavedroad/master/blob/salt/README.md
+devkit_readme: https://github.com/pavedroad-io/pavedroad/master/blob/devkit/README.md
 dco: https://github.com/pavedroad-io/pavedroad/master/blob/DCO
 license: https://github.com/pavedroad-io/pavedroad/master/blob/LICENSE
 meeting: https://github.com/pavedroad-io/pavedroad/master/blob/MEETING.md

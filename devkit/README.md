@@ -114,7 +114,7 @@ This project is licensed under the following [License](/LICENSE).
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
 The source template may be edited:
-[README.md](/assets/templates/salt/README.md)
+[README.md](/assets/templates/devkit/README.md)
 
 For complete instructions on editing templates and processing them see:
 [Document Generation](/assets/README.md)
