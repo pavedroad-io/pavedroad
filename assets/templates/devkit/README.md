@@ -89,9 +89,21 @@ Two package installers that are not fully supported by SaltStack are installed
 and used by this project, _pip3_ and _snap_.
 This project installs several systems for running cloud native applications
 such as _docker_, _microk8s_, and _multipass_.
-Other cloud native applications include _docker-compose_, _kompose_, _kubectl_, and _skaffold_.
+Other cloud native applications include _docker-compose_, _kompose_, _kubebuilder_,
+_kubectl_, _kustomize_, and _skaffold_.
 
 See the complete list of software installed: [Development Software]({{devkit_devsoftware}}).
+
+## Swagger
+
+In addition to the cloud native software the {{project}} includes the ability to create
+Swagger 2.0 REST API specifications and to generate golang client and server code.
+This is accomplished by installing the go package _go-swagger_ and the 
+UI application _pretty-swag_.
+The _go-swagger_ package is an implementation of Swagger 2.0 that is specific to golang
+and is more versatile than _swagger-codegen_.
+The _pretty-swag_ application generates HTML from Swagger specifications and has
+extensive configuration ability to provide customized output.
 
 ## Testing
 

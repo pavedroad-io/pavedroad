@@ -89,9 +89,21 @@
     - match: compound
     - kompose
 
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:kubebuilder':
+    - match: compound
+    - kubebuilder
+
   'G@saltenv:dev and G@roles:pr-golang and G@tops:kubectl':
     - match: compound
     - kubectl
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:kustomize':
+    - match: compound
+    - kustomize
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:pretty_swag':
+    - match: compound
+    - pretty-swag
 
   'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
     - match: compound

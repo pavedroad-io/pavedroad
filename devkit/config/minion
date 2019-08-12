@@ -17,9 +17,12 @@ grains:
     - golang
     - graphviz
     - kompose
+    - kubebuilder
     - kubectl
+    - kustomize
     - microk8s
     - multipass
+    - pretty_swag
     - skaffold
     - vim
   cfg_base:
@@ -118,6 +121,7 @@ grains:
       - keyify
       - motion
       - iferr
+      - swagger
     golang:
       version: latest
     completion:
@@ -133,9 +137,18 @@ grains:
     installs:
       - kompose
     kompose:
-      version: latest
+      version: 1.18.0
     completion:
       - bash
+    debug:
+      enable: True
+  cfg_kubebuilder:
+    installs:
+      - kubebuilder
+    kubebuilder:
+      version: 1.0.8
+    completion:
+      - None
     debug:
       enable: True
   cfg_kubectl:
@@ -145,6 +158,15 @@ grains:
       version: latest
     completion:
       - bash
+    debug:
+      enable: True
+  cfg_kustomize:
+    installs:
+      - kustomize
+    kustomize:
+      version: 3.1.0
+    completion:
+      - None
     debug:
       enable: True
   cfg_microk8s:
@@ -173,6 +195,15 @@ grains:
       version: latest
     completion:
       - bash
+    debug:
+      enable: True
+  cfg_pretty_swag:
+    installs:
+      - pretty_swag
+    pretty_swag:
+      version: latest
+    completion:
+      - None
     debug:
       enable: True
   cfg_snapd:

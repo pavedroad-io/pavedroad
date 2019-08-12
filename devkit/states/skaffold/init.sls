@@ -15,13 +15,13 @@
     {% else %}
       {% set version = 'latest' %}
     {% endif %}
-    {% set skaffold_prefix = 'https://storage.googleapis.com/skaffold/releases' %}
+    {% set skaffold_prefix = 'https://storage.googleapis.com/skaffold/releases/' %}
     {% if grains.os_family == 'MacOS' %}
       {% set skaffold_version = version + '/skaffold-darwin-amd64' %}
     {% else %}
       {% set skaffold_version = version + '/skaffold-linux-amd64' %}
     {% endif %}
-    {% set skaffold_url = skaffold_prefix + '/' + skaffold_version %}
+    {% set skaffold_url = skaffold_prefix + skaffold_version %}
   {% elif skaffold_snap_install %}
     {% set skaffold_path = '/snap/bin/' %}
   {% endif %}
