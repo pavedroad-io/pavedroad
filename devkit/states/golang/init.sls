@@ -137,7 +137,6 @@ golang:
     {% endif %}
   {% endif %}
 
-
   {% load_yaml as go_tools %}
   godep:        github.com/tools/godep
   dlv:          github.com/go-delve/delve/cmd/dlv
@@ -162,6 +161,7 @@ golang:
   keyify:       honnef.co/go/tools/cmd/keyify
   motion:       github.com/fatih/motion
   iferr:        github.com/koron/iferr
+  swagger:      github.com/go-swagger/go-swagger/cmd/swagger
   {% endload %}
 
   {% for key in go_tools %}

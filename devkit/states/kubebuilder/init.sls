@@ -5,16 +5,12 @@
 
 {% if installs and 'kubebuilder' in installs %}
   {% set kubebuilder_pkg_name = 'kubebuilder' %}
-  {% set kubebuilder_directory_install = True %}
-  {% if grains.os_family == 'MacOS' %}
-    {% set kubebuilder_directory = '/usr/local/opt' %}
-  {% else %}
-    {% set kubebuilder_directory = '/usr/local' %}
-  {% endif %}
-  {% set kubebuilder_path = kubebuilder_directory + '/' + kubebuilder_pkg_name + '/bin/' %}
+  {% set kubebuilder_binary_install = True %}
+  {% set kubebuilder_path = '/usr/local/bin/' %}
+  {% set kubebuilder_tmp_dir = '/tmp' %}
   {% set kubebuilder_testdir = grains.gopath + '/src/testkubebuilder' %}
 
-  {% if kubebuilder_directory_install %}
+  {% if kubebuilder_binary_install %}
     {% if grains.cfg_kubebuilder.kubebuilder.version is defined %}
       {% set version = grains.cfg_kubebuilder.kubebuilder.version %}
     {% else %}
@@ -23,35 +19,34 @@
     {% set kubebuilder_prefix = 'https://go.kubebuilder.io/dl/' %}
     {% if grains.os_family == 'MacOS' %}
       {% set kubebuilder_version = version + '/darwin/amd64' %}
-      {% set kubebuilder_file = 'kubebuilder_' + version + '_darwin_amd64' %}
+      {% set kubebuilder_tar_file = 'kubebuilder_' + version + '_darwin_amd64' %}
     {% else %}
       {% set kubebuilder_version = version + '/linux/amd64' %}
-      {% set kubebuilder_file = 'kubebuilder_' + version + '_linux_amd64' %}
+      {% set kubebuilder_tar_file = 'kubebuilder_' + version + '_linux_amd64' %}
     {% endif %}
+    {% set kubebuilder_tmp_path = kubebuilder_tmp_dir + '/' + kubebuilder_tar_file + '/bin/' %}
     {% set kubebuilder_url = kubebuilder_prefix + kubebuilder_version %}
   {% endif %}
 
-  {# Need bash installed so kubebuilder path can be added to .bashrc #}
+  {% if completion and 'bash' in completion %}
 include:
   - bash
+  {% endif %}
 
 kubebuilder:
-  {% if kubebuilder_directory_install %}
+  {# tar file contains 4 binaries in /bin, only copy kubebuilder #}
+  {% if kubebuilder_binary_install %}
     archive.extracted:
       - unless:         command -v {{ kubebuilder_pkg_name }}
-      - name:           {{ kubebuilder_directory }}
+      - name:           {{ kubebuilder_tmp_dir }}
       - source:         {{ kubebuilder_url }}
       - tar_options:    z
       - archive_format: tar
       - skip_verify:    True
-    cmd.run:
-      - unless:   test -x {{ kubebuilder_directory }}/{{ kubebuilder_pkg_name}} 
-      - name:     cd {{ kubebuilder_directory }}; mv {{ kubebuilder_file}} {{ kubebuilder_pkg_name}} 
-    file.append:
-      - name:     {{ grains.homedir }}/.bashrc
-      - text:     export PATH=$PATH:{{ kubebuilder_path }}
-      - require:
-        - sls:    bash
+    file.managed:
+      - name:   {{ kubebuilder_path }}{{ kubebuilder_pkg_name}} 
+      - source: {{ kubebuilder_tmp_path }}{{ kubebuilder_pkg_name }}
+      - mode:   755
   {% else %}
   pkg.installed:
     - unless:   command -v {{ kubebuilder_pkg_name }}
