@@ -82,6 +82,7 @@ for key in "${!grains[@]}"; do
         grains.setval ${key} "${grains[${key}]}"
 done
 
+echo
 echo Applying salt states for the developemt kit now
 echo Please be patient as this process may take 5 to 10 minutes
 echo To see progress: tail -f pr-root/var/log/salt/minion
