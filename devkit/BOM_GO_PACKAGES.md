@@ -23,3 +23,4 @@
 | keyify        | https://honnef.co/go/tools/cmd/keyify      |
 | motion        | https://github.com/fatih/motion            |
 | iferr         | https://github.com/koron/iferr             |
+| swagger       | https://github.com/go-swagger/go-swagger   |
