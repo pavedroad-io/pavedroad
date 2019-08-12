@@ -10,14 +10,14 @@
   {% set kubectl_path = '/usr/local/bin/' %}
 
   {% if kubectl_binary_install %}
-    {% set kubectl_prefix = 'https://storage.googleapis.com/kubernetes-release/release' %}
+    {% set kubectl_prefix = 'https://storage.googleapis.com/kubernetes-release/release/' %}
     {% set version = salt.cmd.run('curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt') %}
     {% if grains.os_family == 'MacOS' %}
       {% set kubectl_version = version + '/bin/darwin/amd64/kubectl' %}
     {% else %}
       {% set kubectl_version = version + '/bin/linux/amd64/kubectl' %}
     {% endif %}
-    {% set kubectl_url = kubectl_prefix + '/' + kubectl_version %}
+    {% set kubectl_url = kubectl_prefix + kubectl_version %}
   {% elif kubectl_snap_install %}
     {% set kubectl_path = '/snap/bin/' %}
   {% endif %}

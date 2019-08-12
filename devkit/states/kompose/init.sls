@@ -9,14 +9,18 @@
   {% set kompose_path = '/usr/local/bin/' %}
 
   {% if kompose_binary_install %}
-    {% set kompose_prefix = 'https://github.com/kubernetes/kompose/releases/download/' %}
-    {% set version = 'v1.18.0' %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set kompose_version = version + '/kompose-darwin-amd64' %}
+    {% if grains.cfg_kompose.kompose.version is defined %}
+      {% set version = grains.cfg_kompose.kompose.version %}
     {% else %}
-      {% set kompose_version = version + '/kompose-linux-amd64' %}
+      {% set version = '1.18.0' %}
     {% endif %}
-    {% set kompose_url = kompose_prefix + '/' + kompose_version %}
+    {% set kompose_prefix = 'https://github.com/kubernetes/kompose/releases/download/' %}
+    {% if grains.os_family == 'MacOS' %}
+      {% set kompose_version = 'v' + version + '/kompose-darwin-amd64' %}
+    {% else %}
+      {% set kompose_version = 'v' + version + '/kompose-linux-amd64' %}
+    {% endif %}
+    {% set kompose_url = kompose_prefix + kompose_version %}
   {% endif %}
 
   {% if completion and 'bash' in completion %}
