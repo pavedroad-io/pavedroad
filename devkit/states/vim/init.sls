@@ -101,7 +101,10 @@ vim-plugins:
     {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
     {% if not grains.os_family == 'MacOS' %}
     - runas:    {{ grains.realuser }}
+      {# Salt requires sudo for "group" here, so MacOS and Docker excluded #}
+      {% if not grains.docker %}
     - group:    {{ grains.realgroup }}
+      {% endif %}
     {% endif %}
     - timeout:  120
     - use_vt:   True
