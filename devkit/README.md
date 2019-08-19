@@ -105,11 +105,11 @@ and is more versatile than _swagger-codegen_.
 The _pretty-swag_ application generates HTML from Swagger specifications and has
 extensive configuration ability to provide customized output.
 
-## Testing
+## Platforms Supported
 
 - Docker containers with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
 - VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
-- MacOS 10.14 on a MacBook Pro
+- MacOS 10.14
 
 ## Links to More Information
 
