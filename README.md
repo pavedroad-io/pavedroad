@@ -59,8 +59,6 @@ at any time without compatibility support and without prior notice.
 
 ## Links to More Information
 
-### Community Meeting
-This project meets on a regular basis: [TBD Community Meeting](https://zoom.us/j/7886774843).
 ### Getting Help
 For contact information or to report a bug see [Support](/SUPPORT.md).
 ### How to Contribute

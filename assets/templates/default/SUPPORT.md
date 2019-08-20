@@ -3,17 +3,17 @@ If you're looking for support for this project the following resources are avail
 
 | | |
 |-|-|
-{# if twitter #}
+{% if twitter %}
 |{{twitter_name}}:|[{{twitter_org}}]({{twitter_link}})|
-{# endif #}
-{# if forum #}
+{% endif %}
+{% if forum %}
 |{{forum_name}}:|[{{forum_org}}]({{forum_link}})|
-{# endif #}
-{# if mailto #}
+{% endif %}
+{% if mailto %}
 |{{mailto_name}}:|[{{mailto_org}}]({{mailto_link}})|
-{# endif #}
+{% endif %}
 
-{# if slack #}
+{% if slack %}
 ## {{slack_name}}
 The {{organization}} team has helpful community members that are
 willing to point you in the right direction.
@@ -27,9 +27,9 @@ willing to point you in the right direction.
 The {{slack_name}} channels {{slack_channels}} are the usual places
 where people offer support.
 
-{# endif #}
+{% endif %}
 
-{# if stack #}
+{% if stack %}
 ## {{stack_name}}
 The {{organization}} community is active on {{stack_name}}.
 
@@ -39,20 +39,20 @@ The {{organization}} community is active on {{stack_name}}.
 |What can be asked about:|[Topics](http://stackoverflow.com/help/on-topic)|
 |How to ask good questions:|[Tips](http://stackoverflow.com/help/how-to-ask)|
 
-{# endif #}
+{% endif %}
 
-{# if comm_meeting #}
+{% if comm_meeting %}
 ## {{comm_meeting_name}} 
 A meeting of the {{organization}} community takes place regularly:
 [{{comm_meeting_name}}]({{meeting}}).
 
-{# endif #}
+{% endif %}
 
-{# if documentation #}
+{% if documentation %}
 ## {{documentation_name}} 
 For {{organization}} getting started guides, installation, deployment,
 and administration, see our [{{documentation_name}}]({{documentation_link}}).
 
-{# endif #}
+{% endif %}
 
 {% include 'do-not-edit.md' %}

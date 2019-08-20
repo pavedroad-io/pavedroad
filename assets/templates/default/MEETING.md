@@ -1,5 +1,6 @@
 # {{comm_meeting_name}}
 
+{% if comm_meeting %}
 A regular community meeting takes place [{{comm_meeting_time}}]({{comm_meeting_link}}).
 Convert to your [local timezone]({{comm_meeting_zone}}).
 
@@ -12,5 +13,11 @@ Anyone who wants to discuss the direction of the project, design and implementat
 * [Meeting link]({{comm_meeting_link}})
 * [Current agenda and past meeting notes]({{agenda_link}})
 * [Past meeting recordings]({{recording_link}})
+{% else %}
+There is no regularly scheduled {{comm_meeting_name}} at this time.
+  {% if slack %}
+See [Slack Announcements]({{slack_announce}}) for impromptu meetings.
+  {% endif %}
+{% endif %}
 
 {% include 'do-not-edit.md' %}

@@ -4,7 +4,7 @@ org_github_name: pavedroad-io
 org_web_name: pavedroad.io
 repo_name: pavedroad
 comm_meeting: False
-comm_meeting_name: TBD Community Meeting
+comm_meeting_name: Community Meeting
 comm_meeting_time: TBD Every other Tuesday at 9:00 AM PST
 comm_meeting_zone: http://www.thetimezoneconverter.com/?t=9:00&tz=PT%20%28Pacific%20Time%29
 comm_meeting_link: https://zoom.us/j/7886774843
@@ -17,7 +17,7 @@ recording_link: https://youtube.com
 documentation: False
 documentation_name: TBD Documentation
 documentation_link: https://github.com/pavedroad-io/pavedroad/blob/master/docs
-slack: False
+slack: True
 slack_name: TBD Slack
 slack_org: pavedroad.io
 slack_join: https://slack.pavedroad.io
@@ -29,14 +29,14 @@ forum: False
 forum_name: TBD Forum
 forum_org: pavedroad-dev
 forum_link: https://groups.google.com/forum/#!forum/pavedroad-dev
-twitter: False
+twitter: True
 twitter_name: TBD Twitter
 twitter_org: pavedroad-io
 twitter_link: https://twitter.com/pavedroad_io
 stack: False
 stack_name: TBD Stack Overflow
 stack_link: http://stackoverflow.com/questions/tagged/pavedroad
-mailto: False
+mailto: True
 mailto_name: TBD Email
 mailto_org: info@pavedroad.io
 mailto_link: mailto:info@pavedroad.io
@@ -79,12 +79,11 @@ roadmap: /ROADMAP.md
 security: /SECURITY.md
 support: /SUPPORT.md
 
-# debug
-twitter: True
-forun: True
-mailto: True
-slack: True
-stack: True
-documentation: True
-comm_meeting: True
-
+# debug - uncomment to see what full fledged support page looks like
+# twitter: True
+# forum: True
+# mailto: True
+# slack: True
+# stack: True
+# documentation: True
+# comm_meeting: True
