@@ -105,16 +105,23 @@ and is more versatile than _swagger-codegen_.
 The _pretty-swag_ application generates HTML from Swagger specifications and has
 extensive configuration ability to provide customized output.
 
-## Testing
+## Platforms Supported
 
-- Docker containers with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
+### Platforms Tested
+- Docker containers with Ubuntu 18.04, CentOS 7.6, Fedora 30, and openSUSE Leap 15
 - VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
-- MacOS 10.14 on a MacBook Pro
+- MacOS 10.14
+
+### Platforms Expected to Work
+- Other Ubuntu versions and recent Debian distributions in addition to Ubuntu
+- Red Hat distributions other than RHEL such as CentOS and Fedora
+- MacOS versions greater than 10.9
+
+Feedback is much appreciated on installing the Development Kit on other distributions,
+see [Support](/SUPPORT.md).
 
 ## Links to More Information
 
-### Community Meeting
-This project meets on a regular basis: [TBD Community Meeting](https://zoom.us/j/7886774843).
 ### Getting Help
 For contact information or to report a bug see [Support](/SUPPORT.md).
 ### How to Contribute

@@ -4,7 +4,7 @@ org_github_name: pavedroad-io
 org_web_name: pavedroad.io
 repo_name: pavedroad
 comm_meeting: False
-comm_meeting_name: TBD Community Meeting
+comm_meeting_name: Community Meeting
 comm_meeting_time: TBD Every other Tuesday at 9:00 AM PST
 comm_meeting_zone: http://www.thetimezoneconverter.com/?t=9:00&tz=PT%20%28Pacific%20Time%29
 comm_meeting_link: https://zoom.us/j/7886774843
@@ -17,27 +17,28 @@ recording_link: https://youtube.com
 documentation: False
 documentation_name: TBD Documentation
 documentation_link: https://github.com/pavedroad-io/pavedroad/blob/master/docs
-slack: False
-slack_name: TBD Slack
-slack_org: pavedroad.io
-slack_join: https://slack.pavedroad.io
+slack: True
+slack_name: Slack
+slack_org: pavedroadio
+slack_join: https://join.slack.com/t/pavedroadio/shared_invite/enQtNzM3MzY1NTAyMjMwLTE1ZWVlNGNkMmVhYmI1YzJmNWM0YzUwZThmM2JkNTIyNDY0Yjc5ZjE4MTE1YmNlYmVlOTI5MTA0NTczYTA4NDc
 slack_link: https://pavedroadio.slack.com
-slack_archive: https://pavedroadio.slackarchive.com
-slack_channels: "#user, #novice, and #announce"
-slack_announce: https://pavedroadio.slack.com/messages/TBD/
+#slack_archive: https://pavedroadio.slackarchive.com
+slack_channels: "#announcemants, #dev, #general, #novice, and #user"
+slack_announce: https://pavedroadio.slack.com/app_redirect?channel=announcements
+slack_announce_name: "#announcements"
 forum: False
 forum_name: TBD Forum
 forum_org: pavedroad-dev
 forum_link: https://groups.google.com/forum/#!forum/pavedroad-dev
-twitter: False
-twitter_name: TBD Twitter
-twitter_org: pavedroad-io
-twitter_link: https://twitter.com/pavedroad_io
+twitter: True
+twitter_name: Twitter
+twitter_org: pavedroadio
+twitter_link: https://twitter.com/pavedroadio
 stack: False
 stack_name: TBD Stack Overflow
 stack_link: http://stackoverflow.com/questions/tagged/pavedroad
-mailto: False
-mailto_name: TBD Email
+mailto: True
+mailto_name: Email
 mailto_org: info@pavedroad.io
 mailto_link: mailto:info@pavedroad.io
 security_email: security@pavedroad.io
@@ -79,12 +80,11 @@ roadmap: /ROADMAP.md
 security: /SECURITY.md
 support: /SUPPORT.md
 
-# debug
-twitter: True
-forun: True
-mailto: True
-slack: True
-stack: True
-documentation: True
-comm_meeting: True
-
+# debug - uncomment to see what full fledged support page looks like
+# twitter: True
+# forum: True
+# mailto: True
+# slack: True
+# stack: True
+# documentation: True
+# comm_meeting: True

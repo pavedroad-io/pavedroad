@@ -74,8 +74,12 @@ the maintainers per the voting process below.
 ## Maintainer responsibilities
 
 * Monitor email aliases.
+{% if slack %}
 * Monitor Slack (delayed response is perfectly acceptable).
+{% endif %}
+{% if comm_meeting %}
 * Attend the regularly recurring [{{comm_meeting_name}}]({{meeting}}).
+{% endif %}
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
   The areas of specialization listed in [OWNERS.md]({{owners}}) can be used to help with routing
   an issue/question to the right person.
