@@ -22,7 +22,9 @@ willing to point you in the right direction.
 |-|-|
 |Login to our Slack workspace:|[{{slack_org}}]({{slack_link}})|
 |Join our Slack workspace:|[Registration]({{slack_join}})|
+  {% if slack_archive is defined %}
 |Check out past conversations:|[Archive]({{slack_archive}})|
+  {% endif %}
 
 The {{slack_name}} channels {{slack_channels}} are the usual places
 where people offer support.

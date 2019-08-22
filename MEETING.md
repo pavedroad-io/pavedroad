@@ -1,7 +1,7 @@
 # Community Meeting
 
 There is no regularly scheduled Community Meeting at this time.
-See [Slack Announcements](https://pavedroadio.slack.com/messages/TBD/) for impromptu meetings.
+See [Slack #announcements](https://pavedroadio.slack.com/app_redirect?channel=announcements) for meeting announcements.
 
 #### Do Not Edit
 This file is generated so edits made to it will be overwritten.
