@@ -39,8 +39,9 @@ pretty-swag-installed:
       - pkg:      npm
 
   {% if grains.cfg_pretty_swag.debug.enable %}
+
 pretty-swag-version:
   cmd.run:
-    - name:     $(npm bin -g)/{{ pretty_swag_pkg_name }} -v
+    - name:     npm bin -g {{ pretty_swag_pkg_name }} -v
   {% endif %}
 {% endif %}
