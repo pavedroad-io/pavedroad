@@ -20,6 +20,9 @@
 
 include:
   - pip3
+  {% if grains.os_family == 'Debian' %}
+  - locales
+  {% endif %}
   {% if vim_src_install %}
   - vim.src
   {% endif %}

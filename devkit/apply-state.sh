@@ -64,22 +64,36 @@ else
     goroot=NONE
 fi
 
-declare -A grains
-grains[realuser]="$(id -un ${SUDO_UID})"
-grains[realgroup]="$(id -gn ${SUDO_UID})"
-grains[homedir]="$(eval echo ~$(id -un ${SUDO_UID}))"
-grains[stateroot]="${saltdir}/states"
-grains[saltenv]=dev
-grains[docker]="${docker}"
-grains[gopath]="${gopath}"
-grains[goroot]="${goroot}"
+# associative arrays not available in bash before version 4
+# thus reverting from associative array to two parallel arrays
+grain_names=(
+realuser
+realgroup
+homedir
+stateroot
+saltenv
+docker
+gopath
+goroot
+)
+
+grain_values=(
+"$(id -un ${SUDO_UID})"
+"$(id -gn ${SUDO_UID})"
+"$(eval echo ~$(id -un ${SUDO_UID}))"
+"${saltdir}/states"
+dev
+"${docker}"
+"${gopath}"
+"${goroot}"
+)
 
 echo Configuring grains for the development kit salt states
 
-for key in "${!grains[@]}"; do
+for i in ${!grain_names[@]}; do
     salt-call \
         --config-dir "${saltdir}/config/" \
-        grains.setval ${key} "${grains[${key}]}"
+        grains.setval "${grain_names[$i]}" "${grain_values[$i]}"
 done
 
 echo
