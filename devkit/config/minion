@@ -22,7 +22,7 @@ grains:
     - kustomize
     - microk8s
     - multipass
-    - pretty_swag
+    - nodejs
     - skaffold
     - vim
   cfg_base:
@@ -183,6 +183,15 @@ grains:
       version: latest
     completion:
       - bash
+    debug:
+      enable: True
+  cfg_nodejs:
+    installs:
+      - nodejs
+    nodejs:
+      version: latest
+    completion:
+      - None
     debug:
       enable: True
   cfg_pip3:

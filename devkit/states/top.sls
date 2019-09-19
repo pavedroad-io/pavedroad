@@ -101,9 +101,9 @@
     - match: compound
     - kustomize
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:pretty_swag':
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:nodejs':
     - match: compound
-    - pretty-swag
+    - nodejs
 
   'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
     - match: compound
