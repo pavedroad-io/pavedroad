@@ -114,6 +114,8 @@ echo Installing the devlopment kit
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
+# Temporary fix for demo, permanent fix TBD in salt states
+${sudo} chown -R $USER:$USER $HOME
 echo Development kit installation complete
 
 if command -v xdp-open >& /dev/null; then
