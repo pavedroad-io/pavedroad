@@ -16,6 +16,15 @@ fi
 branch=
 debug=
 
+# Sets salt install-type to either "stable" or "stable <$salt-version>"
+# Workaround for https://github.com/saltstack/salt/issues/53570
+salt_version="2019.2.0"
+if [ $salt_version ]; then
+    install_type="stable ${salt_version}"
+else
+    install_type="stable"
+fi
+
 while getopts "b:d" opt; do
   case ${opt} in
     b ) branch="--branch ${OPTARG}"
@@ -90,7 +99,7 @@ else
 
     # -P Prevent failure by allowing the script to use pip as a dependency source
     # -X Do not start minion service
-    ${sudo} sh install_salt.sh -P -X
+    ${sudo} sh install_salt.sh -P -X ${install_type}
     echo SaltStack installation complete
 fi
 salt-call --version
