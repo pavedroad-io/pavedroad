@@ -108,3 +108,11 @@
   'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
     - match: compound
     - skaffold
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:direnv':
+    - match: compound
+    - direnv
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:roadctl':
+    - match: compound
+    - roadctl

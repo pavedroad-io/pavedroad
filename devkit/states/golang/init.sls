@@ -76,6 +76,22 @@ include:
     {% endif %}
   {% endif %}
 
+pr-go-env:
+  file.managed:
+    - name:     {{ grains.homedir }}/.pr_go_env
+    - contents: |
+                export GOROOT={{ golang_root }}/go
+                export GOPATH={{ golang_path }}
+                export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+append-bashrc-pr_env:
+  file.append:
+    - name:     {{ grains.homedir }}/.bashrc
+    - text:     source $HOME/.pr_go_env
+    - require:
+      - file:   pr-go-env
 golang:
   file.directory:
     - name:     {{ grains.homedir }}/.cache/go-build
@@ -162,6 +178,7 @@ golang:
   motion:       github.com/fatih/motion
   iferr:        github.com/koron/iferr
   swagger:      github.com/go-swagger/go-swagger/cmd/swagger
+  dep:          github.com/golang/dep/cmd/dep
   {% endload %}
 
   {% for key in go_tools %}

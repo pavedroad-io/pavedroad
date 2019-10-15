@@ -12,6 +12,7 @@ grains:
     - macos
     - windows
     - bash
+    - direnv
     - docker
     - git
     - golang
@@ -23,6 +24,7 @@ grains:
     - microk8s
     - multipass
     - nodejs
+    - roadctl
     - skaffold
     - vim
   cfg_base:
@@ -70,6 +72,12 @@ grains:
       append: True
     completion:
       append: True
+  cfg_direnv:
+    installs:
+      - direnv
+      - prompt
+    direnv:
+      version: latest
   cfg_docker:
     installs:
       - docker
@@ -197,15 +205,6 @@ grains:
   cfg_pip3:
     installs:
       - pip3
-  cfg_skaffold:
-    installs:
-      - skaffold
-    skaffold:
-      version: latest
-    completion:
-      - bash
-    debug:
-      enable: True
   cfg_pretty_swag:
     installs:
       - pretty_swag
@@ -213,6 +212,24 @@ grains:
       version: latest
     completion:
       - None
+    debug:
+      enable: True
+  cfg_roadctl:
+    installs:
+      - roadctl
+    roadctl:
+      version: latest
+    completion:
+      - bash
+    debug:
+      enable: True
+  cfg_skaffold:
+    installs:
+      - skaffold
+    skaffold:
+      version: latest
+    completion:
+      - bash
     debug:
       enable: True
   cfg_snapd:
