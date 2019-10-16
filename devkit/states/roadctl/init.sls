@@ -34,7 +34,9 @@ roadctl:
       - git:    roadctl
     - cwd:      {{ roadctl_tmp }}/src/{{ roadctl_pkg_name }}
     - umask:    022
-    - name:     make all
+    - name:     |
+                . $HOME/.pr_go_env
+                make all
   file.managed:
     - name:     {{ roadctl_path }}{{ roadctl_pkg_name }}
     {# Why is this not in /bin instead of /src/roadctl? #}
