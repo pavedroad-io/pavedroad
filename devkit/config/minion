@@ -75,7 +75,6 @@ grains:
   cfg_direnv:
     installs:
       - direnv
-      - prompt
     direnv:
       version: latest
     debug:
