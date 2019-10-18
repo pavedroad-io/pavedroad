@@ -13,4 +13,10 @@ direnv:
     - version:  {{ grains.cfg_direnv.direnv.version }}
   {% endif %}
 
+  {% if grains.cfg_direnv.debug.enable %}
+direnv-version:
+  cmd.run:
+    - name:     {{ direnv_pkg_name }} version
+  {% endif %}
+
 {% endif %}

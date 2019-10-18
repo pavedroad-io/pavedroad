@@ -78,6 +78,8 @@ grains:
       - prompt
     direnv:
       version: latest
+    debug:
+      enable: True
   cfg_docker:
     installs:
       - docker
@@ -141,6 +143,8 @@ grains:
       - graphviz
     graphviz:
       version: latest
+    debug:
+      enable: True
   cfg_kompose:
     installs:
       - kompose
