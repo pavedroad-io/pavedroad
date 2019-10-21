@@ -1,8 +1,5 @@
 # Sourced by .bashrc
 
-export GOPATH="$HOME/go"
-export PATH=$PATH:$GOPATH/bin
-
 alias gbug='go bug'
 alias gbld='go build'
 alias gcle='go clean'

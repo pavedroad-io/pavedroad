@@ -61,6 +61,10 @@ microk8s:
     {% else %}
     - name:     snap install microk8s --classic
     {% endif %}
+  group.present:
+    - name:     microk8s
+    - addusers:
+      -         {{ grains.realuser }}
   {% endif %}
 
   {% if grains.cfg_microk8s.debug.enable %}
