@@ -46,19 +46,13 @@
     {% set golang_root = '/snap/bin' %}
   {% elif grains.os_family == 'MacOS' %}
     {% set golang_root = '/usr/local/bin' %}
-  {% elif grains.goroot != 'NONE' %}
-    {% set golang_root = grains.goroot %}
   {% elif golang_install == 'binary' %}
     {% set golang_root = '/usr/local' %}
   {% else %}
     {% set golang_root = '/usr/bin' %}
   {% endif %}
 
-  {% if grains.gopath != 'NONE' %}
-    {% set golang_path = grains.gopath %}
-  {% else %}
-    {% set golang_path = grains.homedir + '/go' %}
-  {% endif %}
+  {% set golang_path = grains.homedir + '/go' %}
 
   {% if golang_root.endswith('/bin') %}
     {% set golang_exec = golang_root %}
@@ -80,9 +74,8 @@ pr-go-env:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_go_env
     - contents: |
-                export GOROOT={{ golang_root }}/go
-                export GOPATH={{ golang_path }}
-                export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+                export GOPATH=$HOME/go
+                export PATH=$PATH:$GOPATH/bin
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
