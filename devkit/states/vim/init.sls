@@ -97,7 +97,7 @@ vim-plugins:
   cmd.run:
     {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
     {% if grains.os_family == 'RedHat' %}
-    - name:     sudo -u {{ grains.realuser }} {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    - name:     sudo -u {{ grains.realuser }} {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
     {% else %}
     - name:     {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
     {% endif %}
@@ -153,9 +153,7 @@ vimrc:
 append-source-vimrc:
   file.append:
     - name:     {{ grains.homedir }}/.vimrc
-    - text:     |
-                source $HOME/.pr_vimrc_plug
-                source $HOME/.pr_vimrc_init
+    - text:     source $HOME/.pr_vimrc_init
     - require:
       - file:   vimrc-plug
       - file:   vimrc-init

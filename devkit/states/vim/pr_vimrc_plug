@@ -1,9 +1,37 @@
 set nocompatible
 
 call plug#begin('~/.vim/plugged')
-Plug 'Shougo/deoplete.nvim',
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'zchee/deoplete-go'
+
 Plug 'fatih/vim-go'
+
+if !has('nvim')
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+  Plug 'Shougo/vimshell.vim'
+endif
+Plug 'sebdah/vim-delve'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'vim-airline/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'wincent/ferret'
+Plug 'majutsushi/tagbar'
+Plug 'SirVer/ultisnips'
+
 call plug#end()
+
+" vim: filetype=vim

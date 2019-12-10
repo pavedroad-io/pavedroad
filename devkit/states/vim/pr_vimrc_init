@@ -1,22 +1,321 @@
-" Set :GoDef and :GoInfo to use gopls
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
+" get all of the plugins
+source ~/.pr_vimrc_plug
 
-" Run deoplete.nvim automatically
+"---------------------
+" Shougo/deoplete.nvim
+"---------------------
+" Run deoplete automatically
 let g:deoplete#enable_at_startup = 1
-
 " Tell deoplete.nvim when to call omnifunc
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
+"------------------
+" zchee/deoplete-go
+"------------------
 " neocomplete like
 set completeopt+=noinsert
 " deoplete.nvim recommend
 set completeopt+=noselect
-
 " deoplete-go settings
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
-" deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"-------------
+" fatih/vim-go
+"-------------
+" Default: auto-detect a snippet engine
+let g:go_snippet_engine = "ultisnips"
 
+" Default: gofmt; using goimports extends functionality
+let g:go_fmt_command = "goimports"
+" Default: show a location list when gofmt fails
+let g:go_fmt_fail_silently = 1
+
+" Default: empty; set to quickfix so there is one method for navigation
+let g:go_list_type = "quickfix"
+
+" Default: guru; use gopls for :GoDef
+let g:go_def_mode='gopls'
+" Default: gocode; use gopls for :GoInfo
+let g:go_info_mode='gopls'
+" Default: show gopls won't work outside GOPATH warning
+let g:go_null_module_warning = 0
+" Default: work with newly modified GOPATH; detect before using gopls
+let g:go_autodetect_gopath = 1
+
+" Default: set :GoTest timeout to 10 seconds
+let g:go_test_timeout = '10s'
+" Default: do not prepend name of test to error message
+let g:go_test_prepend_name = 1
+
+" Default: highlight all instances of identifier under cursor
+let g:go_auto_sameids = 0
+" Default: do not show :GoInfo for word under cursor
+let g:go_auto_type_info = 0
+" Default: echo info about Go commands like :GoBuild, :GoTest, :GoCoverage
+let g:go_echo_command_info = 1
+
+" Default: enable vet, golint and errcheck as linters for :GoMetaLinter
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gosec']
+" Default: do not execute :GoMetaLinter on save
+let g:go_metalinter_autosave = 0
+" Default: set maximum time linters have to complete to 5 seconds
+let g:go_metalinter_deadline = "5s"
+
+" Default: treat comments above function as part of function
+let g:go_textobj_include_function_doc = 1
+" Default: use source files instead of binary packages for code completion
+let g:go_gocode_propose_source = 1
+" Default: snakecase: transform option for gomodifytags or snippet expansion
+let g:go_addtags_transform = 'camelcase'
+" Default: block, import, varconst, package_comment; enable fold regions
+let g:go_fold_enable = []
+
+" highlighting
+
+" Default: do not highlight struct and interface names
+let g:go_highlight_types = 1
+" Default: do not highlight struct field names
+let g:go_highlight_fields = 1
+" Default: do not highlight function and method declarations
+let g:go_highlight_functions = 1
+" Default: do not highlight function and method calls
+let g:go_highlight_function_calls = 1
+" Default: do not highlight operators such as := , ==, -=, etc
+let g:go_highlight_operators = 1
+" Default: do not highlight commonly used library types (io.Reader, etc.)
+let g:go_highlight_extra_types = 1
+" Default: do not highlight build constraints
+let g:go_highlight_build_constraints = 1
+" Default: do not highlight go:generate directives
+let g:go_highlight_generate_tags = 1
+" Default: do not highlight instances of tabs following spaces
+let g:go_highlight_space_tab_error = 1
+" Default: do not highlight white space after []
+let g:go_highlight_array_whitespace_error = 0
+" Default: do not highlight trailing white space
+let g:go_highlight_trailing_whitespace_error = 1
+
+" Default: highlight printf-style formatting verbs inside string literals
+let g:go_highlight_format_strings = 0
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+augroup go
+  autocmd!
+  " write file before :make, :GoBuild, :GoTest|Func, :GoRun
+  autocmd FileType go set autowrite
+  " go fmt uses tabs for indentation, ts and sw only affect viewer
+  autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
+  " enable Vim syntax highlighting for Go template files
+  autocmd BufRead,BufNewFile *.gotmpl set filetype=gotexttmpl
+
+  " Map quickfix (list) navigation
+  autocmd FileType go nnoremap <silent> <C-j> :cnext<CR>
+  autocmd FileType go nnoremap <silent> <C-k> :cprev<CR>
+  autocmd FileType go nnoremap <silent> <C-c> :cclose<CR>
+
+  autocmd FileType go nmap     <silent> <leader>gae <Plug>(go-alternate-edit)
+  autocmd FileType go nmap     <silent> <leader>gb :<C-u>call <SID>build_go_files()<CR>
+  autocmd FileType go nnoremap <silent> <leader>gcb :GoCoverageBrowser<CR>
+  autocmd FileType go nmap     <silent> <leader>gce <Plug>(go-callees)
+  autocmd FileType go nmap     <silent> <leader>gcp <Plug>(go-channelpeers)
+  autocmd FileType go nmap     <silent> <leader>gcr <Plug>(go-callers)
+  autocmd FileType go nmap     <silent> <leader>gcs <Plug>(go-callstack)
+  autocmd FileType go nmap     <silent> <leader>gct <Plug>(go-coverage-toggle)
+  autocmd FileType go nnoremap <silent> <leader>gd :GoDecls<CR>
+  autocmd FileType go nnoremap <silent> <leader>gdd :GoDeclsDir<CR>
+  autocmd FileType go nmap     <silent> <leader>gde <Plug>(go-describe)
+  autocmd FileType go nnoremap <silent> <leader>gdf :GoDef<CR>
+  autocmd FileType go nmap     <silent> <leader>gdoc <Plug>(go-doc)
+  autocmd FileType go nmap     <silent> <leader>gdocb <Plug>(go-doc-browser)
+  autocmd FileType go nmap     <silent> <leader>gdocv <Plug>(go-doc-vertical)
+  autocmd FileType go nnoremap <silent> <leader>gdp :GoDefPop<CR>
+  autocmd FileType go nmap     <silent> <leader>gds <Plug>(go-def-split)
+  autocmd FileType go nmap     <silent> <leader>gdsc <Plug>(go-def-stack-clear)
+  autocmd FileType go nmap     <silent> <leader>gdst <Plug>(go-def-stack)
+  autocmd FileType go nmap     <silent> <leader>gdt <Plug>(go-def-tab)
+  autocmd FileType go nmap     <silent> <leader>gdv <Plug>(go-def-vertical)
+  autocmd FileType go nnoremap <silent> <leader>gfs :GoFillStruct<CR>
+  autocmd FileType go nmap     <silent> <leader>gfv <Plug>(go-freevars)
+  autocmd FileType go nmap     <silent> <leader>gi <Plug>(go-install)
+  autocmd FileType go nmap     <silent> <leader>gif <Plug>(go-iferr)
+  autocmd FileType go nnoremap <silent> <leader>gim :GoImpl<CR>
+  autocmd FileType go nmap     <silent> <leader>gin <Plug>(go-info)
+  autocmd FileType go nnoremap <silent> <leader>gk :GoKeyify<CR>
+  autocmd FileType go nmap     <silent> <leader>gm <Plug>(go-metalinter)
+  autocmd FileType go nmap     <silent> <leader>gpt <Plug>(go-pointsto)
+  autocmd FileType go nmap     <silent> <leader>gr <Plug>(go-run)
+  autocmd FileType go nmap     <silent> <leader>grf <Plug>(go-referrers)
+  autocmd FileType go nmap     <silent> <leader>gre <Plug>(go-rename)
+  autocmd FileType go nnoremap <silent> <leader>gs :GoSameIdsToggle<CR>
+  autocmd FileType go nmap     <silent> <leader>gt <Plug>(go-test)
+  autocmd FileType go nmap     <silent> <leader>gtf <Plug>(go-test-func)
+  autocmd FileType go nnoremap <silent> <leader>gwe :GoWhicherrs<CR>
+
+  " :GoAlternate between implementation/test code, like main.go and main_test.go
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabedit')
+augroup END
+
+"-----------------
+" sebdah/vim-delve
+"-----------------
+augroup delve
+  autocmd!
+  autocmd FileType go nnoremap <silent> <leader>dt :DlvTest<CR>
+  autocmd FileType go nnoremap <silent> <leader>dd :DlvDebug<CR>
+  autocmd FileType go nnoremap <silent> <leader>dtb :DlvToggleBreakpoint<CR>
+  autocmd FileType go nnoremap <silent> <leader>dtt :DlvToggleTracepoint<CR>
+  autocmd FileType go nnoremap <silent> <leader>dc :DlvClearAll<CR>
+augroup END
+
+"-------------------
+" tpope/vim-fugitive
+"-------------------
+nnoremap <leader>G :Git!<Space>
+nnoremap <leader>Ga :Git add .<CR>
+nnoremap <leader>Gau :Git add --update<CR>
+nnoremap <leader>Gb :Gblame<CR>
+nnoremap <leader>Gc :Gcheckout<CR>
+nnoremap <leader>Gc- :Git checkout -<CR>
+nnoremap <leader>Gcm :Git checkout master<CR>
+nnoremap <leader>Gc :Gcommit<CR>
+nnoremap <leader>Gcn :Gcommit -n<CR> " commit but ignore hooks
+nnoremap <leader>Gd :Gdiff<CR>
+nnoremap <leader>Gdo :Gdiffoff<CR>
+nnoremap <leader>Ge :Gedit<CR>
+nnoremap <leader>Ges :Gedit<Space>
+nnoremap <leader>Gf :Gfetch<CR>
+nnoremap <leader>Gg :silent Ggrep! <cword><CR>
+nnoremap <leader>Gl :GV!<CR> " git log for the current file
+nnoremap <leader>Glf :GV<CR> " full git log
+nnoremap <leader>Gm :Gmove<Space>
+nnoremap <leader>Gp :Git! push<CR>
+nnoremap <leader>Gpf :Gpush --force-with-lease<CR>
+nnoremap <leader>Gpl :Git! pull<CR>
+nnoremap <leader>Gr :Gread<CR>
+nnoremap <leader>Grb :Grebase -i master<CR>
+nnoremap <leader>Grm :Gremove<CR>
+nnoremap <leader>Gs :Gstatus<CR>
+nnoremap <leader>Gv :Gvdiff<CR>
+nnoremap <leader>Gw :Gwrite<CR> " git add
+
+"------------------
+" tpope/vim-rhubarb
+"------------------
+" Enables :Gbrowse from fugitive.vim to open GitHub URLs
+nnoremap <leader>Gbr :Gbrowse<CR>
+vnoremap <leader>Gbr :Gbrowse<CR> " open visual selection in browser
+nnoremap <leader>Gbr. :.Gbrowse<CR> " open current line in browser
+
+"-----------------------
+" airblade/vim-gitgutter
+"-----------------------
+let g:gitgutter_map_keys = 0
+let g:gitgutter_max_signs = 1000
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
+let g:gitgutter_diff_args = '--ignore-space-at-eol'
+nnoremap <S-F5> :GitGutterToggle<CR>
+nnoremap <S-F6> :GitGutterSignsToggle<CR>
+nnoremap <S-F7> :GitGutterLineHighlightsToggle<CR>
+nmap <silent> ]h :GitGutterNextHunk<CR>
+nmap <silent> [h :GitGutterPrevHunk<CR>
+nnoremap <silent> <leader>ggr :GitGutterRevertHunk<CR>
+nnoremap <silent> <leader>ggp :GitGutterPreviewHunk<CR>
+nnoremap <silent> <leader>gga :GitGutterAll<CR>
+
+"--------------------
+" scrooloose/nerdtree
+"--------------------
+let NERDTreeShowBookmarks=1
+let NERDTreeIgnore=['\\.swo$', '\\.swp$', '\\.git']
+let NERDTreeChDirMode=0
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowHidden=1
+let NERDTreeKeepTreeInNewTab=1
+map <S-F8> :NERDTreeToggle<CR>
+nmap <leader>nt :NERDTreeFind<CR>
+
+"------------------------
+" vim-airline/vim-airline
+"------------------------
+" Default: show status on bottom line
+let g:airline_statusline_ontop=0
+" Default: do not display all buffers when only one tab open
+let g:airline#extensions#tabline#enabled = 1
+nmap <S-F9> :AirlineToggle<CR>
+
+"-------------------
+" ctrlpvim/ctrlp.vim
+"-------------------
+if executable('rg')
+  let g:ctrlp_user_command = 'rg %s -i --color never --no-heading --hidden --no-messages
+        \ -g "" --files'
+endif
+
+nnoremap <leader>cp :CtrlP<CR>
+nnoremap <leader>cb :CtrlPBuffer<CR>
+nnoremap <leader>cbt :CtrlPBufTagAll<CR>
+nnoremap <leader>ccd :CtrlPCurWD<CR>
+nnoremap <leader>ccf :CtrlPCurFile<CR>
+nnoremap <leader>cl :CtrlPLine<CR>
+nnoremap <leader>cm :CtrlPMRU<CR>
+nnoremap <leader>cmf :CtrlPMRUFiles<CR>
+nnoremap <leader>ct :CtrlPTag<CR>
+
+"---------------
+" wincent/ferret
+"---------------
+if executable('rg')
+  let g:FerretExecutableArguments = {
+        \'rg': '--smart-case --vimgrep --no-heading --no-config --max-columns 4096'}
+endif
+
+" Don't bind ferret commands.
+let g:FerretMap = 0
+
+" Don't hide cursor line in quickfix.
+let g:FerretQFOptions = 0
+
+" Bind our own Ferret commands.
+nmap <leader>fa <Plug>(FerretAck)
+nmap <leader>fw <Plug>(FerretAckWord)
+nmap <leader>fl <Plug>(FerretLack)
+nmap <leader>fs <Plug>(FerretAcks)
+
+"------------------
+" majutsushi/tagbar
+"------------------
+let g:tagbar_compact = 1
+let g:tagbar_sort = 0
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 30
+nmap <S-F10> :TagbarToggle<CR>
+
+"-----------------
+" SirVer/ultisnips
+"-----------------
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
+let g:UltiSnipsEditSplit="vertical"
+" Map UltiSnips open edit window
+nmap <leader>se :UltiSnipsEdit<cr>
+nmap <leader>sb :UltiSnipsEdit!<cr>
+
+" vim: filetype=vim

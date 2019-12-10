@@ -154,7 +154,8 @@ golang:
   asmfmt:       github.com/klauspost/asmfmt/cmd/asmfmt
   errcheck:     github.com/kisielk/errcheck
   fillstruct:   github.com/davidrjenni/reftools/cmd/fillstruct
-  gocode:       github.com/stamblerre/gocode
+  gocode:       github.com/mdempsky/gocode
+  gocode-gomod: github.com/stamblerre/gocode
   gocomplete:   github.com/posener/complete/gocomplete
   godef:        github.com/rogpeppe/godef
   gogetdoc:     github.com/zmb3/gogetdoc
