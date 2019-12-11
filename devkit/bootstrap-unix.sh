@@ -18,12 +18,9 @@ debug=
 
 # Sets salt install-type to either "stable" or "stable <$salt-version>"
 # Workaround for https://github.com/saltstack/salt/issues/53570
-salt_version="2019.2.0"
-if [ $salt_version ]; then
-    install_type="stable ${salt_version}"
-else
-    install_type="stable"
-fi
+# Only for debian, ascertained by the existence of apt-get below
+salt_debian_version="2019.2.0"
+install_type="stable"
 
 while getopts "b:d" opt; do
   case ${opt} in
@@ -52,6 +49,7 @@ trap 'error_trap' ERR
 
 if command -v apt-get >& /dev/null; then
     echo Using package manager apt-get
+    install_type="stable ${salt_debian_version}"
     ${sudo} apt-get -qq update >& /dev/null
     if [ $? -ne 0 ]; then
         echo User $(whoami) unable to execute apt-get

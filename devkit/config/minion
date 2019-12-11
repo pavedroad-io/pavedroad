@@ -12,11 +12,13 @@ grains:
     - macos
     - windows
     - bash
+    - ctags
     - direnv
     - docker
     - git
     - golang
     - graphviz
+    - jq
     - kompose
     - kubebuilder
     - kubectl
@@ -24,9 +26,11 @@ grains:
     - microk8s
     - multipass
     - nodejs
+    - ripgrep
     - roadctl
     - skaffold
     - vim
+    - zsh
   cfg_base:
     installs:
       - firefox
@@ -72,6 +76,13 @@ grains:
       append: True
     completion:
       append: True
+  cfg_ctags:
+    installs:
+      - ctags
+    ctags:
+      version: latest
+    debug:
+      enable: True
   cfg_direnv:
     installs:
       - direnv
@@ -91,6 +102,7 @@ grains:
       service: True
     completion:
       - bash
+      - zsh
     debug:
       enable: True
       host: tcp://host.docker.internal:2375
@@ -102,6 +114,7 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     prompt:
       append: True
   cfg_golang:
@@ -135,12 +148,20 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_graphviz:
     installs:
       - graphviz
     graphviz:
+      version: latest
+    debug:
+      enable: True
+  cfg_jq:
+    installs:
+      - jq
+    jq:
       version: latest
     debug:
       enable: True
@@ -151,6 +172,7 @@ grains:
       version: 1.18.0
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_kubebuilder:
@@ -169,6 +191,7 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_kustomize:
@@ -194,6 +217,7 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_nodejs:
@@ -217,6 +241,13 @@ grains:
       - None
     debug:
       enable: True
+  cfg_ripgrep:
+    installs:
+      - ripgrep
+    ripgrep:
+      version: latest
+    debug:
+      enable: True
   cfg_roadctl:
     installs:
       - roadctl
@@ -224,6 +255,7 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_skaffold:
@@ -233,6 +265,7 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_snapd:
@@ -255,5 +288,19 @@ grains:
       append: True
     debug:
       enable: True
+  cfg_zsh:
+    installs:
+      - zsh
+    zsh:
+      version: latest
+    packages:
+      - completion
+    files:
+      - zshrc
+      - completion
+    zshrc:
+      append: True
+    completion:
+      append: True
 
 # vim: filetype=yaml

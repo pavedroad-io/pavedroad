@@ -116,3 +116,19 @@
   'G@saltenv:dev and G@roles:pr-golang and G@tops:roadctl':
     - match: compound
     - roadctl
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:ctags':
+    - match: compound
+    - ctags
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:jq':
+    - match: compound
+    - jq
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:ripgrep':
+    - match: compound
+    - ripgrep
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:zsh':
+    - match: compound
+    - zsh
