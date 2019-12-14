@@ -52,18 +52,6 @@ else
     docker=False
 fi
 
-if ! test -z "${GOPATH}"; then
-    gopath=$(echo ${GOPATH} | awk -F ":" '{print $1}')
-else
-    gopath=NONE
-fi
-
-if ! test -z "${GOROOT}"; then
-    goroot="${GOROOT}"
-else
-    goroot=NONE
-fi
-
 # associative arrays not available in bash before version 4
 # thus reverting from associative array to two parallel arrays
 grain_names=(
@@ -73,8 +61,6 @@ homedir
 stateroot
 saltenv
 docker
-gopath
-goroot
 )
 
 grain_values=(
@@ -84,8 +70,6 @@ grain_values=(
 "${saltdir}/states"
 dev
 "${docker}"
-"${gopath}"
-"${goroot}"
 )
 
 echo Configuring grains for the development kit salt states
