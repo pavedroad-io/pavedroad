@@ -13,6 +13,11 @@ completion:
                 brew list bash-completion@2
   {% endif %}
 {% endif %}
+completion_dir:
+  file.directory:
+    - name:     {{ pillar.directories.completions.bash }}
+    - makedirs: True
+    - mode:     755
 
 {# Make sure bash config files are not owned by root if created here #}
 bashrc:
@@ -34,7 +39,7 @@ bash_profile:
 pr_completion:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_bash_completion
-    - source:   {{ grains.stateroot }}/bash/pr_bash_completion
+    - source:   salt://bash/pr_bash_completion
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
@@ -53,7 +58,7 @@ append-source-completion:
 pr_bashrc:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_bashrc
-    - source:   {{ grains.stateroot }}/bash/pr_bashrc
+    - source:   salt://bash/pr_bashrc
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644

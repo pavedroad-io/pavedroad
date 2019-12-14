@@ -247,7 +247,7 @@ golang-files:
 golang-test:
   file.managed:
     - name:     {{ golang_path }}/src/hello/hello.go
-    - source:   {{ grains.stateroot }}/golang/hello.go
+    - source:   salt://golang/hello.go
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - makedirs: True

@@ -59,7 +59,7 @@ git-bash-prompt:
 pr-bash-prompt:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_bash_prompt
-    - source:   {{ grains.stateroot }}/git/pr_bash_prompt
+    - source:   salt://git/pr_bash_prompt
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644

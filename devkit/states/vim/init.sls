@@ -70,14 +70,14 @@ vim-plugged:
 vimrc-plug:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_vimrc_plug
-    - source:   {{ grains.stateroot }}/vim/pr_vimrc_plug
+    - source:   salt://vim/pr_vimrc_plug
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
 vimrc-init:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_vimrc_init
-    - source:   {{ grains.stateroot }}/vim/pr_vimrc_init
+    - source:   salt://vim/pr_vimrc_init
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644

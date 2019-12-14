@@ -58,7 +58,6 @@ grain_names=(
 realuser
 realgroup
 homedir
-stateroot
 saltenv
 docker
 )
@@ -67,7 +66,6 @@ grain_values=(
 "$(id -un ${SUDO_UID})"
 "$(id -gn ${SUDO_UID})"
 "$(eval echo ~$(id -un ${SUDO_UID}))"
-"${saltdir}/states"
 dev
 "${docker}"
 )
@@ -88,6 +86,7 @@ echo Running in masterless mode: Ignore [ERROR   ] Got insufficient arguments ..
 
 salt-call \
     --config-dir "${saltdir}/config/" \
+    --pillar-root  "${saltdir}/pillar/" \
     --file-root  "${saltdir}/states/" \
     ${loglevel} ${output} ${verbose} \
     state.highstate ${dryrun} 2>/dev/null

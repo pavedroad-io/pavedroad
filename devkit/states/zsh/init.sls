@@ -17,9 +17,13 @@ zsh:
   {% if grains.cfg_zsh.zsh.version is defined %}
     - version:  {{ grains.cfg_zsh.zsh.version }}
   {% endif %}
+  file.directory:
+    - name:     {{ pillar.directories.completions.zsh }}
+    - makedirs: True
+    - mode:     755
 {% endif %}
 
-# Unlike bash, zsh completions are installed with zsh
+# Unlike bash, zsh completions are installed along with zsh
 # zsh-completions below are extra completions not yet in zsh repo
 {% if packages and 'completion' in packages %}
 completion:
