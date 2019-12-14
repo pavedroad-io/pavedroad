@@ -17,5 +17,10 @@ jq:
     - version:  {{ grains.cfg_jq.jq.version }}
   {% endif %}
 
+  {% if grains.cfg_jq.debug.enable %}
+jq-version:
+  cmd.run:
+    - name:     {{ jq_pkg_name }} --version
+  {% endif %}
 {% endif %}
 

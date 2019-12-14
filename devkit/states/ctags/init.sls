@@ -17,5 +17,10 @@ ctags:
     - version:  {{ grains.cfg_ctags.ctags.version }}
   {% endif %}
 
+  {% if grains.cfg_ctags.debug.enable %}
+ctags-version:
+  cmd.run:
+    - name:     {{ ctags_pkg_name }} --version
+  {% endif %}
 {% endif %}
 

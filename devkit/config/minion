@@ -15,6 +15,7 @@ grains:
     - ctags
     - direnv
     - docker
+    - fossa
     - git
     - golang
     - graphviz
@@ -106,6 +107,13 @@ grains:
     debug:
       enable: True
       host: tcp://host.docker.internal:2375
+  cfg_fossa:
+    installs:
+      - fossa
+    fossa:
+      version: latest
+    debug:
+      enable: True
   cfg_git:
     installs:
       - git
@@ -302,5 +310,7 @@ grains:
       append: True
     completion:
       append: True
+    debug:
+      enable: True
 
 # vim: filetype=yaml

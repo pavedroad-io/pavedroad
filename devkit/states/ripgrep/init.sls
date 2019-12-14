@@ -39,5 +39,10 @@ ripgrep:
     - version:  {{ grains.cfg_ripgrep.ripgrep.version }}
   {% endif %}
 
+  {% if grains.cfg_ripgrep.debug.enable %}
+ripgrep-version:
+  cmd.run:
+    - name:     {{ ripgrep_bin_name }} --version
+  {% endif %}
 {% endif %}
 

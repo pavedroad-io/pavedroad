@@ -3,7 +3,7 @@
 # saltenv = dev|stage|test|prod
 # os_family = debian|redhat|suse|macos|windows
 # roles = pr-golang
-# tops = base|bash|git|golang|vim
+# tops = specify options for each salt state
 #
 
 {{ saltenv }}:
@@ -52,6 +52,10 @@
   'G@saltenv:dev and G@tops:bash':
     - match: compound
     - bash
+
+  'G@saltenv:dev and G@tops:zsh':
+    - match: compound
+    - zsh
 
 #
 # Role specific packages
@@ -129,6 +133,6 @@
     - match: compound
     - ripgrep
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:zsh':
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:fossa':
     - match: compound
-    - zsh
+    - fossa
