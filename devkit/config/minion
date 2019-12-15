@@ -68,8 +68,12 @@ grains:
     putty:
       version: latest
   cfg_bash:
+    installs:
+      - bash
+    bash:
+      version: latest
     packages:
-      - completion
+      - bash-completion
     files:
       - bashrc
       - completion
@@ -302,7 +306,7 @@ grains:
     zsh:
       version: latest
     packages:
-      - completion
+      - zsh-completions
     files:
       - zshrc
       - completion

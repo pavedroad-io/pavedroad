@@ -70,6 +70,13 @@ include:
     {% endif %}
   {% endif %}
 
+pr-go-aliases:
+  file.managed:
+    - name:     {{ grains.homedir }}/.pr_go_aliases
+    - source:   salt://golang/pr_go_aliases
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
 pr-go-env:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_go_env
@@ -79,11 +86,23 @@ pr-go-env:
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
-append-bashrc-pr_env:
+append-pr_bashrc:
   file.append:
-    - name:     {{ grains.homedir }}/.bashrc
-    - text:     source $HOME/.pr_go_env
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     |
+                source $HOME/.pr_go_aliases
+                source $HOME/.pr_go_env
     - require:
+      - file:   pr-go-aliases
+      - file:   pr-go-env
+append-pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     |
+                source $HOME/.pr_go_aliases
+                source $HOME/.pr_go_env
+    - require:
+      - file:   pr-go-aliases
       - file:   pr-go-env
 golang:
   file.directory:

@@ -17,6 +17,25 @@ git:
   {% if grains.cfg_git.git.version is defined %}
     - version:  {{ grains.cfg_git.git.version }}
   {% endif %}
+pr-git-aliases:
+  file.managed:
+    - name:     {{ grains.homedir }}/.pr_git_aliases
+    - source:   salt://git/pr_git_aliases
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+append-pr_bashrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     source $HOME/.pr_git_aliases
+    - require:
+      - file:   pr-git-aliases
+append-pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     source $HOME/.pr_git_aliases
+    - require:
+      - file:   pr-git-aliases
 {% endif %}
 
 # MacOS - brew install git also installs git-completion.bash and git-prompt.sh

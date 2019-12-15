@@ -1,0 +1,53 @@
+# vim: filetype=sh
+
+# Source from .bashrc or .zshrc
+
+alias gad="git add"
+alias gbi="git bisect"
+alias gbr="git branch"
+alias gch="git checkout"
+alias gcl="git clone"
+alias gco="git commit"
+alias gdf="git diff"
+alias gft="git fetch"
+alias ggr="git grep"
+alias gin="git init"
+alias glg="git log"
+alias gmg="git merge"
+alias gmv="git mv"
+alias gpl="git pull"
+alias gps="git push"
+alias grb="git rebase"
+alias grs="git reset"
+alias grm="git rm"
+alias gsh="git show"
+alias gst="git status"
+alias gtg="git tag"
+alias gal="git_aliases"
+
+git_aliases() {
+cat << EOF
+Aliases for common git commands:
+gad - git add      -- add file contents to the index
+gbi - git bisect   -- find by binary search the change that introduced a bug
+gbr - git branch   -- list, create, or delete branches
+gch - git checkout -- checkout a branch or paths to the working tree
+gcl - git clone    -- clone a repository into a new directory
+gco - git commit   -- record changes to the repository
+gdf - git diff     -- show changes between commits, commit and working tree, etc
+gft - git fetch    -- download objects and refs from another repository
+ggr - git grep     -- print lines matching a pattern
+gin - git init     -- create an empty Git repository or reinitialize an existing one
+glg - git log      -- show commit logs
+gmg - git merge    -- join two or more development histories together
+gmv - git mv       -- move or rename a file, a directory, or a symlink
+gpl - git pull     -- fetch from and merge with another repository or a local branch
+gps - git push     -- update remote refs along with associated objects
+grb - git rebase   -- forward-port local commits to the updated upstream head
+grs - git reset    -- reset current HEAD to the specified state
+grm - git rm       -- remove files from the working tree and from the index
+gsh - git show     -- show various types of objects
+gst - git status   -- show the working tree status
+gtg - git tag      -- create, list, delete or verify a tag object signed with GPG
+EOF
+}

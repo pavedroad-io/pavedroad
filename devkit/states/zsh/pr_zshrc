@@ -1,6 +1,6 @@
 # vim: filetype=sh
 
-# Sourced by .bashrc
+# Sourced by .zshrc
 
 # Return if not interactive
 [ -z "$PS1" ] && return

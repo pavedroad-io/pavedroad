@@ -1,17 +1,29 @@
-# Sourced by .bash_profile
+# vim: filetype=sh
 
-# Return if not interactive
-[ -z "$PS1" ] && return
+# Sourced by .pr_bashrc
+
+# Set up bash completion
 
 case $OSTYPE in
     darwin*)
-        [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
-            "/usr/local/etc/profile.d/bash_completion.sh"
+        [[ -r /usr/local/etc/profile.d/bash_completion.sh ]] && \
+            sh /usr/local/etc/profile.d/bash_completion.sh
     ;;
     linux*)
         [[ -f /usr/share/bash-completion/bash_completion ]] && \
-            . /usr/share/bash-completion/bash_completion
+            source /usr/share/bash-completion/bash_completion
     ;;
     *)
     ;;
 esac
+
+# pavedroad bash completions are installed in this directory
+LOCAL_BASH_COMP_DIR=/usr/local/share/bash-completion/completions
+
+if [ -d $LOCAL_BASH_COMP_DIR ] && [ "$(ls -A $LOCAL_BASH_COMP_DIR)" ]
+then
+    for compfile in $LOCAL_BASH_COMP_DIR/*
+    do
+        source "$compfile"
+    done
+fi

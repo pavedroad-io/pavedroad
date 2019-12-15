@@ -1,0 +1,17 @@
+# vim: filetype=sh
+
+# Sourced by .pr_zshrc
+
+# Set up zsh completion
+autoload compinit
+zmodload -i zsh/complist
+
+# pavedroad zsh completions are installed in this directory
+LOCAL_ZSH_COMP_DIR=/usr/local/share/zsh/functions
+
+if [ -d $LOCAL_ZSH_COMP_DIR ] && [ "$(ls -A $LOCAL_ZSH_COMP_DIR)" ]
+then
+    fpath=($LOCAL_ZSH_COMP_DIR $fpath)
+    compinit -u
+fi
+
