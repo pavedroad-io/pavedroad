@@ -16,9 +16,9 @@
 
 | Generated Completion | Command |
 |:---------------------|:--------|
-| kompose  | kompose completion (bash|zsh) |
-| kubectl  | kubectl completion (bash|zsh) |
-| skaffold | skaffold completion (bash|zsh) |
+| kompose  | kompose completion (bash\|zsh) |
+| kubectl  | kubectl completion (bash\|zsh) |
+| skaffold | skaffold completion (bash\|zsh) |
 
 | Shell | Extra Completion Directory | Initialization |
 |:------|:---------------------------|:---------------|
