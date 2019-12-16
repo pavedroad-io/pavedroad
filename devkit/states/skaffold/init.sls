@@ -26,14 +26,9 @@
     {% set skaffold_path = '/snap/bin/' %}
   {% endif %}
 
-  {% if skaffold_snap_install or completion and 'bash' in completion %}
+  {% if skaffold_snap_install %}
 include:
-    {% if skaffold_snap_install %}
   - snapd
-    {% endif %}
-    {% if completion and 'bash' in completion %}
-  - bash
-    {% endif %}
   {% endif %}
 
 skaffold:
@@ -63,20 +58,27 @@ skaffold:
 # brew install skaffold also installs bash completion for skaffold
 # so we do not overwrite completion file
 
-  {% if completion and 'bash' in completion %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
-    {% else %}
-      {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
-    {% endif %}
-    {% set bash_comp_file = bash_comp_dir + 'skaffold' %}
+  {% if completion %}
+    {% if 'bash' in completion %}
+      {% set bash_comp_file = pillar.directories.completions.bash + '/skaffold' %}
 skaffold-bash-completion:
   cmd.run:
-    - name:     {{ skaffold_path }}skaffold completion bash > {{ bash_comp_file }}
+    - name:     |
+                mkdir -p {{ pillar.directories.completions.bash }}
+                {{ skaffold_path }}skaffold completion bash > {{ bash_comp_file }}
     - unless:   test -e {{ bash_comp_file }}
     - onlyif:   test -x {{ skaffold_path }}skaffold
-    - require:
-      - sls:    bash
+    {% endif %}
+    {% if 'zsh' in completion %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_skaffold' %}
+skaffold-zsh-completion:
+  cmd.run:
+    - name:     |
+                mkdir -p {{ pillar.directories.completions.zsh }}
+                {{ skaffold_path }}skaffold completion zsh > {{ zsh_comp_file }}
+    - unless:   test -e {{ zsh_comp_file }}
+    - onlyif:   test -x {{ skaffold_path }}skaffold
+    {% endif %}
   {% endif %}
 
   {% if grains.cfg_skaffold.debug.enable %}

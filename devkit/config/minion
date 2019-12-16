@@ -81,6 +81,8 @@ grains:
       append: True
     completion:
       append: True
+    debug:
+      enable: True
   cfg_ctags:
     installs:
       - ctags
@@ -129,6 +131,8 @@ grains:
       - zsh
     prompt:
       append: True
+    debug:
+      enable: True
   cfg_golang:
     installs:
       - golang
@@ -140,6 +144,7 @@ grains:
       - errcheck
       - fillstruct
       - gocode
+      - gocode-gomad
       - gocomplete
       - godef
       - gogetdoc
@@ -156,11 +161,12 @@ grains:
       - motion
       - iferr
       - swagger
+      - dep
     golang:
       version: latest
     completion:
-      - bash
-      - zsh
+      - gocomplete
+      - zchee-zsh
     debug:
       enable: True
   cfg_graphviz:
@@ -175,6 +181,8 @@ grains:
       - jq
     jq:
       version: latest
+    completion:
+      - zsh
     debug:
       enable: True
   cfg_kompose:
@@ -193,7 +201,7 @@ grains:
     kubebuilder:
       version: 2.0.1
     completion:
-      - None
+      - zsh
     debug:
       enable: True
   cfg_kubectl:
@@ -212,7 +220,7 @@ grains:
     kustomize:
       version: 3.1.0
     completion:
-      - None
+      - zsh
     debug:
       enable: True
   cfg_microk8s:
@@ -229,7 +237,6 @@ grains:
       version: latest
     completion:
       - bash
-      - zsh
     debug:
       enable: True
   cfg_nodejs:
@@ -244,6 +251,8 @@ grains:
   cfg_pip3:
     installs:
       - pip3
+    debug:
+      enable: True
   cfg_pretty_swag:
     installs:
       - pretty_swag
@@ -258,6 +267,8 @@ grains:
       - ripgrep
     ripgrep:
       version: latest
+    completion:
+      - zsh
     debug:
       enable: True
   cfg_roadctl:

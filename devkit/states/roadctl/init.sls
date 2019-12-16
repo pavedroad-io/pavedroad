@@ -19,11 +19,14 @@ include:
   {% elif grains.os_family == 'MacOS' %}
   - macos
   {% endif %}
-  {% if completion and 'bash' in completion %}
-  - bash
-  {% endif %}
 
 roadctl:
+  {# roadctl make file use which, missing in Suse #}
+  {% if grains.os_family == 'Suse' %}
+  pkg.installed:
+    - unless:   command -v which
+    - name:     which
+  {% endif %}
   git.latest:
     - unless:   command -v {{ roadctl_pkg_name }}
     - name:     {{ roadctl_url }}
@@ -45,23 +48,18 @@ roadctl:
     - skip_verify: True
     - mode:     755
 
+  {# roadctl only seems to support bash completion #}
   {% if completion and 'bash' in completion %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
-    {% else %}
-      {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
-    {% endif %}
     {% set roadctl_bash_comp_file = 'roadctlBashCompletion.sh' %}
-    {% set bash_comp_file = bash_comp_dir + roadctl_pkg_name %}
+    {% set bash_comp_file = pillar.directories.completions.bash + '/roadctl' %}
 roadctl-bash-completion:
   cmd.run:
     - name:     |
+                mkdir -p {{ pillar.directories.completions.bash }}
                 {{ roadctl_path }}{{ roadctl_pkg_name }} completion
                 mv {{ roadctl_bash_comp_file }} {{ bash_comp_file }}
     - unless:   test -e {{ bash_comp_file }}
     - onlyif:   test -x {{ roadctl_path }}{{ roadctl_pkg_name }}
-    - require:
-      - sls:    bash
   {% endif %}
 
   {% if grains.cfg_roadctl.debug.enable %}

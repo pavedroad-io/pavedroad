@@ -5,8 +5,8 @@
 
 {% if installs and 'kubebuilder' in installs %}
   {% set kubebuilder_pkg_name = 'kubebuilder' %}
+  {% set kubebuilder_path = '/usr/local/bin/' + kubebuilder_pkg_name %}
   {% set kubebuilder_binary_install = True %}
-  {% set kubebuilder_path = '/usr/local/bin/' %}
   {% set kubebuilder_tmp_dir = '/tmp' %}
   {% set kubebuilder_testdir = grains.gopath + '/src/testkubebuilder' %}
 
@@ -28,11 +28,6 @@
     {% set kubebuilder_url = kubebuilder_prefix + kubebuilder_version %}
   {% endif %}
 
-  {% if completion and 'bash' in completion %}
-include:
-  - bash
-  {% endif %}
-
 kubebuilder:
   {# tar file contains 4 binaries in /bin, only copy kubebuilder #}
   {% if kubebuilder_binary_install %}
@@ -45,7 +40,7 @@ kubebuilder:
     - skip_verify:    True
   file.managed:
     - unless:    command -v {{ kubebuilder_pkg_name }}
-    - name:      {{ kubebuilder_path }}{{ kubebuilder_pkg_name}}
+    - name:      {{ kubebuilder_path }}
     - source:    {{ kubebuilder_tmp_path }}{{ kubebuilder_pkg_name }}
     - mode:      755
   {% else %}
@@ -57,20 +52,18 @@ kubebuilder:
     {% endif %}
   {% endif %}
 
-  {% if completion and 'bash' in completion %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
-    {% else %}
-      {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
+  {% if completion %}
+    {# Cannot find bash completion #}
+    {% if 'zsh' in completion %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kubebuilder' %}
+kubebuilder-zsh-completion:
+  file.managed:
+    - name:     {{ zsh_comp_file }}
+    - source:   https://raw.githubusercontent.com/zchee/zsh-completions/master/src/go/_kubebuilder
+    - makedirs: True
+    - skip_verify: True
+    - replace:  False
     {% endif %}
-    {% set bash_comp_file = bash_comp_dir + 'kubebuilder' %}
-kubebuilder-bash-completion:
-  cmd.run:
-    - name:     {{ kubebuilder_path }}{{ kubebuilder_pkg_name }} completion bash > {{ bash_comp_file }}
-    - unless:   test -e {{ bash_comp_file }}
-    - onlyif:   test -x {{ kubebuilder_path }}{{ kubebuilder_pkg_name }}
-    - require:
-      - sls:    bash
   {% endif %}
 
   {% if grains.cfg_kubebuilder.debug.enable %}
@@ -80,7 +73,7 @@ kubebuilder-version:
     - name:     |
                 mkdir -p {{ kubebuilder_testdir }}
                 cd {{ kubebuilder_testdir }}
-                {{ kubebuilder_path }}{{ kubebuilder_pkg_name }} version
+                {{ kubebuilder_path }} version
                 rm -rf {{ kubebuilder_testdir }}
   {% endif %}
 {% endif %}

@@ -28,7 +28,8 @@ zshrc:
     - mode:     644
 
 {# Location where pavedroad installs local zsh completion files #}
-completion_dir:
+{# This includes the extra completions from zsh-users/zsh-completions #}
+zsh_completion_dir:
   file.directory:
     - name:     {{ pillar.directories.completions.zsh }}
     - makedirs: True
@@ -38,7 +39,7 @@ completion_dir:
 # Unlike bash, zsh completions are part of the zsh package install
 # zsh-completions here are extra completions not yet in the zsh package
 {% if packages and 'zsh-completions' in packages %}
-completion:
+zsh_completion:
   {% if grains.os_family == 'MacOS' %}
   pkg.installed:
     - name:     zsh-completions
@@ -50,19 +51,14 @@ completion:
     - target:      /tmp/zsh-completions
     - force_clone: True
   file.copy:
-    - name:     /usr/local/share/zsh-completions
+    - name:     {{ pillar.directories.completions.zsh }}
     - source:   /tmp/zsh-completions/src
-    - replace:  True
-  {% endif %}
-  {% if grains.cfg_zsh.debug.enable %}
-zsh-version:
-  cmd.run:
-    - name:     {{ zsh_pkg_name }} --version
+    - force:    True
   {% endif %}
 {% endif %}
 
 {% if files and 'completion' in files %}
-pr_completion:
+zsh-pr_completion:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_zsh_completion
     - source:   salt://zsh/pr_zsh_completion
@@ -80,12 +76,12 @@ pr_zshrc:
     - group:    {{ grains.realgroup }}
     - mode:     644
   {% if files and 'completion' in files and grains.cfg_zsh.completion.append %}
-append-source-completion:
+pr_zsh_completion:
   file.append:
     - name:     {{ grains.homedir }}/.pr_zshrc
     - text:     source $HOME/.pr_zsh_completion
     - require:
-      - file:   pr_completion
+      - file:   zsh-pr_completion
       - file:   pr_zshrc
   {% endif %}
 
@@ -96,5 +92,10 @@ append_source-zshrc:
     - text:     source $HOME/.pr_zshrc
     - require:
       - file:   zshrc
+  {% endif %}
+  {% if grains.cfg_zsh.debug.enable %}
+zsh-version:
+  cmd.run:
+    - name:     {{ zsh_pkg_name }} --version
   {% endif %}
 {% endif %}

@@ -34,4 +34,9 @@ pip3:
     - name:     /usr/bin/pip3
     - target:   /usr/bin/pip3.4
   {% endif %}
+  {% if grains.cfg_pip3.debug.enable %}
+pip3-version:
+  cmd.run:
+    - name:     pip3 --version
+  {% endif %}
 {% endif %}

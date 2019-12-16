@@ -19,13 +19,10 @@
     {% set multipass_snap_install = False %}
   {% endif %}
 
-  {% if multipass_supported and multipass_snap_install and snapd_required or completion and 'bash' in completion %}
-include:
+  {% if multipass_supported and multipass_snap_install and snapd_required %}
     {% if multipass_supported and multipass_snap_install and snapd_required %}
+include:
   - snapd
-    {% endif %}
-    {% if completion and 'bash' in completion %}
-  - bash
     {% endif %}
   {% endif %}
 
@@ -66,26 +63,20 @@ multipass:
       {% endif %}
     {% endif %}
 
+    {# Cannot find zsh completion #}
     {% if completion and 'bash' in completion %}
       {% set multipass_prefix = 'https://raw.githubusercontent.com/CanonicalLtd' %}
       {% set multipass_content = '/multipass/master/completions/bash/multipass' %}
       {% set multipass_comp_url = multipass_prefix + multipass_content %}
       {# brew cask install does not install completion #}
-      {% if grains.os_family == 'MacOS' %}
-        {% set bash_comp_dir = '/usr/local/etc/bash_completion.d' %}
-      {% else %}
-        {% set bash_comp_dir = '/usr/share/bash-completion/completions' %}
-      {% endif %}
 
 multipass-bash-completion:
   file.managed:
-    - name:     {{ bash_comp_dir }}/multipass
+    - name:     {{ pillar.directories.completions.bash }}/multipass
     - source:   {{ multipass_comp_url }}
     - makedirs: True
     - skip_verify: True
     - replace:  False
-    - require:
-      - sls:    bash
     {% endif %}
 
     {% if grains.cfg_multipass.debug.enable %}

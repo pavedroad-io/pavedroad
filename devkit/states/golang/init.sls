@@ -60,14 +60,9 @@
     {% set golang_exec = golang_root + '/go/bin' %}
   {% endif %}
 
-  {% if snapd_build_required or completion and 'bash' in completion %}
+  {% if snapd_build_required %}
 include:
-    {% if snapd_build_required %}
   - snapd
-    {% endif %}
-    {% if completion and 'bash' in completion %}
-  - bash
-    {% endif %}
   {% endif %}
 
 pr-go-aliases:
@@ -82,11 +77,16 @@ pr-go-env:
     - name:     {{ grains.homedir }}/.pr_go_env
     - contents: |
                 export GOPATH=$HOME/go
+  {% if grains.os_family == 'Suse' %}
+                export GOROOT=/usr/local/go
+                export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+  {% else %}
                 export PATH=$PATH:$GOPATH/bin
+  {% endif %}
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
-append-pr_bashrc:
+go-append-pr_bashrc:
   file.append:
     - name:     {{ grains.homedir }}/.pr_bashrc
     - text:     |
@@ -95,7 +95,7 @@ append-pr_bashrc:
     - require:
       - file:   pr-go-aliases
       - file:   pr-go-env
-append-pr_zshrc:
+go-append-pr_zshrc:
   file.append:
     - name:     {{ grains.homedir }}/.pr_zshrc
     - text:     |
@@ -226,12 +226,14 @@ chown-go-path:
       - cmd:    iferr
 {% endif %}
 
-# Uses gocomplete package installed above
-{% if completion and 'bash' in completion %}
-golang-bash-completion:
+{# Completion uses gocomplete package installed above #}
+{# Appends complete command line to .bash_profile and .zshrc #}
+{# Assume this overrides normal completion installed for bash and zsh #}
+{% if completion and 'gocomplete' in completion %}
+gocomplete-completion:
   cmd.run:
   {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
-  {% if grains.os_family == 'RedHat' %}
+  {% if not grains.docker and grains.os_family == 'RedHat' %}
     - name:     sudo -u {{ grains.realuser }} {{ golang_path }}/bin/gocomplete --install -y
   {% else %}
     - name:     {{ golang_path }}/bin/gocomplete --install -y
@@ -252,8 +254,16 @@ golang-bash-completion:
   {% else %}
     - success_retcodes: 3
   {% endif %}
-    - require:
-      - sls:    bash
+{% endif %}
+{% if completion and 'zchee-zsh' in completion %}
+zchee-zsh-completion:
+  git.latest:
+    - name:        https://github.com/zchee/zsh-completions.git
+    - branch:      master
+    - target:      /tmp/zchee
+    - force_clone: True
+  cmd.run:
+    - name:     cp -n /tmp/zchee/src/go/* {{ pillar.directories.completions.zsh }}
 {% endif %}
 
 {% if grains.cfg_golang.debug.enable %}

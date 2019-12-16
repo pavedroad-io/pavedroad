@@ -16,7 +16,7 @@ We get the following error with "pretty-swag -v"
   {% set pretty_swag_pkg_name = 'pretty-swag' %}
 
   {# If OS is Ubuntu, only install on 18.04+ #}
-  {% if (grains['os'] != 'Ubuntu') or (osmajorrelease >= 18) %}
+  {% if (grains.os != 'Ubuntu') or (osmajorrelease >= 18) %}
 pretty-swag-installed:
   npm.installed:
     - name:       {{ pretty_swag_pkg_name }}

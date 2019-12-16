@@ -23,11 +23,6 @@
     {% set kustomize_url = kustomize_prefix + kustomize_version %}
   {% endif %}
 
-  {% if completion and 'bash' in completion %}
-include:
-  - bash
-  {% endif %}
-
 kustomize:
   {% if kustomize_binary_install %}
   file.managed:
@@ -46,20 +41,18 @@ kustomize:
     {% endif %}
   {% endif %}
 
-  {% if completion and 'bash' in completion %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
-    {% else %}
-      {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
+  {% if completion %}
+    {# Cannot find bash completion #}
+    {% if 'zsh' in completion %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kustomize' %}
+kustomize-zsh-completion:
+  file.managed:
+    - name:     {{ zsh_comp_file }}
+    - source:   https://raw.githubusercontent.com/zchee/zsh-completions/master/src/go/_kustomize
+    - makedirs: True
+    - skip_verify: True
+    - replace:  False
     {% endif %}
-    {% set bash_comp_file = bash_comp_dir + 'kustomize' %}
-kustomize-bash-completion:
-  cmd.run:
-    - name:     {{ kustomize_path }}kustomize completion bash > {{ bash_comp_file }}
-    - unless:   test -e {{ bash_comp_file }}
-    - onlyif:   test -x {{ kustomize_path }}kustomize
-    - require:
-      - sls:    bash
   {% endif %}
 
   {% if grains.cfg_kustomize.debug.enable %}

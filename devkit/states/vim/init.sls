@@ -96,10 +96,10 @@ neovim-dep:
 vim-plugins:
   cmd.run:
     {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
-    {% if grains.os_family == 'RedHat' %}
+    {% if not grains.docker and grains.os_family == 'RedHat' %}
     - name:     sudo -u {{ grains.realuser }} {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
     {% else %}
-    - name:     {{ vim_path }}vim -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    - name:     {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
     {% endif %}
     {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
     {% if not grains.os_family == 'MacOS' %}

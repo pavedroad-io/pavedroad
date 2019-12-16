@@ -109,6 +109,10 @@
     - match: compound
     - nodejs
 
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:pretty-swag':
+    - match: compound
+    - pretty-swag
+
   'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
     - match: compound
     - skaffold

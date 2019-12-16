@@ -1,6 +1,7 @@
 # Install ripgrep
 
 {% set installs = grains.cfg_ripgrep.installs %}
+{% set completion = grains.cfg_ripgrep.completion %}
 {% set ripgrep_pkg_name = 'ripgrep' %}
 {% set ripgrep_bin_name = 'rg' %}
 
@@ -37,6 +38,19 @@ ripgrep:
     - name:     {{ ripgrep_pkg_name }}
   {% if grains.cfg_ripgrep.ripgrep.version is defined %}
     - version:  {{ grains.cfg_ripgrep.ripgrep.version }}
+  {% endif %}
+  {% if completion %}
+    {# Cannot find bash completion #}
+    {% if 'zsh' in completion %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_rg' %}
+rg-zsh-completion:
+  file.managed:
+    - name:     {{ zsh_comp_file }}
+    - source:   https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg
+    - makedirs: True
+    - skip_verify: True
+    - replace:  False
+    {% endif %}
   {% endif %}
 
   {% if grains.cfg_ripgrep.debug.enable %}

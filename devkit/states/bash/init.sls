@@ -27,7 +27,7 @@ bashrc:
     - group:    {{ grains.realgroup }}
     - mode:     644
 {# Location where pavedroad installs local bash completion files #}
-completion_dir:
+bash_completion_dir:
   file.directory:
     - name:     {{ pillar.directories.completions.bash }}
     - makedirs: True
@@ -35,7 +35,7 @@ completion_dir:
 {% endif %}
 
 {% if packages and 'bash-completion' in packages %}
-completion:
+bash_completion:
   pkg.installed:
     - name:     bash-completion
   {% if grains.os_family == 'MacOS' %}
@@ -46,7 +46,7 @@ completion:
 {% endif %}
 
 {% if files and 'completion' in files %}
-pr_completion:
+bash-pr_completion:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_bash_completion
     - source:   salt://bash/pr_bash_completion
@@ -64,12 +64,12 @@ pr_bashrc:
     - group:    {{ grains.realgroup }}
     - mode:     644
   {% if files and 'completion' in files and grains.cfg_bash.completion.append %}
-append-source-completion:
+pr_bash_completion:
   file.append:
     - name:     {{ grains.homedir }}/.pr_bashrc
     - text:     source $HOME/.pr_bash_completion
     - require:
-      - file:   pr_completion
+      - file:   bash-pr_completion
       - file:   pr_bashrc
   {% endif %}
 
@@ -81,5 +81,10 @@ append_source-bashrc:
     - require:
       - file:   bashrc
       - file:   pr_bashrc
+  {% endif %}
+  {% if grains.cfg_bash.debug.enable %}
+bash-version:
+  cmd.run:
+    - name:     {{ bash_pkg_name }} --version
   {% endif %}
 {% endif %}

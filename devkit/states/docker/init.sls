@@ -18,11 +18,6 @@
     {% set docker_pkg_name = 'docker.io' %}
   {% endif %}
 
-  {% if completion and 'bash' in completion %}
-include:
-  - bash
-  {% endif %}
-
 # MacOS - brew cask installs /Applications/Docker.app (client and server)
 
 docker:
@@ -78,58 +73,71 @@ compose:
 
 # MacOS - brew cask install docker does not install completions
 
-{% if completion and 'bash' in completion %}
-  {% set docker_prefix = 'https://raw.githubusercontent.com/docker' %}
-  {% set docker_content = '/cli/master/contrib/completion/bash/docker' %}
-  {% set docker_comp_url = docker_prefix + docker_content %}
+{% if completion %}
+  {% set docker_prefix = 'https://raw.githubusercontent.com/docker/' %}
+  {% set docker_content = 'cli/master/contrib/completion/' %}
   {# set compose_vers = salt.cmd.run('docker-compose version --short') #}
   {% set compose_vers = '1.18.0' %}
-  {% set compose_content = '/contrib/completion/bash/docker-compose' %}
-  {% set compose_comp_url = docker_prefix + '/compose/' + compose_vers + compose_content %}
-  {% if grains.os_family == 'MacOS' %}
-    {% set bash_comp_dir = '/usr/local/etc/bash_completion.d' %}
-  {% else %}
-    {% set bash_comp_dir = '/usr/share/bash-completion/completions' %}
-  {% endif %}
+  {% set compose_content = 'compose/' + compose_vers + '/contrib/completion/' %}
+  {% if 'bash' in completion %}
+    {% set docker_bash_url = docker_prefix + docker_content + 'bash/docker' %}
+    {% set compose_bash_url = docker_prefix + compose_content + 'bash/docker-compose' %}
 
 docker-bash-completion:
   file.managed:
-    - name:     {{ bash_comp_dir }}/docker
-    - source:   {{ docker_comp_url }}
+    - name:     {{ pillar.directories.completions.bash }}/docker
+    - source:   {{ docker_bash_url }}
     - makedirs: True
     - skip_verify: True
     - replace:  False
-    - require:
-      - sls:    bash
 compose-bash-completion:
   file.managed:
-    - name:     {{ bash_comp_dir }}/docker-compose
-    - source:   {{ compose_comp_url }}
+    - name:     {{ pillar.directories.completions.bash }}/docker-compose
+    - source:   {{ compose_bash_url }}
     - makedirs: True
     - skip_verify: True
     - replace:  False
-    - require:
-      - sls:    bash
+  {% endif %}
+
+  {% if 'zsh' in completion %}
+    {% set docker_zsh_url = docker_prefix + docker_content + 'zsh/_docker' %}
+    {% set compose_zsh_url = docker_prefix + compose_content + 'zsh/_docker-compose' %}
+
+docker-zsh-completion:
+  file.managed:
+    - name:     {{ pillar.directories.completions.zsh }}/_docker
+    - source:   {{ docker_zsh_url }}
+    - makedirs: True
+    - skip_verify: True
+    - replace:  False
+compose-zsh-completion:
+  file.managed:
+    - name:     {{ pillar.directories.completions.zsh }}/_docker-compose
+    - source:   {{ compose_zsh_url }}
+    - makedirs: True
+    - skip_verify: True
+    - replace:  False
+  {% endif %}
 {% endif %}
 
 # MacOS - docker links in /usr/local/bin are created when the Docker app is first run
 
 {% if installs and grains.cfg_docker.debug.enable %}
-  {% if not grains.os_family == 'MacOS' %}
 docker-version:
   cmd.run:
     - name:     docker --version
+compose-version:
+  cmd.run:
+    - name:     docker-compose --version
+docker-test:
+  cmd.run:
+    - name:     docker run hello-world
+  {% if not grains.os_family == 'MacOS' %}
 docker-group:
   cmd.run:
     - name:     grep docker /etc/group
 docker-files:
   cmd.run:
     - name:     ls -l /usr/bin/docker*
-docker-test:
-  cmd.run:
-    - name:     docker run hello-world
-compose-version:
-  cmd.run:
-    - name:     docker-compose --version
   {% endif %}
 {% endif %}
