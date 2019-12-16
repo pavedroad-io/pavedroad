@@ -25,4 +25,4 @@
 | motion        | https://github.com/fatih/motion            |
 | iferr         | https://github.com/koron/iferr             |
 | swagger       | https://github.com/go-swagger/go-swagger   |
-| dep           | https://github.com/golang/dep/cmd/dep      |
+| dep           | https://github.com/golang/dep              |
