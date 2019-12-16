@@ -7,7 +7,8 @@
 | asmfmt        | https://github.com/klauspost/asmfmt        |
 | errcheck      | https://github.com/kisielk/errcheck        |
 | fillstruct    | https://github.com/davidrjenni/reftools    |
-| gocode        | https://github.com/stamblerre/gocode       |
+| gocode        | https://github.com/mdempsky/gocode         |
+| gocode-gomod  | https://github.com/stamblerre/gocode       |
 | gocomplete    | https://github.com/posener/complete        |
 | godef         | https://github.com/rogpeppe/godef          |
 | gogetdoc      | https://github.com/zmb3/gogetdoc           |
@@ -24,3 +25,4 @@
 | motion        | https://github.com/fatih/motion            |
 | iferr         | https://github.com/koron/iferr             |
 | swagger       | https://github.com/go-swagger/go-swagger   |
+| dep           | https://github.com/golang/dep/cmd/dep      |
