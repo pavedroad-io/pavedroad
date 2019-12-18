@@ -166,7 +166,7 @@ grains:
       version: latest
     completion:
       - gocomplete
-      - zchee-zsh
+      - zsh-go
     debug:
       enable: True
   cfg_graphviz:
@@ -201,7 +201,7 @@ grains:
     kubebuilder:
       version: 2.0.1
     completion:
-      - zsh
+      - None
     debug:
       enable: True
   cfg_kubectl:
@@ -220,7 +220,7 @@ grains:
     kustomize:
       version: 3.1.0
     completion:
-      - zsh
+      - None
     debug:
       enable: True
   cfg_microk8s:
