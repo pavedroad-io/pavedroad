@@ -36,25 +36,23 @@ zsh_completion_dir:
     - mode:     755
 {% endif %}
 
-# Unlike bash, zsh completions are part of the zsh package install
-# zsh-completions here are extra completions not yet in the zsh package
+{# Unlike bash, zsh completions are part of the zsh package install #}
+{# The zsh-completion package has extra completions not yet in the zsh package #}
+{# Not using salt pkg.installed for zsh-completion package #}
+{# First, homebrew does not install in the directory structure we use #}
+{# Second, none of the linux package managers support the package #}
 {% if packages and 'zsh-completions' in packages %}
 zsh_completion:
-  {% if grains.os_family == 'MacOS' %}
-  pkg.installed:
-    - name:     zsh-completions
-    - unless:   brew list zsh-completions
-  {% else %}
   git.latest:
     - name:        https://github.com/zsh-users/zsh-completions.git
     - branch:      master
     - target:      /tmp/zsh-completions
     - force_clone: True
   file.copy:
-    - name:     {{ pillar.directories.completions.zsh }}
+    - name:     {{ pillar.directories.completions.zsh_extra }}
     - source:   /tmp/zsh-completions/src
+    - makedirs: True
     - force:    True
-  {% endif %}
 {% endif %}
 
 {% if files and 'completion' in files %}

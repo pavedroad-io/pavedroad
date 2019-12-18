@@ -1,7 +1,6 @@
 # Install kubebuilder
 
 {% set installs = grains.cfg_kubebuilder.installs %}
-{% set completion = grains.cfg_kubebuilder.completion %}
 
 {% if installs and 'kubebuilder' in installs %}
   {% set kubebuilder_pkg_name = 'kubebuilder' %}
@@ -49,20 +48,6 @@ kubebuilder:
     - name:     {{ kubebuilder_pkg_name }}
     {% if grains.cfg_kubebuilder.kubebuilder.version is defined %}
     - version:  {{ grains.cfg_kubebuilder.kubebuilder.version }}
-    {% endif %}
-  {% endif %}
-
-  {% if completion %}
-    {# Cannot find bash completion #}
-    {% if 'zsh' in completion %}
-      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kubebuilder' %}
-kubebuilder-zsh-completion:
-  file.managed:
-    - name:     {{ zsh_comp_file }}
-    - source:   https://raw.githubusercontent.com/zchee/zsh-completions/master/src/go/_kubebuilder
-    - makedirs: True
-    - skip_verify: True
-    - replace:  False
     {% endif %}
   {% endif %}
 

@@ -20,12 +20,18 @@ A bash bootstrap script must be downloaded to the target device
 and run to install the Development Kit.
 This script first installs _curl_, _git_ and _salt_ on the target device and then
 clones the PavedRoad Development Kit repository.
+
+See the information needed to perform this bootstrap: [Install](/devkit/INSTALL.md).
+
+## SaltStack
+
 SaltStack (in masterless mode) is used to install the development environment.
 Thus the bootstrap script runs _salt-call_ to apply the salt states in the cloned
 repository to the target device.
 Running the bootstrap script installs the complete development environment.
-
-See the information needed to perform this bootstrap: [Install](/devkit/INSTALL.md).
+The salt states generally use the local package manager to do the installations.
+In some cases a binary install is required in order to get a later version.
+Also a build from source is required for _vim_ to set the build options.
 
 ## Development Environment
 
@@ -110,6 +116,10 @@ See the complete list of packages installed: [Go Packages](/devkit/BOM_GO_PACKAG
 One of the most important pieces of development software is the _git_ system.
 The _git_ system has been enhanced by installing shell completions and vim plugins.
 Shell aliases are installed for _git_ as well as a shell prompt with _git_ features.
+The _git_ prompt is set up for both _bash_ and _zsh_ with three sections:
+the user@host, the current directory, and the git branch.
+The prompt is set up for both _bash_ and _zsh_ with green, blue and yellow
+colors respectively for the above three sections.
 
 ### Software
 

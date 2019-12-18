@@ -2,12 +2,14 @@
 
 source ~/.git-prompt.sh
 
+setopt promptsubst
+
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
 if [ "$color_prompt" = yes ]; then
-    PS1='[\[\033[01;32m\]\u@\h \[\033[01;34m\]\W\[\033[01;33m\]$(__git_ps1 " (%s)")\[\033[0m\]]\$ '
+    PS1='[%F{green}%n@%m %F{blue}%c%F{yellow}$(__git_ps1 " (%s)")%f]\$ '
 else
-    PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+    PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 fi

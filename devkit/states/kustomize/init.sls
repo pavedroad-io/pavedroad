@@ -1,7 +1,6 @@
 # Install kustomize
 
 {% set installs = grains.cfg_kustomize.installs %}
-{% set completion = grains.cfg_kustomize.completion %}
 
 {% if installs and 'kustomize' in installs %}
   {% set kustomize_pkg_name = 'kustomize' %}
@@ -38,20 +37,6 @@ kustomize:
     - name:     kustomize
     {% if grains.cfg_kustomize.kustomize.version is defined %}
     - version:  {{ grains.cfg_kustomize.kustomize.version }}
-    {% endif %}
-  {% endif %}
-
-  {% if completion %}
-    {# Cannot find bash completion #}
-    {% if 'zsh' in completion %}
-      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kustomize' %}
-kustomize-zsh-completion:
-  file.managed:
-    - name:     {{ zsh_comp_file }}
-    - source:   https://raw.githubusercontent.com/zchee/zsh-completions/master/src/go/_kustomize
-    - makedirs: True
-    - skip_verify: True
-    - replace:  False
     {% endif %}
   {% endif %}
 

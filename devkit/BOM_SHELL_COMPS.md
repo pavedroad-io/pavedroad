@@ -1,10 +1,9 @@
-| Completion Packages| Website |
+| Completion Package | Website |
 |:-------------------|:--------|
 | bash-completion    | https://github.com/scop/bash-completion |
 | zsh Completion     | https://github.com/zsh-users/zsh/tree/master/Completion |
 | zsh-completions    | https://github.com/zsh-users/zsh-completions/tree/master/src |
-| go zsh completions | https://github.com/zchee/zsh-completions/tree/master/src/go |
-
+| go-zsh-completions | https://github.com/zchee/zsh-completions/tree/master/src/go |
 
 | Command Completion | Website |
 |:-------------------|:--------|
@@ -20,7 +19,15 @@
 | kubectl  | kubectl completion (bash\|zsh) |
 | skaffold | skaffold completion (bash\|zsh) |
 
-| Shell | Extra Completion Directory | Initialization |
-|:------|:---------------------------|:---------------|
-| bash  | /usr/local/share/bash-completion/completions | ~/.pr_bash_completion |
-| zsh   | /usr/local/share/zsh/functions               | ~/.pr_zsh_completion |
+| Shell | Initialization Script |
+|:------|:--------------------- |
+| bash  | ~/.pr_bash_completion |
+| zsh   | ~/.pr_zsh_completion  |
+
+| Completion Type    | New completion directories created by devkit |
+|:-------------------|:---------------------------------------------|
+| created bash files | /usr/local/share/bash/completions/pavedroad |
+| created zsh files  | /usr/local/share/zsh/completions/pavedroad |
+| zsh-completions    | /usr/local/share/zsh/completions/extra |
+| go-zsh-completions | /usr/local/share/zsh/completions/go |
+

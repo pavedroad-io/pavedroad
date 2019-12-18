@@ -66,7 +66,7 @@ kubectl-bash-completion:
     - onlyif:   test -x {{ kubectl_path }}kubectl
     {% endif %}
     {% if 'zsh' in completion %}
-      {% set zsh_comp_file = pillar.directories.completions.zsh + '_kubectl' %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kubectl' %}
 kubectl-zsh-completion:
   cmd.run:
     - name:     |

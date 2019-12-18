@@ -2,28 +2,53 @@
 
 # Sourced by .pr_bashrc
 
-# Set up bash completion
+# Setting up bash completion
+#
+# Completion functionality requires that bash be version 4 or later.
+# The pavedroad devkit installs the bash-completion package
+#   and installs additional individual completion files
+#   in /usr/local/share/bash/completions/pavedroad.
+#
+# For macOS see:
+#   https://docs.brew.sh/Shell-Completion
+# macOS does not allow installs over commands in /bin and /usr/bin.
+# The homebrew package manager installs in /usr/local/bin by default.
+# In order to chsh to a later version of bash in /usr/local/bin
+#   the line "/usr/local/bin/bash" must be added to /etc/shells.
+# Homebrew installs the bash-completion@2 package in /usr/local/share with
+#   the completion files in /usr/local/share/bash-completion/completions.
+# Homebrew installs additional individual completion files
+#   in /usr/local/etc/bash_completion.d.
+#
+# For linux see:
+#   https://github.com/scop/bash-completion
+# Package managers install the bash-completion package in /usr/share with
+#   the completion files in /usr/share/bash-completion/completions.
 
 case $OSTYPE in
     darwin*)
-        [[ -r /usr/local/etc/profile.d/bash_completion.sh ]] && \
-            sh /usr/local/etc/profile.d/bash_completion.sh
+        if type brew &>/dev/null; then
+            HOMEBREW_PREFIX="$(brew --prefix)"
+            if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+                source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+            fi
+            for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+                [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+            done
+        fi
     ;;
     linux*)
         [[ -f /usr/share/bash-completion/bash_completion ]] && \
             source /usr/share/bash-completion/bash_completion
+        for COMPLETION in /etc/bash_completion.d/*; do
+            [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+        done
     ;;
     *)
     ;;
 esac
 
-# pavedroad bash completions are installed in this directory
-LOCAL_BASH_COMP_DIR=/usr/local/share/bash-completion/completions
+for COMPLETION in /usr/local/share/bash/completions/pavedroad/*; do
+    [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+done
 
-if [ -d $LOCAL_BASH_COMP_DIR ] && [ "$(ls -A $LOCAL_BASH_COMP_DIR)" ]
-then
-    for compfile in $LOCAL_BASH_COMP_DIR/*
-    do
-        source "$compfile"
-    done
-fi

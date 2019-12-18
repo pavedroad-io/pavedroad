@@ -41,7 +41,7 @@ git-append-pr_zshrc:
   {% set git_content = '/git/master/contrib/completion' %}
   {% set git_prompt_url = git_prefix + git_content + '/git-prompt.sh' %}
 
-git-bash-prompt:
+git-prompt:
   file.managed:
     - name:     {{ grains.homedir }}/.git-prompt.sh
     - source:   {{ git_prompt_url }}
@@ -50,7 +50,7 @@ git-bash-prompt:
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
-pr-bash-prompt:
+pr_bash_prompt:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_bash_prompt
     - source:   salt://git/pr_bash_prompt
@@ -58,14 +58,31 @@ pr-bash-prompt:
     - group:    {{ grains.realgroup }}
     - mode:     644
   {% if grains.cfg_git.prompt.append %}
-append-source-prompt:
+pr_bashrc:
   file.append:
     - name:     {{ grains.homedir }}/.pr_bashrc
     - text:     source $HOME/.pr_bash_prompt
     - require:
-      - file:   git-bash-prompt
-      - file:   pr-bash-prompt
+      - file:   git-prompt
+      - file:   pr_bash_prompt
   {% endif %}
+pr_zsh_prompt:
+  file.managed:
+    - name:     {{ grains.homedir }}/.pr_zsh_prompt
+    - source:   salt://git/pr_zsh_prompt
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
+  {% if grains.cfg_git.prompt.append %}
+pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     source $HOME/.pr_zsh_prompt
+    - require:
+      - file:   git-prompt
+      - file:   pr_zsh_prompt
+  {% endif %}
+
   {% if grains.cfg_git.debug.enable %}
 git-version:
   cmd.run:

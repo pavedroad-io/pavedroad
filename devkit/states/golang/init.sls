@@ -255,15 +255,17 @@ gocomplete-completion:
     - success_retcodes: 3
   {% endif %}
 {% endif %}
-{% if completion and 'zchee-zsh' in completion %}
+{% if completion and 'zsh-go' in completion %}
 zchee-zsh-completion:
   git.latest:
     - name:        https://github.com/zchee/zsh-completions.git
     - branch:      master
     - target:      /tmp/zchee
     - force_clone: True
-  cmd.run:
-    - name:     cp -n /tmp/zchee/src/go/* {{ pillar.directories.completions.zsh }}
+  file.copy:
+    - name:     {{ pillar.directories.completions.zsh_go }}
+    - source:   /tmp/zchee/src/go
+    - makedirs: True
 {% endif %}
 
 {% if grains.cfg_golang.debug.enable %}
