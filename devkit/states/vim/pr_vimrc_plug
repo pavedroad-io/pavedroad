@@ -9,8 +9,8 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'zchee/deoplete-go'
-
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+Plug 'SirVer/ultisnips'
 Plug 'fatih/vim-go'
 
 if !has('nvim')
@@ -30,7 +30,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'wincent/ferret'
 Plug 'majutsushi/tagbar'
-Plug 'SirVer/ultisnips'
 
 call plug#end()
 

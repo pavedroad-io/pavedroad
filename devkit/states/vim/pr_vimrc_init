@@ -6,20 +6,20 @@ source ~/.pr_vimrc_plug
 "---------------------
 " Run deoplete automatically
 let g:deoplete#enable_at_startup = 1
-" Tell deoplete.nvim when to call omnifunc
-call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
-" deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+call deoplete#custom#source('go', 'min_pattern_length', 2)
+call deoplete#custom#source('go', 'rank', 200)
+call deoplete#custom#var('omni', 'input_patterns', { 'go': '[^. *\t]\.\w*' })
 
 "------------------
-" zchee/deoplete-go
+" deoplete-plugins/deoplete-go
 "------------------
 " neocomplete like
 set completeopt+=noinsert
 " deoplete.nvim recommend
 set completeopt+=noselect
+"
 " deoplete-go settings
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode-gomod'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 "-------------
@@ -51,9 +51,9 @@ let g:go_test_timeout = '10s'
 let g:go_test_prepend_name = 1
 
 " Default: highlight all instances of identifier under cursor
-let g:go_auto_sameids = 0
+" let g:go_auto_sameids = 0
 " Default: do not show :GoInfo for word under cursor
-let g:go_auto_type_info = 0
+" let g:go_auto_type_info = 0
 " Default: echo info about Go commands like :GoBuild, :GoTest, :GoCoverage
 let g:go_echo_command_info = 1
 
@@ -257,6 +257,7 @@ nmap <leader>nt :NERDTreeFind<CR>
 let g:airline_statusline_ontop=0
 " Default: do not display all buffers when only one tab open
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
 nmap <S-F9> :AirlineToggle<CR>
 
 "-------------------
@@ -309,9 +310,6 @@ nmap <S-F10> :TagbarToggle<CR>
 "-----------------
 " SirVer/ultisnips
 "-----------------
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
 let g:UltiSnipsEditSplit="vertical"
 " Map UltiSnips open edit window

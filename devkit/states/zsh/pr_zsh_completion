@@ -14,7 +14,7 @@
 # In this case the dumped configuration must be manually removed:
 #   rm -f ~/.zcompdump
 
-# The pavedroad devkit installs completions in the following directors:
+# The pavedroad devkit installs completions in the following directories:
 
 # Individual completion files:
 ZSH_COMP_PR=/usr/local/share/zsh/completions/pavedroad
@@ -26,7 +26,7 @@ ZSH_COMP_EX=/usr/local/share/zsh/completions/extra
 
 # Additional go completion files:
 ZSH_COMP_GO=/usr/local/share/zsh/completions/go
-# See https://github.com/zchee/zsh-completions
+# See https://github.com/zchee/go-zsh-completions
 
 autoload compinit
 zmodload -i zsh/complist
