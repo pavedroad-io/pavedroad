@@ -166,32 +166,32 @@ golang:
   {% endif %}
 
   {% load_yaml as go_tools %}
-  godep:        github.com/tools/godep
-  dlv:          github.com/go-delve/delve/cmd/dlv
-  golint:       golang.org/x/lint/golint
-  gosec:        github.com/securego/gosec/cmd/gosec
-  asmfmt:       github.com/klauspost/asmfmt/cmd/asmfmt
-  errcheck:     github.com/kisielk/errcheck
-  fillstruct:   github.com/davidrjenni/reftools/cmd/fillstruct
-  gocode:       github.com/mdempsky/gocode
-  gocode-gomod: github.com/stamblerre/gocode
-  gocomplete:   github.com/posener/complete/gocomplete
-  godef:        github.com/rogpeppe/godef
-  gogetdoc:     github.com/zmb3/gogetdoc
-  goimports:    golang.org/x/tools/cmd/goimports
-  gopls:        golang.org/x/tools/cmd/gopls
-  gometalinter: github.com/alecthomas/gometalinter
+  asmfmt:        github.com/klauspost/asmfmt/cmd/asmfmt
+  dep:           github.com/golang/dep/cmd/dep
+  dlv:           github.com/go-delve/delve/cmd/dlv
+  errcheck:      github.com/kisielk/errcheck
+  fillstruct:    github.com/davidrjenni/reftools/cmd/fillstruct
+  gocode-gomod:  github.com/stamblerre/gocode
+  gocode:        github.com/mdempsky/gocode
+  gocomplete:    github.com/posener/complete/gocomplete
+  godef:         github.com/rogpeppe/godef
+  godep:         github.com/tools/godep
+  gogetdoc:      github.com/zmb3/gogetdoc
+  goimports:     golang.org/x/tools/cmd/goimports
   golangci-lint: github.com/golangci/golangci-lint/cmd/golangci-lint
-  gomodifytags: github.com/fatih/gomodifytags
-  gorename:     golang.org/x/tools/cmd/gorename
-  gotags:       github.com/jstemmer/gotags
-  guru:         golang.org/x/tools/cmd/guru
-  impl:         github.com/josharian/impl
-  keyify:       honnef.co/go/tools/cmd/keyify
-  motion:       github.com/fatih/motion
-  iferr:        github.com/koron/iferr
-  swagger:      github.com/go-swagger/go-swagger/cmd/swagger
-  dep:          github.com/golang/dep/cmd/dep
+  golint:        golang.org/x/lint/golint
+  gometalinter:  github.com/alecthomas/gometalinter
+  gomodifytags:  github.com/fatih/gomodifytags
+  gopls:         golang.org/x/tools/cmd/gopls
+  gorename:      golang.org/x/tools/cmd/gorename
+  gosec:         github.com/securego/gosec/cmd/gosec
+  gotags:        github.com/jstemmer/gotags
+  guru:          golang.org/x/tools/cmd/guru
+  iferr:         github.com/koron/iferr
+  impl:          github.com/josharian/impl
+  keyify:        honnef.co/go/tools/cmd/keyify
+  motion:        github.com/fatih/motion
+  swagger:       github.com/go-swagger/go-swagger/cmd/swagger
   {% endload %}
 
   {% for key in go_tools %}
