@@ -16,6 +16,7 @@ grains:
     - direnv
     - docker
     - fossa
+    - fzf
     - git
     - golang
     - graphviz
@@ -113,6 +114,16 @@ grains:
     debug:
       enable: True
       host: tcp://host.docker.internal:2375
+  cfg_fzf:
+    installs:
+      - fzf
+    fzf:
+      version: latest
+    completion:
+      - bash
+      - zsh
+    debug:
+      enable: True
   cfg_fossa:
     installs:
       - fossa

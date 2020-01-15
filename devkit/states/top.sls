@@ -137,6 +137,10 @@
     - match: compound
     - ripgrep
 
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:fzf':
+    - match: compound
+    - fzf
+
   'G@saltenv:dev and G@roles:pr-golang and G@tops:fossa':
     - match: compound
     - fossa
