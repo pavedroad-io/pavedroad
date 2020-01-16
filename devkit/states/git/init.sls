@@ -58,7 +58,7 @@ pr_bash_prompt:
     - group:    {{ grains.realgroup }}
     - mode:     644
   {% if grains.cfg_git.prompt.append %}
-pr_bashrc:
+pr_bashrc-git:
   file.append:
     - name:     {{ grains.homedir }}/.pr_bashrc
     - text:     source $HOME/.pr_bash_prompt
@@ -74,7 +74,7 @@ pr_zsh_prompt:
     - group:    {{ grains.realgroup }}
     - mode:     644
   {% if grains.cfg_git.prompt.append %}
-pr_zshrc:
+pr_zshrc-git:
   file.append:
     - name:     {{ grains.homedir }}/.pr_zshrc
     - text:     source $HOME/.pr_zsh_prompt
