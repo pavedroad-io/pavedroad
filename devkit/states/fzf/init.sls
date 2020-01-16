@@ -2,21 +2,10 @@
 
 {% set installs = grains.cfg_fzf.installs %}
 {% set completion = grains.cfg_fzf.completion %}
-{% set fzf_pkg_name = 'fzf' %}
 
 {% if installs and 'fzf' in installs %}
-
-fzf:
-  pkg.installed:
-  {% if grains.os_family == 'MacOS' %}
-    - unless:   brew list {{ fzf_pkg_name }}
-  {% else %}
-    - unless:   command -v {{ fzf_pkg_name }}
-  {% endif %}
-    - name:     {{ fzf_pkg_name }}
-  {% if grains.cfg_fzf.fzf.version is defined %}
-    - version:  {{ grains.cfg_fzf.fzf.version }}
-  {% endif %}
+{# fzf is installed using "go get" in golang/init.sls #}
+{# Only completion files are installed here #}
   {% if completion %}
     {% if 'bash' in completion %}
       {% set bash_comp_file = pillar.directories.completions.bash + '/fzf' %}
@@ -38,12 +27,6 @@ fzf-zsh-completion:
     - skip_verify: True
     - replace:  False
     {% endif %}
-  {% endif %}
-
-  {% if grains.cfg_fzf.debug.enable %}
-fzf-version:
-  cmd.run:
-    - name:     {{ fzf_pkg_name }} --version
   {% endif %}
 {% endif %}
 

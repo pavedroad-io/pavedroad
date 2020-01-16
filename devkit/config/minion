@@ -117,13 +117,9 @@ grains:
   cfg_fzf:
     installs:
       - fzf
-    fzf:
-      version: latest
     completion:
       - bash
       - zsh
-    debug:
-      enable: True
   cfg_fossa:
     installs:
       - fossa
@@ -147,32 +143,33 @@ grains:
   cfg_golang:
     installs:
       - golang
-      - godep
-      - dlv
-      - golint
-      - gosec
       - asmfmt
+      - dep
+      - dlv
       - errcheck
       - fillstruct
+      - fzf
       - gocode
-      - gocode-gomad
+      - gocode-gomod
       - gocomplete
       - godef
+      - godep
       - gogetdoc
       - goimports
-      - gopls
-      - gometalinter
       - golangci-lint
+      - golint
+      - gometalinter
       - gomodifytags
+      - gopls
       - gorename
+      - gosec
       - gotags
       - guru
+      - iferr
       - impl
       - keyify
       - motion
-      - iferr
       - swagger
-      - dep
     golang:
       version: latest
     completion:
