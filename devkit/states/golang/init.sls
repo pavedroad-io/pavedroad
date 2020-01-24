@@ -80,9 +80,8 @@ pr-go-env:
     - name:     {{ grains.homedir }}/.pr_go_env
     - contents: |
                 export GOPATH=$HOME/go
-  {% if grains.os_family == 'Suse' %}
-                export GOROOT=/usr/local/go
-                export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+  {% if golang_install == 'binary' %}
+                export PATH=$PATH:{{ golang_exec }}:$GOPATH/bin
   {% else %}
                 export PATH=$PATH:$GOPATH/bin
   {% endif %}
@@ -245,33 +244,19 @@ chown-go-path:
 {% endif %}
 
 {# Completion uses gocomplete package installed above #}
-{# Appends complete command line to .bash_profile and .zshrc #}
+{# Appends complete command lines to .pr_bashrc and .pr_zshrc #}
 {# Assume this overrides normal completion installed for bash and zsh #}
 {% if completion and 'gocomplete' in completion %}
-gocomplete-completion:
-  cmd.run:
-  {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
-  {% if not grains.docker and grains.os_family == 'RedHat' %}
-    - name:     sudo -u {{ grains.realuser }} {{ golang_bin }}/gocomplete --install -y
-  {% else %}
-    - name:     {{ golang_bin }}/gocomplete --install -y
-  {% endif %}
-  {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
-  {% if not grains.os_family == 'MacOS' %}
-    - runas:    {{ grains.realuser }}
-    {# Salt requires sudo for "group" here, so MacOS and Docker excluded #}
-    {% if not grains.docker %}
-    - group:    {{ grains.realgroup }}
-    {% endif %}
-  {% endif %}
-  {# gocomplete returns exit code 3 if already installed #}
-  {# Suse has version 2018.3.0 of salt without success_retcodes #}
-  {% if grains.os_family == 'Suse' %}
-    - check_cmd:
-      - /bin/true
-  {% else %}
-    - success_retcodes: 3
-  {% endif %}
+gocomplete-bash-completion:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     complete -C $HOME/go/bin/gocomplete go
+gocomplete-zsh-completion:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     |
+                autoload -U +X bashcompinit && bashcompinit
+                complete -o nospace -C $HOME/go/bin/gocomplete go
 {% endif %}
 {% if completion and 'zsh-go' in completion %}
 zchee-zsh-completion:
