@@ -82,7 +82,9 @@ echo
 echo Applying salt states for the developemt kit now
 echo Please be patient as this process may take 5 to 10 minutes
 echo To see progress: tail -f pr-root/var/log/salt/minion
-echo Running in masterless mode: Ignore [ERROR   ] Got insufficient arguments ...
+echo Running in masterless mode: Ignore the following:
+echo     [ERROR   ] Got insufficient arguments ...
+echo     [INFO    ] Although 'dmidecode' was found in path ...
 
 salt-call \
     --config-dir "${saltdir}/config/" \
