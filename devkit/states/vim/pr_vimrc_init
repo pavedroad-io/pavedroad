@@ -4,6 +4,7 @@ source ~/.pr_vimrc_plug
 "-----------------------
 " airblade/vim-gitgutter
 "-----------------------
+" TODO disables default key maps why
 let g:gitgutter_map_keys = 0
 let g:gitgutter_max_signs = 1000
 let g:gitgutter_realtime = 0
@@ -55,6 +56,7 @@ let g:go_test_prepend_name = 1
 " Default: highlight all instances of identifier under cursor
 " let g:go_auto_sameids = 0
 " Default: do not show :GoInfo for word under cursor
+" TODO Enable if you do not find it too slow
 " let g:go_auto_type_info = 0
 " Default: echo info about Go commands like :GoBuild, :GoTest, :GoCoverage
 let g:go_echo_command_info = 1
@@ -127,6 +129,7 @@ augroup go
   autocmd FileType go nnoremap <silent> <C-c> :cclose<CR>
 
   autocmd FileType go nmap     <silent> <leader>gae <Plug>(go-alternate-edit)
+  autocmd FileType go nnoremap <silent> <leader>gat :GoAddTags<CR>
   autocmd FileType go nmap     <silent> <leader>gb :<C-u>call <SID>build_go_files()<CR>
   autocmd FileType go nnoremap <silent> <leader>gcb :GoCoverageBrowser<CR>
   autocmd FileType go nmap     <silent> <leader>gce <Plug>(go-callees)
@@ -157,8 +160,9 @@ augroup go
   autocmd FileType go nmap     <silent> <leader>gm <Plug>(go-metalinter)
   autocmd FileType go nmap     <silent> <leader>gpt <Plug>(go-pointsto)
   autocmd FileType go nmap     <silent> <leader>gr <Plug>(go-run)
-  autocmd FileType go nmap     <silent> <leader>grf <Plug>(go-referrers)
   autocmd FileType go nmap     <silent> <leader>gre <Plug>(go-rename)
+  autocmd FileType go nmap     <silent> <leader>grf <Plug>(go-referrers)
+  autocmd FileType go nnoremap <silent> <leader>grt :GoRemoveTags<CR>
   autocmd FileType go nnoremap <silent> <leader>gs :GoSameIdsToggle<CR>
   autocmd FileType go nmap     <silent> <leader>gt <Plug>(go-test)
   autocmd FileType go nmap     <silent> <leader>gtf <Plug>(go-test-func)
@@ -169,12 +173,31 @@ augroup go
   autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabedit')
+
+  " Shorter mappings for more common vim-go commands
+  " TODO why M instead of m? why u instead of f? why y instead of k?
+  autocmd FileType go nmap     <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
+  autocmd FileType go nmap     <silent> <leader>c <Plug>(go-coverage-toggle)
+  autocmd FileType go nnoremap <silent> <leader>C :GoCoverageBrowser<CR>
+  autocmd FileType go nmap     <silent> <leader>d <Plug>(go-doc)
+  autocmd FileType go nmap     <silent> <leader>D <Plug>(go-doc-browser)
+  autocmd FileType go nmap     <silent> <leader>e <Plug>(go-iferr)
+  autocmd FileType go nmap     <silent> <leader>i <Plug>(go-implements)
+  autocmd FileType go nnoremap <silent> <leader>I :GoImpl<CR>
+  autocmd FileType go nmap     <silent> <leader>M <Plug>(go-metalinter)
+  autocmd FileType go nmap     <silent> <leader>r <Plug>(go-run)
+  autocmd FileType go nmap     <silent> <leader>R <Plug>(go-rename)
+  autocmd FileType go nmap     <silent> <leader>t <Plug>(go-test-func)
+  autocmd FileType go nnoremap <silent> <leader>u :GoFillStruct<CR>
+  autocmd FileType go nnoremap <silent> <leader>y :GoKeyify<CR>
+
 augroup END
 
 "----------------------
 " itchyny/lightline.vim
 "----------------------
 set laststatus=2
+set updatetime=100
 set noshowmode " mode shown in lightline status
 
 let g:lightline = {
@@ -202,13 +225,18 @@ endfunction
 "-----------------
 let g:fzf_layout = { 'down': '~50%' }
 
-" search 
-nmap <C-p> :History<cr>
-imap <C-p> <esc>:<C-u>zfHistory<cr>
-
-" search across files in the current directory
-nmap <C-b> :zfFiles<cr>
-imap <C-b> <esc>:<C-u>zfFiles<cr>
+" TODO changed some of these, okay or not?
+noremap <leader>zb :BCommits<CR>
+noremap <leader>zc :Commits<CR>
+noremap <leader>zC :Commands<CR>
+noremap <leader>zcl :Colors<CR>
+noremap <leader>zf :Files<CR>
+noremap <leader>zt :Filetypes<CR>
+noremap <leader>zg :GFiles?<CR>
+noremap <leader>zh :History:<CR>
+noremap <leader>zl :Lines<CR>
+noremap <leader>zm :Maps<CR>
+noremap <leader>zs :Snippets<CR>
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
@@ -249,9 +277,12 @@ noremap <leader>nt :NERDTreeFind<CR>
 " SirVer/ultisnips
 "-----------------
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"  
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
-let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" TODO the plugged directory is for plugins
+" does this even need to be set?
+" let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
+" let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
 let g:UltiSnipsEditSplit="vertical"
 " Map UltiSnips open edit window
 nmap <leader>se :UltiSnipsEdit<cr>
@@ -296,6 +327,13 @@ let g:FerretExecutableArguments = {
 
 " Don't bind ferret commands.
 let g:FerretMap = 0
+
+" Highlight search 1 true 0 false
+let g:FerretHlsearch = 1
+
+" match only on word boundaries
+" 1 true 0 false
+let g:FerretAckWordWord = 0
 
 " Don't hide cursor line in quickfix.
 let g:FerretQFOptions = 0
