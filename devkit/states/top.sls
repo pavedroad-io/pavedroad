@@ -73,6 +73,7 @@
     - match: compound
     - golang
 
+# vim.sls depends on files installed by golang.sls
   'G@saltenv:dev and G@roles:pr-golang and G@tops:vim':
     - match: compound
     - vim
@@ -137,6 +138,7 @@
     - match: compound
     - ripgrep
 
+# fzf.sls depends on files installed by vim.sls
   'G@saltenv:dev and G@roles:pr-golang and G@tops:fzf':
     - match: compound
     - fzf

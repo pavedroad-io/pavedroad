@@ -185,7 +185,6 @@ golang-bin:
   dlv:           github.com/go-delve/delve/cmd/dlv
   errcheck:      github.com/kisielk/errcheck
   fillstruct:    github.com/davidrjenni/reftools/cmd/fillstruct
-  fzf:           github.com/junegunn/fzf
   gocode:        github.com/mdempsky/gocode
   gocode-gomod:  github.com/stamblerre/gocode
   gocomplete:    github.com/posener/complete/gocomplete

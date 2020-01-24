@@ -200,16 +200,15 @@ endfunction
 "-----------------
 " junegunn/fzf.vim
 "-----------------
-let g:fzf_command_prefix = 'Fzf'
-let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'down': '~50%' }
 
 " search 
-nmap <C-p> :FzfHistory<cr>
-imap <C-p> <esc>:<C-u>FzfHistory<cr>
+nmap <C-p> :History<cr>
+imap <C-p> <esc>:<C-u>zfHistory<cr>
 
 " search across files in the current directory
-nmap <C-b> :FzfFiles<cr>
-imap <C-b> <esc>:<C-u>FzfFiles<cr>
+nmap <C-b> :zfFiles<cr>
+imap <C-b> <esc>:<C-u>zfFiles<cr>
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"

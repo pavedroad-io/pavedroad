@@ -4,12 +4,21 @@
 {% set completion = grains.cfg_fzf.completion %}
 
 {% if installs and 'fzf' in installs %}
-{# fzf is installed using "go get" in golang/init.sls #}
-{# Only completion files and the man page are installed here #}
+  {% set fzf_plugin = grains.homedir + '/.vim/plugged/fzf' %}
+{# fzf is installed using vim-plug in vim/init.sls #}
+{# The binary, completion files and the man page are copied as needed #}
+fzf-binary:
+  file.managed:
+    - name:        /usr/local/bin/fzf
+    - source:      {{ fzf_plugin }}/bin/fzf
+    - makedirs:    True
+    - skip_verify: True
+    - replace:     True
+    - mode:        755
 fzf-man-page:
   file.managed:
     - name:        /usr/local/share/man/man1/fzf.1
-    - source:      https://github.com/junegunn/fzf/blob/master/man/man1/fzf.1
+    - source:      {{ fzf_plugin }}/man/man1/fzf.1
     - makedirs:    True
     - skip_verify: True
     - replace:     True
@@ -19,7 +28,7 @@ fzf-man-page:
 fzf-bash-completion:
   file.managed:
     - name:        {{ bash_comp_file }}
-    - source:      https://github.com/junegunn/fzf/blob/master/shell/completion.bash
+    - source:      {{ fzf_plugin }}/shell/completion.bash
     - makedirs:    True
     - skip_verify: True
     - replace:     True
@@ -29,11 +38,19 @@ fzf-bash-completion:
 fzf-zsh-completion:
   file.managed:
     - name:        {{ zsh_comp_file }}
-    - source:      https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
+    - source:      {{ fzf_plugin }}/shell/completion.zsh
     - makedirs:    True
     - skip_verify: True
     - replace:     True
     {% endif %}
   {% endif %}
+fzf-append-pr_bashrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     source $HOME/.vim/plugged/fzf/shell/key-bindings.bash 2> /dev/null
+fzf-append-pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     source $HOME/.vim/plugged/fzf/shell/key-bindings.zsh 2> /dev/null
 {% endif %}
 
