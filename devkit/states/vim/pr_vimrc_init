@@ -4,7 +4,9 @@ source ~/.pr_vimrc_plug
 "-----------------------
 " airblade/vim-gitgutter
 "-----------------------
+"This disables default key maps why
 let g:gitgutter_map_keys = 0
+
 let g:gitgutter_max_signs = 1000
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
@@ -127,6 +129,8 @@ augroup go
   autocmd FileType go nnoremap <silent> <C-c> :cclose<CR>
 
   autocmd FileType go nmap     <silent> <leader>gae <Plug>(go-alternate-edit)
+  autocmd FileType go nnoremap <silent> <leader>gat :GoAddTags<CR>
+  autocmd FileType go nnoremap <silent> <leader>grt :GoRemoveTags<CR>
   autocmd FileType go nmap     <silent> <leader>gb :<C-u>call <SID>build_go_files()<CR>
   autocmd FileType go nnoremap <silent> <leader>gcb :GoCoverageBrowser<CR>
   autocmd FileType go nmap     <silent> <leader>gce <Plug>(go-callees)
@@ -198,7 +202,7 @@ endfunction
 " junegunn/fzf.vim
 "-----------------
 let g:fzf_command_prefix = 'Fzf'
-let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'down': '~50%' }
 
 " search 
 nmap <C-p> :FzfHistory<cr>
@@ -207,6 +211,36 @@ imap <C-p> <esc>:<C-u>FzfHistory<cr>
 " search across files in the current directory
 nmap <C-b> :FzfFiles<cr>
 imap <C-b> <esc>:<C-u>FzfFiles<cr>
+
+" Select a color to display
+noremap <leader>zC :Colors<CR>
+
+" Show commits in all buffers
+noremap <leader>zc :Commits<CR>
+
+" Show commits in his buffer
+noremap <leader>zbc :BCommits<CR>
+
+" Show snippets for this file type
+noremap <leader>zs :Snippets<CR>
+
+" Show file types
+noremap <leader>zf :Filetypes<CR>
+
+" Show Maps
+noremap <leader>zm :Maps<CR>
+
+" Show Commands
+noremap <leader>zcmd :Commands<CR>
+
+" Search lines in all buffers
+noremap <leader>zl :Lines<CR>
+
+" Search git files with preview
+noremap <leader>zg :GFiles?<CR>
+
+" Search vim command history
+noremap <leader>zh :History:<CR>
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
@@ -247,9 +281,10 @@ noremap <leader>nt :NERDTreeFind<CR>
 " SirVer/ultisnips
 "-----------------
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"  
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
-let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsListSnippets="<c-z>"
+let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
 let g:UltiSnipsEditSplit="vertical"
 " Map UltiSnips open edit window
 nmap <leader>se :UltiSnipsEdit<cr>
@@ -295,6 +330,13 @@ let g:FerretExecutableArguments = {
 " Don't bind ferret commands.
 let g:FerretMap = 0
 
+" Highlight search 1 true 0 false
+let g:FerretHlsearch = 1
+
+" match only on word boundaries
+" 1 true 0 false
+let g:FerretAckWordWord = 0
+
 " Don't hide cursor line in quickfix.
 let g:FerretQFOptions = 0
 
@@ -321,4 +363,99 @@ let g:NERDTreeIndicatorMapCustom = {
 	\ 'Unknown'   : '?'
 \ }
 
+set rtp+=~/.fzf
+
+" JMS vimrc
+" write file before :make, :GoBuild, :GoTest|Func, :GoRun 
+set autowrite
+"
+"" use \r to execut :GoRun
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+" run :GoBuild or :GoTestCompile based on the go file
+" assumes func.go vs func_test.go
+"
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+" When \b is selected execut build_go function
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+
+" When \c is entered, call :GoCoverageToggle
+" assumes func.go vs func_test.go
+autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+
+" By default go-vim uses gofmt when saving files
+" This tells it to use goimports for extended checking
+" of imported packages
+let g:go_fmt_command = "goimports"
+
+" color scheme
+let g:rehash256 = 1
+let g:molokai_original = 1
+colorscheme molokai
+
+" linting
+"
+" Note: golangci-lint is what is used under the hood
+"       may want to see if there are other options we
+"       should be using
+"
+" uncomment if you want to limit linting on autosave
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gosec']
+
+" Automatically show :GoInfo for the word under
+" the cursor.  Disable if you find it to slow
+let g:go_auto_type_info = 1
+
+" Sets vim status bar refresh rate
+" Reducing it from default of 800 to 100ms
+set updatetime=100
+
+"w Alternwate window splits
+nnoremap <leader>w <C-w>w
+
+"e Generate error handling :GoIfErr
+autocmd FileType go nmap <leader>e <Plug>(go-iferr)
+
+"r Rename :GoRename[!] [to]
+autocmd FileType go nmap <leader>r <Plug>(go-rename)
+
+"t Test function :GoTestFunc[!] [expand]
+autocmd FileType go nmap <leader>t <Plug>(go-test-func)
+
+"y Keyify struct literals :GoKeyify
+nnoremap <Leader>y :GoKeyify<CR>
+
+"u Fill struct with defaults :GoFillStruct
+nnoremap <Leader>u :GoFillStruct<CR>
+
+"i List interfaces implemented :GoImplements
+autocmd FileType go nmap <leader>i <Plug>(go-implements)
+
+"I Stub interface methods :GoImpl [receiver] [interface]
+nnoremap <Leader>I :GoImpl<CR>
+
+"d Show doc :GoDoc [word]
+autocmd FileType go nmap <leader>d <Plug>(go-doc)
+"D Browse doc :GoDocBrowser [word]
+autocmd FileType go nmap <leader>D <Plug>(go-doc-browser)
+
+"w Close window split
+nnoremap <leader>x <C-w>c
+
+"c Toggle coverage :GoCoverageToggle[!] [options]
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+"
+"C Browse coverage :GoCoverageBrowser[!] [options]
+nnoremap <Leader>C :GoCoverageBrowser<CR>
+"
+"m Meta linter :GoMetaLinter [path]
+autocmd FileType go nmap <leader>M <Plug>(go-metalinter)
 " vim: filetype=vim
