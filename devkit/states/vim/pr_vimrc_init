@@ -178,17 +178,20 @@ set laststatus=2
 set noshowmode " mode shown in lightline status
 
 let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ], [ 'go' ] ]
-      \ },
-      \ 'component': {
-      \   'go': '%#goStatuslineColor#%{LightlineGo()}',
-      \ },
-      \ 'component_type': {
-      \   'go': 'raw',
-      \ },
-      \ }
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste', 'readonly' ],
+  \             [ 'gitbranch', 'filename', 'modified' ], [ 'gostatus' ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'fugitive#head',
+  \ },
+  \ 'component': {
+  \   'gostatus': '%#goStatuslineColor#%{LightlineGo()}',
+  \ },
+  \ 'component_type': {
+  \   'gostatus': 'raw',
+  \ },
+  \ }
 
 function! LightlineGo()
   return exists('*go#statusline#Show') ? go#statusline#Show() : ''
@@ -309,16 +312,16 @@ nmap <leader>fs <Plug>(FerretAcks)
 "----------------------------
 " Override the default symbols
 let g:NERDTreeIndicatorMapCustom = {
-	\ 'Modified'  : 'M',
-	\ 'Staged'    : 'S',
-	\ 'Untracked' : '*',
-	\ 'Renamed'   : 'R',
-	\ 'Unmerged'  : 'U',
-	\ 'Deleted'   : '!',
-	\ 'Dirty'     : 'D',
-	\ 'Clean'     : 'C',
-	\ 'Ignored'   : 'I',
-	\ 'Unknown'   : '?'
+  \ 'Modified'  : 'M',
+  \ 'Staged'    : 'S',
+  \ 'Untracked' : '*',
+  \ 'Renamed'   : 'R',
+  \ 'Unmerged'  : 'U',
+  \ 'Deleted'   : '!',
+  \ 'Dirty'     : 'D',
+  \ 'Clean'     : 'C',
+  \ 'Ignored'   : 'I',
+  \ 'Unknown'   : '?'
 \ }
 
 " vim: filetype=vim

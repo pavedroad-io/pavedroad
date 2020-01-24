@@ -7,7 +7,7 @@
   {% set kubebuilder_path = '/usr/local/bin/' + kubebuilder_pkg_name %}
   {% set kubebuilder_binary_install = True %}
   {% set kubebuilder_tmp_dir = '/tmp' %}
-  {% set kubebuilder_testdir = grains.gopath + '/src/testkubebuilder' %}
+  {% set kubebuilder_testdir = grains.homedir + '/go/src/testkubebuilder' %}
 
   {% if kubebuilder_binary_install %}
     {% if grains.cfg_kubebuilder.kubebuilder.version is defined %}
