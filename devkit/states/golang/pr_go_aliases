@@ -12,10 +12,15 @@ alias gfmt='go fmt'
 alias ggen='go generate'
 alias gget='go get'
 alias ghlp='go help'
+alias gimp='goimports'
 alias gins='go install'
+alias glci='golangci-lint'
 alias glst='go list'
 alias gmod='go mod'
+alias gmtg='gomodifytags'
+alias gren='gorename'
 alias grun='go run'
+alias gtag='gotags'
 alias gtst='go test'
 alias gtoo='go tool'
 alias gver='go version'
@@ -23,29 +28,34 @@ alias gvet='go vet'
 alias gpth='cd $GOPATH'
 alias gbin='cd $GOPATH/bin'
 alias gsrc='cd $GOPATH/src'
-alias gali="go_aliases"
 
+alias gali="go_aliases"
 go_aliases() {
 cat << EOF
 Aliases for common go commands:
-gbug - go bug      -- start a bug report
-gbld - go build    -- compile packages and dependencies
-gcle - go clean    -- remove object files and cached files
-gdoc - go doc      -- show documentation for package or symbol
-genv - go env      -- print Go environment information
-gfix - go fix      -- update packages to use new APIs
-gfmt - go fmt      -- gofmt (reformat) package sources
-ggen - go generate -- generate Go files by processing source
-gget - go get      -- download and install packages and dependencies
-ghlp - go help     -- get more information about a command
-gins - go install  -- compile and install packages and dependencies
-glst - go list     -- list packages or modules
-gmod - go mod      -- module maintenance
-grun - go run      -- compile and run Go program
-gtst - go test     -- test packages
-gtoo - go tool     -- run specified go tool
-gver - go version  -- print Go version
-gvet - go vet      -- report likely mistakes in packages
+gbug - go bug        -- start a bug report
+gbld - go build      -- compile packages and dependencies
+gcle - go clean      -- remove object files and cached files
+gdoc - go doc        -- show documentation for package or symbol
+genv - go env        -- print Go environment information
+gfix - go fix        -- update packages to use new APIs
+gfmt - go fmt        -- gofmt (reformat) package sources
+ggen - go generate   -- generate Go files by processing source
+gget - go get        -- download and install packages and dependencies
+ghlp - go help       -- get more information about a command
+gimp - goimports     -- format code and add/remove import lines
+gins - go install    -- compile and install packages and dependencies
+glci - golangci-lint -- run newer lint aggregator
+glst - go list       -- list packages or modules
+gmod - go mod        -- module maintenance
+gmtg - gomodifytags  -- add or update field tags in structs
+gren - gorename      -- perform type-safe renaming of Go identifiers
+grun - go run        -- compile and run Go program
+gtag - gotags        -- generate ctags compatible tags for Go files
+gtst - go test       -- test packages
+gtoo - go tool       -- run specified go tool
+gver - go version    -- print Go version
+gvet - go vet        -- report likely mistakes in packages
 gpth - cd $GOPATH
 gbin - cd $GOPATH/bin
 gsrc - cd $GOPATH/src

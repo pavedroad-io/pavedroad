@@ -4,6 +4,7 @@
 
 alias gad="git add"
 alias gbi="git bisect"
+alias gbl="git blame"
 alias gbr="git branch"
 alias gch="git checkout"
 alias gcl="git clone"
@@ -23,13 +24,14 @@ alias grm="git rm"
 alias gsh="git show"
 alias gst="git status"
 alias gtg="git tag"
-alias gal="git_aliases"
 
+alias gal="git_aliases"
 git_aliases() {
 cat << EOF
 Aliases for common git commands:
 gad - git add      -- add file contents to the index
 gbi - git bisect   -- find by binary search the change that introduced a bug
+gbl - git blame    -- show last revision and author for each line in a file
 gbr - git branch   -- list, create, or delete branches
 gch - git checkout -- checkout a branch or paths to the working tree
 gcl - git clone    -- clone a repository into a new directory
