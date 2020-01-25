@@ -132,32 +132,34 @@ augroup go
   autocmd FileType go nnoremap <silent> <leader>gat :GoAddTags<CR>
   autocmd FileType go nmap     <silent> <leader>gb :<C-u>call <SID>build_go_files()<CR>
   autocmd FileType go nnoremap <silent> <leader>gcb :GoCoverageBrowser<CR>
-  autocmd FileType go nmap     <silent> <leader>gce <Plug>(go-callees)
-  autocmd FileType go nmap     <silent> <leader>gcp <Plug>(go-channelpeers)
-  autocmd FileType go nmap     <silent> <leader>gcr <Plug>(go-callers)
-  autocmd FileType go nmap     <silent> <leader>gcs <Plug>(go-callstack)
   autocmd FileType go nmap     <silent> <leader>gct <Plug>(go-coverage-toggle)
   autocmd FileType go nnoremap <silent> <leader>gd :GoDecls<CR>
+  autocmd FileType go nnoremap <silent> <leader>gdb :GoDebugStart<CR>
+  autocmd FileType go nmap     <silent> <leader>gdc <Plug>(go-doc)
   autocmd FileType go nnoremap <silent> <leader>gdd :GoDeclsDir<CR>
   autocmd FileType go nmap     <silent> <leader>gde <Plug>(go-describe)
   autocmd FileType go nnoremap <silent> <leader>gdf :GoDef<CR>
-  autocmd FileType go nmap     <silent> <leader>gdoc <Plug>(go-doc)
-  autocmd FileType go nmap     <silent> <leader>gdocb <Plug>(go-doc-browser)
-  autocmd FileType go nmap     <silent> <leader>gdocv <Plug>(go-doc-vertical)
-  autocmd FileType go nnoremap <silent> <leader>gdp :GoDefPop<CR>
+  autocmd FileType go nmap     <silent> <leader>gdp <Plug>(go-deps)
+  autocmd FileType go nnoremap <silent> <leader>gdr :GoDrop<CR>
   autocmd FileType go nmap     <silent> <leader>gds <Plug>(go-def-split)
-  autocmd FileType go nmap     <silent> <leader>gdsc <Plug>(go-def-stack-clear)
-  autocmd FileType go nmap     <silent> <leader>gdst <Plug>(go-def-stack)
   autocmd FileType go nmap     <silent> <leader>gdt <Plug>(go-def-tab)
   autocmd FileType go nmap     <silent> <leader>gdv <Plug>(go-def-vertical)
+  autocmd FileType go nnoremap <silent> <leader>gec :GoErrCheck<CR>
+  autocmd FileType go nmap     <silent> <leader>gf <Plug>(go-files)
   autocmd FileType go nnoremap <silent> <leader>gfs :GoFillStruct<CR>
   autocmd FileType go nmap     <silent> <leader>gfv <Plug>(go-freevars)
   autocmd FileType go nmap     <silent> <leader>gi <Plug>(go-install)
-  autocmd FileType go nmap     <silent> <leader>gif <Plug>(go-iferr)
-  autocmd FileType go nnoremap <silent> <leader>gim :GoImpl<CR>
+  autocmd FileType go nmap     <silent> <leader>gie <Plug>(go-iferr)
+  autocmd FileType go nmap     <silent> <leader>gim <Plug>(go-imports)
   autocmd FileType go nmap     <silent> <leader>gin <Plug>(go-info)
+  autocmd FileType go nmap     <silent> <leader>gip <Plug>(go-import)
   autocmd FileType go nnoremap <silent> <leader>gk :GoKeyify<CR>
+  autocmd FileType go nmap     <silent> <leader>gl <Plug>(go-lint)
   autocmd FileType go nmap     <silent> <leader>gm <Plug>(go-metalinter)
+  autocmd FileType go nnoremap <silent> <leader>gmp :GoImpl<CR>
+  autocmd FileType go nmap     <silent> <leader>gms <Plug>(go-implements)
+  autocmd FileType go nnoremap <silent> <leader>gp :GoPath<CR>
+  autocmd FileType go nnoremap <silent> <leader>gpl :GoPlay<CR>
   autocmd FileType go nmap     <silent> <leader>gpt <Plug>(go-pointsto)
   autocmd FileType go nmap     <silent> <leader>gr <Plug>(go-run)
   autocmd FileType go nmap     <silent> <leader>gre <Plug>(go-rename)
@@ -166,6 +168,7 @@ augroup go
   autocmd FileType go nnoremap <silent> <leader>gs :GoSameIdsToggle<CR>
   autocmd FileType go nmap     <silent> <leader>gt <Plug>(go-test)
   autocmd FileType go nmap     <silent> <leader>gtf <Plug>(go-test-func)
+  autocmd FileType go nmap     <silent> <leader>gv <Plug>(go-vet)
   autocmd FileType go nnoremap <silent> <leader>gwe :GoWhicherrs<CR>
 
   " :GoAlternate between implementation/test code, like main.go and main_test.go
@@ -200,6 +203,7 @@ set laststatus=2
 set updatetime=100
 set noshowmode " mode shown in lightline status
 
+" %< in fileformat compresses long status lines from that point
 let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'mode', 'paste', 'readonly' ],
@@ -210,6 +214,7 @@ let g:lightline = {
   \ },
   \ 'component': {
   \   'gostatus': '%#goStatuslineColor#%{LightlineGo()}',
+  \   'fileformat': '%<%{&ff}',
   \ },
   \ 'component_type': {
   \   'gostatus': 'raw',
@@ -223,20 +228,32 @@ endfunction
 "-----------------
 " junegunn/fzf.vim
 "-----------------
+" TODO had to add prefix back due to command name conflicts
+" Thus added mapping for all of the fzf commands
+let g:fzf_command_prefix="Fzf"
 let g:fzf_layout = { 'down': '~50%' }
 
-" TODO changed some of these, okay or not?
-noremap <leader>zb :BCommits<CR>
-noremap <leader>zc :Commits<CR>
-noremap <leader>zC :Commands<CR>
-noremap <leader>zcl :Colors<CR>
-noremap <leader>zf :Files<CR>
-noremap <leader>zt :Filetypes<CR>
-noremap <leader>zg :GFiles?<CR>
-noremap <leader>zh :History:<CR>
-noremap <leader>zl :Lines<CR>
-noremap <leader>zm :Maps<CR>
-noremap <leader>zs :Snippets<CR>
+noremap <leader>za :FzfAg<CR>
+noremap <leader>zb :FzfBCommits<CR>
+noremap <leader>zbl :FzfBLines<CR>
+noremap <leader>zbt :FzfBTags<CR>
+noremap <leader>zbu :FzfBuffers<CR>
+noremap <leader>zc :FzfCommits<CR>
+noremap <leader>zC :FzfCommands<CR>
+noremap <leader>zco :FzfColors<CR>
+noremap <leader>zf :FzfFiles<CR>
+noremap <leader>zft :FzfFiletypes<CR>
+noremap <leader>zg :FzfGFiles?<CR>
+noremap <leader>zh :FzfHistory<CR>
+noremap <leader>zht :FzfHelptags<CR>
+noremap <leader>zl :FzfLines<CR>
+noremap <leader>zlo :FzfLocate<CR>
+noremap <leader>zm :FzfMaps<CR>
+noremap <leader>zmk :FzfMarks<CR>
+noremap <leader>zr :FzfRg<CR>
+noremap <leader>zs :FzfSnippets<CR>
+noremap <leader>zt :FzfTags<CR>
+noremap <leader>zw :FzfWindows<CR>
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
