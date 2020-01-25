@@ -235,21 +235,21 @@ let g:fzf_layout = { 'down': '~50%' }
 
 noremap <leader>za :FzfAg<CR>
 noremap <leader>zb :FzfBCommits<CR>
+noremap <leader>zB :FzfBuffers<CR>
 noremap <leader>zbl :FzfBLines<CR>
 noremap <leader>zbt :FzfBTags<CR>
-noremap <leader>zbu :FzfBuffers<CR>
 noremap <leader>zc :FzfCommits<CR>
 noremap <leader>zC :FzfCommands<CR>
 noremap <leader>zco :FzfColors<CR>
 noremap <leader>zf :FzfFiles<CR>
-noremap <leader>zft :FzfFiletypes<CR>
+noremap <leader>zF :FzfFiletypes<CR>
 noremap <leader>zg :FzfGFiles?<CR>
 noremap <leader>zh :FzfHistory<CR>
-noremap <leader>zht :FzfHelptags<CR>
+noremap <leader>zH :FzfHelptags<CR>
 noremap <leader>zl :FzfLines<CR>
-noremap <leader>zlo :FzfLocate<CR>
+noremap <leader>zL :FzfLocate<CR>
 noremap <leader>zm :FzfMaps<CR>
-noremap <leader>zmk :FzfMarks<CR>
+noremap <leader>zM :FzfMarks<CR>
 noremap <leader>zr :FzfRg<CR>
 noremap <leader>zs :FzfSnippets<CR>
 noremap <leader>zt :FzfTags<CR>
