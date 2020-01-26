@@ -6,6 +6,7 @@
 | docker         | https://www.docker.com                    |
 | docker-compose | https://docs.docker.com/compose           |
 | fossa-cli      | https://github.com/fossas/fossa-cli       |
+| fzf            | https://github.com/junegunn/fzf           |
 | git            | https://git-scm.com                       |
 | golang         | https://golang.org                        |
 | graphviz       | https://www.graphviz.org                  |
