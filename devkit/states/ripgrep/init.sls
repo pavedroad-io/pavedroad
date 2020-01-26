@@ -2,13 +2,30 @@
 
 {% set installs = grains.cfg_ripgrep.installs %}
 {% set completion = grains.cfg_ripgrep.completion %}
-{% set ripgrep_pkg_name = 'ripgrep' %}
-{% set ripgrep_bin_name = 'rg' %}
 
 {% if installs and 'ripgrep' in installs %}
+  {% set ripgrep_pkg_name = 'ripgrep' %}
+  {% set ripgrep_bin_name = 'rg' %}
+  {% set ripgrep_snap_install = False %}
+  {% set osmajorrelease = grains.osmajorrelease | int %}
+  {% if not grains.docker and (grains.os == 'Ubuntu') and (osmajorrelease >= 19) %}
+    {% set ripgrep_snap_install = True %}
+    {% set ripgrep_bin_name = '/snap/bin/rg' %}
+  {% endif %}
+
+  {% if ripgrep_snap_install %}
+include:
+  - snapd
+  {% endif %}
 
 ripgrep:
-  {% if grains.os_family in ('Debian', 'RedHat', 'Suse') %}
+  {% if ripgrep_snap_install %}
+  cmd.run:
+    - require:
+      - sls:    snapd
+    - unless:   snap list | grep ripgrep
+    - name:     snap install ripgrep --classic
+  {% elif grains.os_family in ('Debian', 'RedHat', 'Suse') %}
   pkgrepo.managed:
     {% if grains.os_family == 'Debian' %}
     - ppa:      x4121/ripgrep
