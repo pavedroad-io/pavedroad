@@ -23,6 +23,14 @@ direnv:
     - version:  {{ grains.cfg_direnv.direnv.version }}
     {% endif %}
   {% endif %}
+direnv-append-pr_bashrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     eval "$(direnv hook bash)"
+direnv-append-pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     eval "$(direnv hook zsh)"
 
   {% if grains.cfg_direnv.debug.enable %}
 direnv-version:
