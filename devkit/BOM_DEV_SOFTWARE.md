@@ -22,6 +22,7 @@
 | pip3           | https://pip.pypa.io                       |
 | pretty-swag    | https://github.com/twskj/pretty-swag      |
 | ripgrep        | https://github.com/BurntSushi/ripgrep     |
+| roadctl        | https://github.com/pavedroad-io/roadctl   |
 | skaffold       | https://skaffold.dev                      |
 | snap           | https://snapcraft.io                      |
 | vim            | https://www.vim.org                       |

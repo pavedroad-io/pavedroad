@@ -10,14 +10,19 @@
 | docker        | https://github.com/docker/cli/tree/master/contrib/completion/bash |
 | docker-compose| https://github.com/docker/compose/tree/master/contrib/completion/bash |
 | git           | https://github.com/git/git/tree/master/contrib/completion/git-completion.bash |
+| fzf           | https://github.com/junegunn/fzf/tree/master/shell |
 | go            | https://github.com/posener/complete |
+| jq            | https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/\_jq |
 | multipass     | https://github.com/CanonicalLtd/multipass/tree/master/completions/bash |
+| ripgrep       | https://github.com/BurntSushi/ripgrep/blob/master/complete/\_rg |
 
 | Generated Completion | Command |
 |:---------------------|:--------|
 | kompose  | kompose completion (bash\|zsh) |
 | kubectl  | kubectl completion (bash\|zsh) |
+| roadctl  | roadctl completion |
 | skaffold | skaffold completion (bash\|zsh) |
+Note: roadctl only creates a bash completion file, not stdout, see roadctl help
 
 | Shell | Initialization Script |
 |:------|:--------------------- |
