@@ -4,7 +4,6 @@ source ~/.pr_vimrc_plug
 "-----------------------
 " airblade/vim-gitgutter
 "-----------------------
-" TODO disables default key maps why
 let g:gitgutter_map_keys = 0
 let g:gitgutter_max_signs = 1000
 let g:gitgutter_realtime = 0
@@ -54,10 +53,9 @@ let g:go_test_timeout = '10s'
 let g:go_test_prepend_name = 1
 
 " Default: highlight all instances of identifier under cursor
-" let g:go_auto_sameids = 0
+let g:go_auto_sameids = 0
 " Default: do not show :GoInfo for word under cursor
-" TODO Enable if you do not find it too slow
-" let g:go_auto_type_info = 0
+let g:go_auto_type_info = 1
 " Default: echo info about Go commands like :GoBuild, :GoTest, :GoCoverage
 let g:go_echo_command_info = 1
 
@@ -178,21 +176,20 @@ augroup go
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabedit')
 
   " Shorter mappings for more common vim-go commands
-  " TODO why M instead of m? why u instead of f? why y instead of k?
   autocmd FileType go nmap     <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
   autocmd FileType go nmap     <silent> <leader>c <Plug>(go-coverage-toggle)
   autocmd FileType go nnoremap <silent> <leader>C :GoCoverageBrowser<CR>
   autocmd FileType go nmap     <silent> <leader>d <Plug>(go-doc)
   autocmd FileType go nmap     <silent> <leader>D <Plug>(go-doc-browser)
   autocmd FileType go nmap     <silent> <leader>e <Plug>(go-iferr)
+  autocmd FileType go nnoremap <silent> <leader>f :GoFillStruct<CR>
   autocmd FileType go nmap     <silent> <leader>i <Plug>(go-implements)
   autocmd FileType go nnoremap <silent> <leader>I :GoImpl<CR>
-  autocmd FileType go nmap     <silent> <leader>M <Plug>(go-metalinter)
+  autocmd FileType go nnoremap <silent> <leader>k :GoKeyify<CR>
+  autocmd FileType go nmap     <silent> <leader>m <Plug>(go-metalinter)
   autocmd FileType go nmap     <silent> <leader>r <Plug>(go-run)
   autocmd FileType go nmap     <silent> <leader>R <Plug>(go-rename)
   autocmd FileType go nmap     <silent> <leader>t <Plug>(go-test-func)
-  autocmd FileType go nnoremap <silent> <leader>u :GoFillStruct<CR>
-  autocmd FileType go nnoremap <silent> <leader>y :GoKeyify<CR>
 
 augroup END
 
@@ -296,10 +293,6 @@ noremap <leader>nt :NERDTreeFind<CR>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" TODO the plugged directory is for plugins
-" does this even need to be set?
-" let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
-" let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
 let g:UltiSnipsEditSplit="vertical"
 " Map UltiSnips open edit window
 nmap <leader>se :UltiSnipsEdit<cr>
