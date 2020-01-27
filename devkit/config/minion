@@ -31,6 +31,8 @@ grains:
     - ripgrep
     - roadctl
     - skaffold
+    - stern
+    - tilt
     - vim
     - zsh
   cfg_base:
@@ -164,6 +166,7 @@ grains:
       - gorename
       - gosec
       - gotags
+      - govendor
       - guru
       - iferr
       - impl
@@ -303,6 +306,23 @@ grains:
     installs:
       - snapd
     snapd:
+      version: latest
+    debug:
+      enable: True
+  cfg_stern:
+    installs:
+      - stern
+    stern:
+      version: 1.11.0
+    completion:
+      - bash
+      - zsh
+    debug:
+      enable: True
+  cfg_tilt:
+    installs:
+      - tilt
+    tilt:
       version: latest
     debug:
       enable: True

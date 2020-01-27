@@ -146,3 +146,11 @@
   'G@saltenv:dev and G@roles:pr-golang and G@tops:fossa':
     - match: compound
     - fossa
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:stern':
+    - match: compound
+    - stern
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:tilt':
+    - match: compound
+    - tilt

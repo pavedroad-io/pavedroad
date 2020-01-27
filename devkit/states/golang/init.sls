@@ -199,6 +199,7 @@ golang-bin:
   gorename:      golang.org/x/tools/cmd/gorename
   gosec:         github.com/securego/gosec/cmd/gosec
   gotags:        github.com/jstemmer/gotags
+  govendor:      github.com/kardianos/govendor
   guru:          golang.org/x/tools/cmd/guru
   iferr:         github.com/koron/iferr
   impl:          github.com/josharian/impl
