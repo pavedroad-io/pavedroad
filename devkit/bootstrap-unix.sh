@@ -116,7 +116,7 @@ mv ${tmpdir} ${saltdir}
 ${sudo} chown -R $USER:$USER $HOME
 echo Development kit installation complete
 
-if command -v xdp-open >& /dev/null; then
+if command -v xdg-open >& /dev/null; then
     echo Opening the getting started page for the devlopment kit
-    xdp-open http://www.pavedroad.io/Tooling.html
+    xdg-open http://www.pavedroad.io/Tooling.html
 fi
