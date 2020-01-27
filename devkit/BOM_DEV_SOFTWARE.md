@@ -25,5 +25,7 @@
 | roadctl        | https://github.com/pavedroad-io/roadctl   |
 | skaffold       | https://skaffold.dev                      |
 | snap           | https://snapcraft.io                      |
+| stern          | https://github.com/wercker/stern          |
+| tilt           | https://github.com/windmilleng/tilt       |
 | vim            | https://www.vim.org                       |
 | zsh            | http://zsh.sourceforge.net                |

@@ -18,10 +18,11 @@
 
 | Generated Completion | Command |
 |:---------------------|:--------|
-| kompose  | kompose completion (bash\|zsh) |
-| kubectl  | kubectl completion (bash\|zsh) |
+| kompose  | kompose completion [bash\|zsh] |
+| kubectl  | kubectl completion [bash\|zsh] |
 | roadctl  | roadctl completion |
-| skaffold | skaffold completion (bash\|zsh) |
+| skaffold | skaffold completion [bash\|zsh] |
+| stern    | stern --completion=[bash\|zsh] |
 Note: roadctl only creates a bash completion file, not stdout, see roadctl help
 
 | Shell | Initialization Script |

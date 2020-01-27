@@ -20,6 +20,7 @@
 | gorename      | https://golang.org/x/tools/cmd/gorename    |
 | gosec         | https://github.com/securego/gosec          |
 | gotags        | https://github.com/jstemmer/gotags         |
+| govendor      | https://github.com/kardianos/govendor      |
 | guru          | https://golang.org/x/tools/cmd/guru        |
 | iferr         | https://github.com/koron/iferr             |
 | impl          | https://github.com/josharian/impl          |
