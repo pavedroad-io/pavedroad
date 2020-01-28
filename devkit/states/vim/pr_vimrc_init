@@ -1,14 +1,27 @@
-" get all of the plugins
+" This vimrc works for vi, vim, and nvim
+"
+" Plugins installed have been curated for golang development with git.
+" Recommended settings and mappings below have been curated as well.
+" Alternate settings and mappings below can be uncommented or edited.
+" The default settings are shown in the comments for comparison.
+"
+" Get all of the plugins
 source ~/.pr_vimrc_plug
 
 "-----------------------
 " airblade/vim-gitgutter
 "-----------------------
+" https://github.com/airblade/vim-gitgutter
+
+" Default: Set whether plugin provides mappings = 1
 let g:gitgutter_map_keys = 0
+
+" Default: Set maximum signs to show in a buffer = 500
 let g:gitgutter_max_signs = 1000
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
+
+" Default: Set extra arguments to pass to git-diff = empty
 let g:gitgutter_diff_args = '--ignore-space-at-eol'
+
 nnoremap <S-F5> :GitGutterToggle<CR>
 nnoremap <S-F6> :GitGutterSignsToggle<CR>
 nnoremap <S-F7> :GitGutterLineHighlightsToggle<CR>
@@ -21,87 +34,106 @@ nnoremap <silent> <leader>gga :GitGutterAll<CR>
 "------------------
 " ervandew/supertab
 "------------------
+" https://github.com/ervandew/supertab
+
+" Default: Set supertab completion type = '<c-p>'
 let g:SuperTabDefaultCompletionType = "context"
+
+" Default: Set omni completion precedence = ['&completefunc', '&omnifunc'] 
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 
 "-------------
 " fatih/vim-go
 "-------------
-" Default: auto-detect a snippet engine
+" https://github.com/fatih/vim-go
+
+" Default: Define snippet engine to use = "automatic"
+" Available settings: automatic, ultisnips, neosnippet, minisnip
 let g:go_snippet_engine = "ultisnips"
 
-" Default: gofmt; using goimports extends functionality
+" Using goimports extends gofmt functionality
+" Default: Set formatting tool = "gofmt"
 let g:go_fmt_command = "goimports"
-" Default: show a location list when gofmt fails
+
+" Default: Show a location list when gofmt fails = 0
 let g:go_fmt_fail_silently = 1
 
-" Default: empty; set to quickfix so there is one method for navigation
+" Default: Set type of list to use for command outputs = empty
 let g:go_list_type = "quickfix"
 
-" Default: guru; use gopls for :GoDef
-let g:go_def_mode='gopls'
-" Default: gocode; use gopls for :GoInfo
-let g:go_info_mode='gopls'
-" Default: show gopls won't work outside GOPATH warning
-let g:go_null_module_warning = 0
-" Default: work with newly modified GOPATH; detect before using gopls
+" To revert to defaults prior to gopls uncomment next two settings
+" Using goimports extends gofmt functionality
+" Default: Set the command to be used for :GoDef = 'gopls'
+" let g:go_def_mode='guru'
+" Default: Set the command to be used for :GoInfo = 'gopls'
+" let g:go_info_mode='gocode'
+"
+" Default: modify GOPATH for certain directory structures = 0
 let g:go_autodetect_gopath = 1
 
-" Default: set :GoTest timeout to 10 seconds
-let g:go_test_timeout = '10s'
-" Default: do not prepend name of test to error message
-let g:go_test_prepend_name = 1
+" The test timeout can be changed with the next setting
+" Default: Set the timeout of :GoTest = '10s'
+" let g:go_test_timeout = '20s'
 
-" Default: highlight all instances of identifier under cursor
-let g:go_auto_sameids = 0
-" Default: do not show :GoInfo for word under cursor
+" Use :GoSameIdsToggle to toggle this setting or change the setting
+" Default: Highlight all instances of identifier under cursor = 0
+" let g:go_auto_sameids = 1
+
+" Default: Show the type info (:GoInfo) for word under cursor = 0
 let g:go_auto_type_info = 1
-" Default: echo info about Go commands like :GoBuild, :GoTest, :GoCoverage
-let g:go_echo_command_info = 1
 
-" Default: enable vet, golint and errcheck as linters for :GoMetaLinter
+" Default: Echo info about commands like :GoBuild, :GoTest, etc = 1
+let g:go_echo_command_info = 0
+
+" Default: Specify linters for :GoMetaLinter = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gosec']
-" Default: do not execute :GoMetaLinter on save
-let g:go_metalinter_autosave = 0
-" Default: set maximum time linters have to complete to 5 seconds
-let g:go_metalinter_deadline = "5s"
 
-" Default: treat comments above function as part of function
-let g:go_textobj_include_function_doc = 1
-" Default: use source files instead of binary packages for code completion
+" Default: Automatically execute :GoMetaLinter on save = 0
+" let g:go_metalinter_autosave = 1
+
+" Default: Set maximum time linters have to complete = "5s"
+" let g:go_metalinter_deadline = "10s"
+
+" Default: Treat comments above function as part of function = 1
+" let g:go_textobj_include_function_doc = 0
+
+" Default: Use source files instead of binary packages for code completion = 0
 let g:go_gocode_propose_source = 1
-" Default: snakecase: transform option for gomodifytags or snippet expansion
+
+" Default: Transform option for :GoAddTags or snippet expansion = 'snakecase'
+" Available settings: snakecase, camelcase, lispcase, pascalcase, keep
 let g:go_addtags_transform = 'camelcase'
-" Default: block, import, varconst, package_comment; enable fold regions
+
+" Default: Specify fold regions = ['block', 'import', 'varconst', 'package_comment']
+" Available settings: block, import, varconst, package_comment, comment
 let g:go_fold_enable = []
 
-" Default: do not highlight struct and interface names
+" Default: Highlight struct and interface names = 0
 let g:go_highlight_types = 1
-" Default: do not highlight struct field names
+" Default: Highlight struct field names = 0
 let g:go_highlight_fields = 1
-" Default: do not highlight function and method declarations
+" Default: Highlight function and method declarations = 0
 let g:go_highlight_functions = 1
-" Default: do not highlight function and method calls
+" Default: Highlight function and method calls = 0
 let g:go_highlight_function_calls = 1
-" Default: do not highlight operators such as := , ==, -=, etc
+" Default: Highlight operators such as := , ==, -=, etc = 0
 let g:go_highlight_operators = 1
-" Default: do not highlight commonly used library types (io.Reader, etc.)
+" Default: Highlight commonly used library types (io.Reader, etc.) = 0
 let g:go_highlight_extra_types = 1
-" Default: do not highlight build constraints
+" Default: Highlight build constraints = 0
 let g:go_highlight_build_constraints = 1
-" Default: do not highlight go:generate directives
+" Default: Highlight go:generate directives = 0
 let g:go_highlight_generate_tags = 1
-" Default: do not highlight instances of tabs following spaces
+" Default: Highlight instances of tabs following spaces = 0
 let g:go_highlight_space_tab_error = 1
-" Default: do not highlight white space after []
-let g:go_highlight_array_whitespace_error = 0
-" Default: do not highlight trailing white space
+" Default: Highlight white space after [] = 0
+" let g:go_highlight_array_whitespace_error = 1
+" Default: Highlight trailing white space = 0
 let g:go_highlight_trailing_whitespace_error = 1
-
-" Default: highlight printf-style formatting verbs inside string literals
+" Default: highlight printf-style formatting verbs inside string literals = 1
 let g:go_highlight_format_strings = 0
 
-" Run :GoBuild or :GoTestCompile based on the go file
+" Run :GoBuild or :GoTestCompile based on the file name
 function! s:build_go_files()
   let l:file = expand('%')
   if l:file =~# '^\f\+_test\.go$'
@@ -196,11 +228,20 @@ augroup END
 "----------------------
 " itchyny/lightline.vim
 "----------------------
-set laststatus=2
-set updatetime=100
-set noshowmode " mode shown in lightline status
+" https://github.com/itchyny/lightline.vim
 
-" %< in fileformat compresses long status lines from that point
+" Default: Set when the last window will have a status line = 1
+" Available settings 0: never
+"                    1: only if there are at least two windows
+"                    2: always
+set laststatus=2
+
+" Default: Show mode in status line = Vim: on / Vi: off
+" Mode will be shown in lightline status
+set noshowmode
+
+" Default: Overriding default for left side but using default for right side
+" Adding "%<" to " fileformat setting to compress long status lines from there
 let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'mode', 'paste', 'readonly' ],
@@ -218,18 +259,29 @@ let g:lightline = {
   \ },
   \ }
 
+" Define this function to get vim-go status in color, plus raw setting above
 function! LightlineGo()
   return exists('*go#statusline#Show') ? go#statusline#Show() : ''
 endfunction
 
 "-----------------
+" junegunn/fzf
+"-----------------
+" https://github.com/junegunn/fzf
+
+" This plugin provides core functions and :FZF command used by fzf.vim plugin
+" Default: Set position and size of fzf window = = { 'down': '~40%' }
+" let g:fzf_layout = { 'down': '~50%' }
+
+"-----------------
 " junegunn/fzf.vim
 "-----------------
-" TODO had to add prefix back due to command name conflicts
-" Thus added mapping for all of the fzf commands
-let g:fzf_command_prefix="Fzf"
-let g:fzf_layout = { 'down': '~50%' }
+" https://github.com/junegunn/fzf.vim
 
+" Default: Set prefix for fzf command = empty
+let g:fzf_command_prefix="Fzf"
+
+" Use prefix in mapping of all of the fzf commands
 noremap <leader>za :FzfAg<CR>
 noremap <leader>zb :FzfBCommits<CR>
 noremap <leader>zB :FzfBuffers<CR>
@@ -237,7 +289,7 @@ noremap <leader>zbl :FzfBLines<CR>
 noremap <leader>zbt :FzfBTags<CR>
 noremap <leader>zc :FzfCommits<CR>
 noremap <leader>zC :FzfCommands<CR>
-noremap <leader>zco :FzfColors<CR>
+noremap <leader>zcl :FzfColors<CR>
 noremap <leader>zf :FzfFiles<CR>
 noremap <leader>zF :FzfFiletypes<CR>
 noremap <leader>zg :FzfGFiles?<CR>
@@ -252,11 +304,9 @@ noremap <leader>zs :FzfSnippets<CR>
 noremap <leader>zt :FzfTags<CR>
 noremap <leader>zw :FzfWindows<CR>
 
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
-  \ -g "!{.git,node_modules,vendor}/*" '
-
+" Default: Rg command - edit as needed to change preview specs
+" The shellescape wraps the <q-args> in double quotes
+" This allows commands like :Rg function foo
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -264,36 +314,90 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
+" Set rg command to use in mapping below with included/excluded file types
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case
+  \ --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,md,styl,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+" Example: F command mapping to call rg with the above options and supplied args
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 "------------------
 " majutsushi/tagbar
 "------------------
+" https://github.com/majutsushi/tagbar
+
+" Default: Omit short help at top of the window = 0
 let g:tagbar_compact = 1
+
+" Default: Sort tags according to their name = 1
 let g:tagbar_sort = 0
+
+" Default: Move cursor to the Tagbar window when it is opened = 0
 let g:tagbar_autofocus = 1
+
+" Default: Set width of Tagbar window in characters = 40
 let g:tagbar_width = 30
+
 nmap <S-F10> :TagbarToggle<CR>
 
 "--------------------
 " scrooloose/nerdtree
 "--------------------
+" https://github.com/scrooloose/nerdtree-git-plugin
+
+" Default: Display the bookmarks table = 0
 let NERDTreeShowBookmarks=1
+"
+" Default: Specify which files to ignore = ['\~$']
 let NERDTreeIgnore=['\\.swo$', '\\.swp$', '\\.git']
-let NERDTreeChDirMode=0
+
+" Default: Set when to change the current working directory = 0
+" Available settings 0: never change directory
+"                    1: change when started with :NERDTree <dir>
+"                    2: same as 1 plus when changing the tree root
+"                    3: same as 2 plus when changing tabs
+" let NERDTreeChDirMode=0
+"
+" Default: Set whether NERDTree window or bookmarks table closes after opening
+"     file with NERDTree-o, NERDTree-i, NERDTree-t or NERDTree-T mappings = 0
+" Available settings 0: no change
+"                    1: closes after opening a file
+"                    2: closes bookmark table after opening a bookmark
+"                    3: same as both 1 and 2
 let NERDTreeQuitOnOpen=1
+
+" Default: Display hidden files = 0
 let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
+
 noremap <S-F8> :NERDTreeToggle<CR>
 noremap <leader>nt :NERDTreeFind<CR>
 
 "-----------------
 " SirVer/ultisnips
 "-----------------
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" https://github.com/SirVer/ultisnips
+
+" Uncomment and edit settings below to change behavior
+" Default: Key used to expand a snippet = "<tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+
+" Default: Key used to jump forward in a snippet = "<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+
+" Default: Key used to jump backward in a snippet = "<c-k>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" Default: Defines how the edit window is opened = "normal"
+" Available settings: normal:     Opens in the current window
+"                     tabdo:      Opens the window in a new tab
+"                     horizontal: Splits the window horizontally
+"                     vertical:   Splits the window vertically
+"                     context:    Splits depending on context
 let g:UltiSnipsEditSplit="vertical"
+
 " Map UltiSnips open edit window
 nmap <leader>se :UltiSnipsEdit<cr>
 nmap <leader>sb :UltiSnipsEdit!<cr>
@@ -301,6 +405,8 @@ nmap <leader>sb :UltiSnipsEdit!<cr>
 "-------------------
 " tpope/vim-fugitive
 "-------------------
+" https://github.com/tpope/vim-fugitive
+
 nnoremap <leader>G :Git!<Space>
 nnoremap <leader>Ga :Git add .<CR>
 nnoremap <leader>Gau :Git add --update<CR>
@@ -332,23 +438,26 @@ nnoremap <leader>Gw :Gwrite<CR> " git add
 "---------------
 " wincent/ferret
 "---------------
+" https://github.com/wincent/ferret
+
+" Default: Set args passed to underlying search = {}
 let g:FerretExecutableArguments = {
   \'rg': '--smart-case --vimgrep --no-heading --no-config --max-columns 4096'}
 
-" Don't bind ferret commands.
+" Default: Set up Ferret command mappings = 1
 let g:FerretMap = 0
 
-" Highlight search 1 true 0 false
+" Default: Highlight search pattern when running :Ack or :Lack = 0
 let g:FerretHlsearch = 1
 
-" match only on word boundaries
-" 1 true 0 false
-let g:FerretAckWordWord = 0
+" Default: Pass the -w (word boundary) option to underlying search = 0
+" let g:FerretAckWordWord = 1
 
-" Don't hide cursor line in quickfix.
+" Default: Override settings for quickfix windows = 1
+" These are various settings such as norelativenumber, nolist and nowrap
 let g:FerretQFOptions = 0
 
-" Bind our own Ferret commands.
+" Map some Ferret commands
 nmap <leader>fa <Plug>(FerretAck)
 nmap <leader>fw <Plug>(FerretAckWord)
 nmap <leader>fl <Plug>(FerretLack)
@@ -357,7 +466,22 @@ nmap <leader>fs <Plug>(FerretAcks)
 "----------------------------
 " Xuyuanp/nerdtree-git-plugin
 "----------------------------
-" Override the default symbols
+" https://github.com/Xuyuanp/nerdtree-git-plugin
+
+" Default: NERDTree file status symbols = {
+"  \ 'Modified'  : '✹',
+"  \ 'Staged'    : '✚',
+"  \ 'Untracked' : '✭',
+"  \ 'Renamed'   : '➜',
+"  \ 'Unmerged'  : '═',
+"  \ 'Deleted'   : '✖',
+"  \ 'Dirty'     : '✗',
+"  \ 'Clean'     : '✔︎',
+"  \ 'Ignored'   : '☒',
+"  \ 'Unknown'   : '?'
+"  \ }
+
+" Override symbols with mnemonic characters
 let g:NERDTreeIndicatorMapCustom = {
   \ 'Modified'  : 'M',
   \ 'Staged'    : 'S',
