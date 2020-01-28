@@ -23,6 +23,9 @@ npm-installed:
   pkg.installed:
     - unless:   command -v {{ npm_pkg_name }}
     - name:     {{ npm_pkg_name }}
+  cmd.run:
+    - onlyif:   command -v {{ npm_pkg_name }}
+    - name:     {{ npm_pkg_name }} install npm@latest -g
   {% endif %}
 
   {# Fix "npm-default is unavailable" error #}

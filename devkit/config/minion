@@ -28,6 +28,7 @@ grains:
     - microk8s
     - multipass
     - nodejs
+    - pretty_swag
     - ripgrep
     - roadctl
     - skaffold
