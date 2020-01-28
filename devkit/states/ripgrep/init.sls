@@ -6,11 +6,11 @@
 {% if installs and 'ripgrep' in installs %}
   {% set ripgrep_pkg_name = 'ripgrep' %}
   {% set ripgrep_bin_name = 'rg' %}
+  {% set ripgrep_path_name = '/usr/bin/' %}
   {% set ripgrep_snap_install = False %}
-  {% set osmajorrelease = grains.osmajorrelease | int %}
-  {% if not grains.docker and (grains.os == 'Ubuntu') and (osmajorrelease >= 19) %}
+  {% if not grains.docker and (grains.os == 'Ubuntu' and grains.osmajorrelease >= 19) %}
     {% set ripgrep_snap_install = True %}
-    {% set ripgrep_bin_name = '/snap/bin/rg' %}
+    {% set ripgrep_path_name = '/snap/bin/' %}
   {% endif %}
 
   {% if ripgrep_snap_install %}
@@ -23,14 +23,15 @@ ripgrep:
   cmd.run:
     - require:
       - sls:    snapd
-    - unless:   snap list | grep ripgrep
-    - name:     snap install ripgrep --classic
-  {% elif grains.os_family in ('Debian', 'RedHat', 'Suse') %}
+    - unless:   snap list | grep {{ ripgrep_pkg_name }}
+    - name:     snap install {{ ripgrep_pkg_name }} --classic
+  {% else %}
+    {% if grains.os_family in ('Debian', 'RedHat', 'Suse') and not grains.os == 'Ubuntu' %}
   pkgrepo.managed:
-    {% if grains.os_family == 'Debian' %}
+      {% if grains.os_family == 'Debian' %}
     - ppa:      x4121/ripgrep
-    {% elif grains.os == 'CentOS' %}
-    - humanname: Copr repo for ripgrep owned by carlwgeorge
+      {% elif grains.os == 'CentOS' and grains.osmajorrelease == 7 %}
+    - humanname: Copr repo for ripgrep from carlwgeorge
     - baseurl: https://copr-be.cloud.fedoraproject.org/results/carlwgeorge/ripgrep/epel-7-{{ grains.cpuarch }}/
     - type: rpm-md
     - skip_if_unavailable: True
@@ -39,8 +40,8 @@ ripgrep:
     - repo_gpgcheck: 0
     - enabled: 1
     - enabled_metadata: 1
-    {% elif grains.os_family == 'Suse' %}
-    - humanname: all the small tools for the shell (openSUSE_Leap_15.0)
+      {% elif grains.os_family == 'Suse' and grains.osfullname == 'Leap' %}
+    - humanname: All the small tools for the shell (openSUSE_Leap_15.0)
     - baseurl: http://download.opensuse.org/repositories/utilities/openSUSE_Leap_15.0/
     - type: rpm-md
     - gpgcheck: 1
@@ -49,15 +50,17 @@ ripgrep:
     {% endif %}
     - require_in:
       - pkg:    ripgrep
-  {% endif %}
+    {% endif %}
   pkg.installed:
     - unless:   command -v {{ ripgrep_bin_name }}
     - name:     {{ ripgrep_pkg_name }}
-  {% if grains.cfg_ripgrep.ripgrep.version is defined %}
+    {% if grains.cfg_ripgrep.ripgrep.version is defined %}
     - version:  {{ grains.cfg_ripgrep.ripgrep.version }}
+    {% endif %}
   {% endif %}
+
   {% if completion %}
-    {# Cannot find bash completion #}
+    {# bash completion and man page only available if binary install is done #}
     {% if 'zsh' in completion %}
       {% set zsh_comp_file = pillar.directories.completions.zsh + '/_rg' %}
 rg-zsh-completion:
@@ -73,7 +76,7 @@ rg-zsh-completion:
   {% if grains.cfg_ripgrep.debug.enable %}
 ripgrep-version:
   cmd.run:
-    - name:     {{ ripgrep_bin_name }} --version
+    - name:     {{ ripgrep_path_name }}{{ ripgrep_bin_name }} --version
   {% endif %}
 {% endif %}
 
