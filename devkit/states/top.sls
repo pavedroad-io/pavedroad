@@ -154,3 +154,7 @@
   'G@saltenv:dev and G@roles:pr-golang and G@tops:tilt':
     - match: compound
     - tilt
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:sonar_scanner':
+    - match: compound
+    - sonar-scanner

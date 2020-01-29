@@ -32,6 +32,7 @@ grains:
     - ripgrep
     - roadctl
     - skaffold
+    - sonar_scanner
     - stern
     - tilt
     - vim
@@ -301,6 +302,13 @@ grains:
     completion:
       - bash
       - zsh
+    debug:
+      enable: True
+  cfg_sonar_scanner:
+    installs:
+      - sonar_scanner
+    sonar_scanner:
+      version: latest
     debug:
       enable: True
   cfg_snapd:
