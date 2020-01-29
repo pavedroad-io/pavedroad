@@ -26,28 +26,27 @@ ripgrep:
     - unless:   snap list | grep {{ ripgrep_pkg_name }}
     - name:     snap install {{ ripgrep_pkg_name }} --classic
   {% else %}
-    {% if grains.os_family in ('Debian', 'RedHat', 'Suse') and not grains.os == 'Ubuntu' %}
+    {% if grains.os_family in ('Debian', 'RedHat', 'Suse') 
+      and not (grains.os == 'Ubuntu' and grains.osmajorrelease >= 19) %}
   pkgrepo.managed:
       {% if grains.os_family == 'Debian' %}
     - ppa:      x4121/ripgrep
       {% elif grains.os == 'CentOS' and grains.osmajorrelease == 7 %}
-    - humanname: Copr repo for ripgrep from carlwgeorge
-    - baseurl: https://copr-be.cloud.fedoraproject.org/results/carlwgeorge/ripgrep/epel-7-{{ grains.cpuarch }}/
-    - type: rpm-md
+    - humanname:           Copr repo for ripgrep from carlwgeorge
+    - baseurl:             https://copr-be.cloud.fedoraproject.org/results/carlwgeorge/ripgrep/epel-7-{{ grains.cpuarch }}/
+    - type:                rpm-md
     - skip_if_unavailable: True
-    - gpgcheck: 1
-    - gpgkey: https://copr-be.cloud.fedoraproject.org/results/carlwgeorge/ripgrep/pubkey.gpg
-    - repo_gpgcheck: 0
-    - enabled: 1
-    - enabled_metadata: 1
+    - gpgcheck:            1
+    - gpgkey:              https://copr-be.cloud.fedoraproject.org/results/carlwgeorge/ripgrep/pubkey.gpg
+    - repo_gpgcheck:       0
+    - enabled:             1
+    - enabled_metadata:    1
       {% elif grains.os_family == 'Suse' and grains.osfullname == 'Leap' %}
-    - humanname: All the small tools for the shell (openSUSE_Leap_15.0)
-    - baseurl: http://download.opensuse.org/repositories/utilities/openSUSE_Leap_15.0/
-    - type: rpm-md
-    - gpgcheck: 1
-    - gpgkey: http://download.opensuse.org/repositories/utilities/openSUSE_Leap_15.0/repodata/repomd.xml.key
-    - enabled: 1
-    {% endif %}
+    - humanname: Main open source software repository (openSUSE_Leap_15.1)
+    - baseurl:   http://download.opensuse.org/distribution/leap/15.1/repo/oss/
+    - type:      rpm-md
+    - enabled:   1
+      {% endif %}
     - require_in:
       - pkg:    ripgrep
     {% endif %}
