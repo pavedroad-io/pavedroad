@@ -21,6 +21,8 @@ debug=
 # Only for debian, ascertained by the existence of apt-get below
 salt_debian_version="2019.2.0"
 install_type="stable"
+ubuntu_pip_rel="19.10"
+os_rel_file="/etc/os-release"
 
 while getopts "b:d" opt; do
   case ${opt} in
@@ -47,7 +49,18 @@ trap 'error_trap' ERR
 # Install curl and git, needed to install saltstack
 # Not a comprehensive list of package managers
 
-if command -v apt-get >& /dev/null; then
+if test -e "${os_rel_file}" ; then
+    source "${os_rel_file}"
+    ubuntu_rel=${VERSION_ID}
+else
+    ubuntu_rel='false'
+fi
+
+if [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
+    echo Using package manager apt-get and pip
+    ${sudo} apt-get update
+    ${sudo} apt-get -qq install -y curl git python-pip
+elif command -v apt-get >& /dev/null; then
     echo Using package manager apt-get
     install_type="stable ${salt_debian_version}"
     ${sudo} apt-get -qq update >& /dev/null
@@ -91,8 +104,12 @@ set -o errexit -o errtrace
 # Install saltstack
 if command -v salt-call >& /dev/null; then
     echo SaltStack is installed
+elif [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
+    echo Installing SaltStack with pip
+    ${sudo} pip install "salt==${salt_debian_version}"
+    echo SaltStack installation complete
 else
-    echo Installing SaltStack
+    echo Installing SaltStack with bootstrap
     curl -o install_salt.sh -L https://bootstrap.saltstack.com
 
     # -P Prevent failure by allowing the script to use pip as a dependency source
