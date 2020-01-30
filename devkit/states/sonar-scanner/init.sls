@@ -11,7 +11,8 @@
   {% if sonar_scanner_binary_install %}
     {% set sonar_scanner_prefix =
       'https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-' %}
-    {% if grains.cfg_sonar_scanner.sonar_scanner.version is defined %}
+    {% if grains.cfg_sonar_scanner.sonar_scanner.version is defined and
+      grains.cfg_sonar_scanner.sonar_scanner.version != 'latest' %}
       {% set version = grains.cfg_sonar_scanner.sonar_scanner.version %}
     {% else %}
       {% set version = '4.2.0.1873' %}
@@ -38,14 +39,14 @@ sonar_scanner:
     - skip_verify:    True
     - archive_format: zip
   file.copy:
-    - unless:    command -v {{ sonar_scanner_pkg_name }}
-    - name:      {{ sonar_scanner_lib_dir }}{{ sonar_scanner_pkg_name }}
-    - source:    {{ sonar_scanner_tmp_dir }}{{ sonar_scanner_file }}
+    - unless:   command -v {{ sonar_scanner_pkg_name }}
+    - name:     {{ sonar_scanner_lib_dir }}{{ sonar_scanner_pkg_name }}
+    - source:   {{ sonar_scanner_tmp_dir }}{{ sonar_scanner_file }}
 sonar_scanner_link:
   file.symlink:
-    - unless:    command -v {{ sonar_scanner_pkg_name }}
-    - name:      {{ sonar_scanner_path }}{{ sonar_scanner_pkg_name }}
-    - target:    {{ sonar_scanner_lib_path }}{{ sonar_scanner_pkg_name }}
+    - unless:   command -v {{ sonar_scanner_pkg_name }}
+    - name:     {{ sonar_scanner_path }}{{ sonar_scanner_pkg_name }}
+    - target:   {{ sonar_scanner_lib_path }}{{ sonar_scanner_pkg_name }}
   {% else %}
   pkg.installed:
     - unless:   command -v {{ sonar_scanner_pkg_name }}
