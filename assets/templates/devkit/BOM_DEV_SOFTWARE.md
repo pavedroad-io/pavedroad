@@ -23,6 +23,7 @@
 | pretty-swag    | https://github.com/twskj/pretty-swag      |
 | ripgrep        | https://github.com/BurntSushi/ripgrep     |
 | roadctl        | https://github.com/pavedroad-io/roadctl   |
+| sonar-scanner  | https://github.com/SonarSource/sonar-scanner-cli |
 | skaffold       | https://skaffold.dev                      |
 | snap           | https://snapcraft.io                      |
 | stern          | https://github.com/wercker/stern          |

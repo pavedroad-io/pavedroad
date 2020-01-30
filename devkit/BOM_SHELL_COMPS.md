@@ -20,10 +20,10 @@
 |:---------------------|:--------|
 | kompose  | kompose completion [bash\|zsh] |
 | kubectl  | kubectl completion [bash\|zsh] |
-| roadctl  | roadctl completion |
+| roadctl  | roadctl completion [bash\|zsh] |
 | skaffold | skaffold completion [bash\|zsh] |
 | stern    | stern --completion=[bash\|zsh] |
-Note: roadctl only creates a bash completion file, not stdout, see roadctl help
+Note: the above commands create a completion file on stdout, see command help
 
 | Shell | Initialization Script |
 |:------|:--------------------- |

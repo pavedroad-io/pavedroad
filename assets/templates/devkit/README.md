@@ -130,7 +130,7 @@ such as _docker_, _microk8s_, and _multipass_.
 Installed cloud native applications include _docker-compose_, _kompose_, _kubebuilder_,
 _kubectl_, _kustomize_, _skaffold_, _stern_ and _tilt_.
 Other development applications include _ctags_, _direnv_, _fossa-cli_, _fzf_, _graphviz_,
-_jq_, _nodejs_, and _ripgrep_.
+_jq_, _nodejs_, _ripgrep_, and _sonar-scanner_.
 
 See the complete list of software installed: [Development Software]({{devkit_devsoftware}}).
 
