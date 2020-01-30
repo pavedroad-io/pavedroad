@@ -15,6 +15,7 @@ fi
 
 branch=
 debug=
+salt_only=
 
 # Sets salt install-type to either "stable" or "stable <$salt-version>"
 # Workaround for https://github.com/saltstack/salt/issues/53570
@@ -24,11 +25,16 @@ install_type="stable"
 ubuntu_pip_rel="19.10"
 os_rel_file="/etc/os-release"
 
-while getopts "b:d" opt; do
+while getopts "b:ds" opt; do
   case ${opt} in
     b ) branch="--branch ${OPTARG}"
+        echo Using git branch ${OPTARG}
       ;;
     d ) debug="-l debug"
+        echo Setting debug mode
+      ;;
+    s ) salt_only=1
+        echo Installing salt only
       ;;
     \? ) echo "Usage: "$0" [-b <branch>] [-d]"
         echo "-b <branch> - git clone"
@@ -58,8 +64,12 @@ fi
 
 if [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
     echo Using package manager apt-get and pip
-    ${sudo} apt-get update
+    ${sudo} apt-get -qq update >& /dev/null
     ${sudo} apt-get -qq install -y curl git python-pip
+    if [ $? -ne 0 ]; then
+        echo User $(whoami) unable to execute apt-get
+        exit 1
+    fi
 elif command -v apt-get >& /dev/null; then
     echo Using package manager apt-get
     install_type="stable ${salt_debian_version}"
@@ -103,7 +113,7 @@ set -o errexit -o errtrace
 
 # Install saltstack
 if command -v salt-call >& /dev/null; then
-    echo SaltStack is installed
+    echo SaltStack is already installed
 elif [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
     echo Installing SaltStack with pip
     ${sudo} pip install "salt==${salt_debian_version}"
@@ -117,7 +127,13 @@ else
     ${sudo} sh install_salt.sh -P -X ${install_type}
     echo SaltStack installation complete
 fi
+echo -n "Version: "
 salt-call --version
+
+if [ ${salt_only} ] ; then
+    echo Not installing the devlopment kit
+    exit
+fi
 
 # Clone salt states
 echo Cloning the devlopment kit repository
