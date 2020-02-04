@@ -158,4 +158,4 @@ The source template may be edited:
 [README.md](/assets/templates/assets/README.md)
 
 For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)
+[Document Generation](https://github.com/pavedroad-io/pavedroad/blob/master/assets/README.md)
