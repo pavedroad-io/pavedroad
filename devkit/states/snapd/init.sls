@@ -57,6 +57,16 @@ snapd-wait:
   cmd.run:
     - name:     snap wait system seed.loaded
     - timeout:  20
+    {% if grains.os_family == 'Suse' %}
+apparmor-parser:
+  pkg.installed:
+    - unless:   test -e /sbin/apparmor-parser
+    - name:     apparmor-parser
+apparmor-profiles:
+  pkg.installed:
+    - unless:   test -d /usr/share/apparmor/extra-profiles
+    - name:     apparmor-profiles
+    {% endif %}
     {% if grains.os == 'CentOS' %}
 snapd-append-pr_bashrc:
   file.append:
