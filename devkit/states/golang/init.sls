@@ -80,6 +80,7 @@ pr-go-env:
     - name:     {{ grains.homedir }}/.pr_go_env
     - contents: |
                 export GOPATH=$HOME/go
+                export GO111MODULE=auto
   {% if golang_install == 'binary' %}
                 export PATH=$PATH:{{ golang_exec }}:$GOPATH/bin
   {% else %}
