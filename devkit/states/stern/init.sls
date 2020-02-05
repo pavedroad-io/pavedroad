@@ -20,7 +20,7 @@
       {% set stern_file = '/stern_linux_amd64' %}
     {% endif %}
     {% set stern_url = stern_prefix + stern_version + stern_file %}
-    {% set stern_bin = '/usr/local/bin/' %}
+    {% set stern_bin = '/usr/local/bin' %}
   {% else %}
     {% set stern_url = 'https://github.com/wercker/stern.git' %}
     {% set stern_src = grains.homedir + '/go/src' %}
@@ -33,14 +33,14 @@ include:
 stern:
   {% if stern_binary_install %}
   file.managed:
-    - name:        {{ stern_bin }}{{ stern_pkg_name }}
+    - name:        {{ stern_bin }}/{{ stern_pkg_name }}
     - source:      {{ stern_url }}
     - makedirs:    True
     - skip_verify: True
     - mode:        755
     - replace:     False
   {% else %}
-  {# stern build instruction do not work with latest go version #}
+  {# stern build instructions do not work with latest go version #}
   git.latest:
     - unless:      command -v {{ stern_pkg_name }}
     - name:        {{ stern_url }}
@@ -53,7 +53,7 @@ stern:
     - cwd:      {{ stern_src }}/{{ stern_pkg_name }}
     - umask:    022
     - name:     |
-                . $HOME/.pr_go_env
+                . {{grains.homedir}}/.pr_go_env
                 govendor sync
                 go install
   {% endif %}
