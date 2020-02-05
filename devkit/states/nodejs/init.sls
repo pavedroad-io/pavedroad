@@ -17,8 +17,8 @@ nodejs-installed:
   {% if grains.cfg_nodejs.nodejs.version is defined %}
     - version:  {{ grains.cfg_nodejs.nodejs.version }}
   {% endif %}
-  {# Ubuntu does not include npm in nodejs install #}
-  {% if grains.os == 'Ubuntu' %}
+  {# Some systems do not include npm in nodejs install #}
+  {% if grains.os_family in ('Debian', 'Suse') %}
 npm-installed:
   pkg.installed:
     - unless:   command -v {{ npm_pkg_name }}
