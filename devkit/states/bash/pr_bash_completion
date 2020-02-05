@@ -24,7 +24,6 @@
 #   https://github.com/scop/bash-completion
 # Package managers install the bash-completion package in /usr/share with
 #   the completion files in /usr/share/bash-completion/completions.
-# bash_completion fails on grub on some versions of ubuntu so it is moved out
 
 case $OSTYPE in
     darwin*)
@@ -39,9 +38,6 @@ case $OSTYPE in
         fi
     ;;
     linux*)
-        [[ -f /etc/bash-completion.d/grub ]] && \
-            mkdir /etc/bash_completion_old.d && \
-            mv /etc/bash-completion.d/grub /etc/bash_completion_old.d
         [[ -f /usr/share/bash-completion/bash_completion ]] && \
             source /usr/share/bash-completion/bash_completion
         for COMPLETION in /etc/bash_completion.d/*; do

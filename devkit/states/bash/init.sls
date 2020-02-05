@@ -64,6 +64,8 @@ pr_bashrc:
     - group:    {{ grains.realgroup }}
     - mode:     644
   {% if files and 'completion' in files and grains.cfg_bash.completion.append %}
+  {% set grub_comp_file = '/etc/bash_completion.d/grub' %}
+  {% set comp_old_dir = '/etc/bash_completion_old.d' %}
 pr_bash_completion:
   file.append:
     - name:     {{ grains.homedir }}/.pr_bashrc
@@ -71,6 +73,12 @@ pr_bash_completion:
     - require:
       - file:   bash-pr_completion
       - file:   pr_bashrc
+  {# bash_completion fails on grub on some systems so it is moved out #}
+  cmd.run:
+    - onlyif:   test -e {{ grub_comp_file }}
+    - name:     |
+                mkdir -p {{ comp_old_dir }}
+                mv {{ grub_comp_file }} {{ comp_old_dir }}
   {% endif %}
 
   {% if grains.cfg_bash.bashrc.append %}
