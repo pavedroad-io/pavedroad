@@ -4,12 +4,18 @@
 
 {% if installs and 'direnv' in installs %}
   {% set direnv_pkg_name = 'direnv' %}
+  {% set direnv_binary_install = False %}
+  {% set direnv_path = '/usr/bin' %}
+  {% if grains.os == 'CentOS' %}
+    {% set direnv_binary_install = True %}
+    {% set direnv_path = '/usr/local/bin' %}
+  {% endif %}
 
 direnv:
-  {% if grains.os == 'CentOS' %}
+  {% if direnv_binary_install %}
   file.managed:
     - unless:   command -v {{ direnv_pkg_name }}
-    - name:     /usr/local/bin/{{ direnv_pkg_name }}
+    - name:     {{ direnv_path }}/{{ direnv_pkg_name }}
     - source:   https://github.com/direnv/direnv/releases/download/v2.20.0/direnv.linux-386
     - makedirs: True
     - mode:     755
@@ -35,7 +41,7 @@ direnv-append-pr_zshrc:
   {% if grains.cfg_direnv.debug.enable %}
 direnv-version:
   cmd.run:
-    - name:     {{ direnv_pkg_name }} version
+    - name:     {{ direnv_path }}/{{ direnv_pkg_name }} version
   {% endif %}
 
 {% endif %}

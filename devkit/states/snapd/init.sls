@@ -57,6 +57,16 @@ snapd-wait:
   cmd.run:
     - name:     snap wait system seed.loaded
     - timeout:  20
+    {% if grains.os == 'CentOS' %}
+snapd-append-pr_bashrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     export PATH=$PATH:/snap/bin
+snapd-append-pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     export PATH=$PATH:/snap/bin
+    {% endif %}
   {% endif %}
 
   {% if grains.cfg_snapd.debug.enable %}

@@ -40,9 +40,15 @@ roadctl:
     - require:
       - git:    roadctl
     - cwd:      {{ roadctl_src }}/{{ roadctl_pkg_name }}
+  {% if grains.os == 'CentOS' %}
+    - runas:    {{ grains.realuser }}
+    {% if not grains.docker %}
+    - group:    {{ grains.realgroup }}
+    {% endif %}
+  {% endif %}
     - umask:    022
     - name:     |
-                . $HOME/.pr_go_env
+                . {{grains.homedir}}/.pr_go_env
                 make compile
   file.managed:
     - name:        {{ roadctl_binary }}
