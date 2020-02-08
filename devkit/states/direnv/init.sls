@@ -9,6 +9,8 @@
   {% if grains.os == 'CentOS' %}
     {% set direnv_binary_install = True %}
     {% set direnv_path = '/usr/local/bin' %}
+  {% elif grains.os_family == 'MacOS' %}
+    {% set direnv_path = '/usr/local/bin' %}
   {% endif %}
 
 direnv:

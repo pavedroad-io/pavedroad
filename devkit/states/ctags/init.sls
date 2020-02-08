@@ -15,11 +15,12 @@ ctags:
     - unless:   brew list {{ ctags_pkg_name }}
   {% else %}
     - unless:   command -v {{ ctags_bin_name }}
+    {# Do not set version on MacOS as state fails on version check #}
+    {% if grains.cfg_ctags.ctags.version is defined %}
+    - version:  {{ grains.cfg_ctags.ctags.version }}
+    {% endif %}
   {% endif %}
     - name:     {{ ctags_pkg_name }}
-  {% if grains.cfg_ctags.ctags.version is defined %}
-    - version:  {{ grains.cfg_ctags.ctags.version }}
-  {% endif %}
 
   {% if grains.cfg_ctags.debug.enable %}
 ctags-version:

@@ -6,11 +6,13 @@
 {% if installs and 'ripgrep' in installs %}
   {% set ripgrep_pkg_name = 'ripgrep' %}
   {% set ripgrep_bin_name = 'rg' %}
-  {% set ripgrep_path_name = '/usr/bin/' %}
+  {% set ripgrep_path_name = '/usr/bin' %}
   {% set ripgrep_snap_install = False %}
   {% if not grains.docker and (grains.os == 'Ubuntu' and grains.osmajorrelease >= 19) %}
     {% set ripgrep_snap_install = True %}
-    {% set ripgrep_path_name = '/snap/bin/' %}
+    {% set ripgrep_path_name = '/snap/bin' %}
+  {% elif grains.os_family == 'MacOS' %}
+    {% set ripgrep_path_name = '/usr/local/bin' %}
   {% endif %}
 
   {% if ripgrep_snap_install %}
@@ -75,7 +77,7 @@ rg-zsh-completion:
   {% if grains.cfg_ripgrep.debug.enable %}
 ripgrep-version:
   cmd.run:
-    - name:     {{ ripgrep_path_name }}{{ ripgrep_bin_name }} --version
+    - name:     {{ ripgrep_path_name }}/{{ ripgrep_bin_name }} --version
   {% endif %}
 {% endif %}
 

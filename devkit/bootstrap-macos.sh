@@ -98,7 +98,7 @@ if command -v brew >& /dev/null; then
     echo Homebrew is installed
 else
     echo Installing Homebrew
-    /usr/bin/ruby -e $(curl -fsSLo /tmp/install.sh https://raw.githubusercontent.com/Homebrew/install/master/install)
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 # Install developer tools if needed, newer versions of homebrew already do this
