@@ -14,6 +14,7 @@ if [ $? -eq 0 ]; then
 fi
 
 branch=
+chown=true
 debug=
 salt_only=
 
@@ -30,15 +31,20 @@ while getopts "b:ds" opt; do
     b ) branch="--branch ${OPTARG}"
         echo Using git branch ${OPTARG}
       ;;
+    c ) chown=false
+        echo Skipping chown to $USER
+      ;;
     d ) debug="-l debug"
         echo Setting debug mode
       ;;
     s ) salt_only=1
         echo Installing salt only
       ;;
-    \? ) echo "Usage: "$0" [-b <branch>] [-d]"
+    \? ) echo "Usage: "$0" [-b <branch>] [-c] [-d] [-s]"
         echo "-b <branch> - git clone"
+        echo "-c          - chown skip"
         echo "-d          - debug states"
+        echo "-s          - salt only"
         exit 1
       ;;
   esac
@@ -145,8 +151,11 @@ echo Installing the devlopment kit
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
+
+if ${chown}; then
 # Temporary fix for demo, permanent fix TBD in salt states
 ${sudo} chown -R $USER:$USER $HOME
+fi
 echo Development kit installation complete
 
 if command -v xdg-open >& /dev/null; then
