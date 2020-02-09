@@ -12,18 +12,28 @@
 
 {% if installs and 'docker' in installs %}
   {% set docker_pkg_name = 'docker' %}
+  {% set docker_bin_name = 'docker' %}
   {% set docker_alt_install = False %}
+  {% set docker_path = '/usr/bin' %}
+  {% set compose_pkg_name = 'docker-compose' %}
+  {% set compose_bin_name = 'docker-compose' %}
+  {% set compose_path = '/usr/bin' %}
 
   {% if grains.os_family == 'Debian' %}
     {% set docker_pkg_name = 'docker.io' %}
+  {% elif grains.os_family == 'MacOS' %}
+    {% set docker_app = '/Applications/Docker.app' %}
+    {% set docker_path = docker_app + '/Contents/Resources/bin' %}
+    {% set compose_path = docker_path + '/docker-compose' %}
   {% endif %}
 
-# MacOS - brew cask installs /Applications/Docker.app (client and server)
+{# MacOS - brew cask installs /Applications/Docker.app (client and server)
+   CLI commands and launchctl are set up first time Docker.app is opened #}
 
 docker:
   {% if grains.os_family == 'MacOS' %}
   cmd.run:
-    - unless:   test -d /Applications/Docker.app
+    - unless:   test -d  {{ docker_app }}
     - name:     brew cask install docker
   {% elif docker_alt_install %}
   cmd.run:
@@ -56,7 +66,6 @@ docker:
 {% endif %}
 
 {% if installs and 'compose' in installs %}
-  {% set compose_pkg_name = 'docker-compose' %}
 
 # MacOS - brew cask install docker also installs compose
 
@@ -74,14 +83,22 @@ compose:
 # MacOS - brew cask install docker does not install completions
 
 {% if completion %}
-  {% set docker_prefix = 'https://raw.githubusercontent.com/docker/' %}
-  {% set docker_content = 'cli/master/contrib/completion/' %}
+  {% if grains.os_family == 'MacOS' %}
+mac-docker-completion:
+  pkg.installed:
+    - name:     docker-completion
+mac-compose-completion:
+  pkg.installed:
+    - name:     docker-compose-completion
+  {% else %}
+    {% set docker_prefix = 'https://raw.githubusercontent.com/docker/' %}
+    {% set docker_content = 'cli/master/contrib/completion/' %}
   {# set compose_vers = salt.cmd.run('docker-compose version --short') #}
-  {% set compose_vers = '1.18.0' %}
-  {% set compose_content = 'compose/' + compose_vers + '/contrib/completion/' %}
-  {% if 'bash' in completion %}
-    {% set docker_bash_url = docker_prefix + docker_content + 'bash/docker' %}
-    {% set compose_bash_url = docker_prefix + compose_content + 'bash/docker-compose' %}
+    {% set compose_vers = '1.18.0' %}
+    {% set compose_content = 'compose/' + compose_vers + '/contrib/completion/' %}
+    {% if 'bash' in completion %}
+      {% set docker_bash_url = docker_prefix + docker_content + 'bash/docker' %}
+      {% set compose_bash_url = docker_prefix + compose_content + 'bash/docker-compose' %}
 
 docker-bash-completion:
   file.managed:
@@ -97,11 +114,11 @@ compose-bash-completion:
     - makedirs: True
     - skip_verify: True
     - replace:  False
-  {% endif %}
+    {% endif %}
 
-  {% if 'zsh' in completion %}
-    {% set docker_zsh_url = docker_prefix + docker_content + 'zsh/_docker' %}
-    {% set compose_zsh_url = docker_prefix + compose_content + 'zsh/_docker-compose' %}
+    {% if 'zsh' in completion %}
+      {% set docker_zsh_url = docker_prefix + docker_content + 'zsh/_docker' %}
+      {% set compose_zsh_url = docker_prefix + compose_content + 'zsh/_docker-compose' %}
 
 docker-zsh-completion:
   file.managed:
@@ -117,27 +134,32 @@ compose-zsh-completion:
     - makedirs: True
     - skip_verify: True
     - replace:  False
+    {% endif %}
   {% endif %}
 {% endif %}
 
 # MacOS - docker links in /usr/local/bin are created when the Docker app is first run
 
 {% if installs and grains.cfg_docker.debug.enable %}
+  {% if installs and 'docker' in installs %}
 docker-version:
   cmd.run:
-    - name:     docker --version
-compose-version:
-  cmd.run:
-    - name:     docker-compose --version
+    - name:     {{ docker_path }}/{{ docker_bin_name }} --version
+    {% if not grains.os_family == 'MacOS' %}
 docker-test:
   cmd.run:
-    - name:     docker run hello-world
-  {% if not grains.os_family == 'MacOS' %}
+    - name:     {{ docker_path }}/{{ docker_bin_name }} run hello-world
 docker-group:
   cmd.run:
-    - name:     grep docker /etc/group
+    - name:     grep {{ docker_bin_name }} /etc/group
+    {% endif %}
 docker-files:
   cmd.run:
-    - name:     ls -l /usr/bin/docker*
+    - name:     ls -ld {{ docker_path }}/{{ docker_bin_name }}*
+  {% endif %}
+  {% if installs and 'compose' in installs %}
+compose-version:
+  cmd.run:
+    - name:     {{ compose_path }}/{{ compose_bin_name }} --version
   {% endif %}
 {% endif %}
