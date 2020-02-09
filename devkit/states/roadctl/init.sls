@@ -9,6 +9,11 @@
   {% set roadctl_path = '/usr/local/bin/' %}
   {% set roadctl_binary = roadctl_path + roadctl_pkg_name %}
 
+  {# Temporary until github binary runs on MacOS #}
+  {% if grains.os_family == 'MacOS' %}
+    {% set roadctl_binary_install = False %}
+  {% endif %}
+
   {% if roadctl_binary_install %}
     {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/download/' %}
     {% if grains.cfg_roadctl.roadctl.version is defined and
