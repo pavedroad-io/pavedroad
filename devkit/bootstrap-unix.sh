@@ -8,7 +8,7 @@ sudo=$(command -v sudo)
 if [ $? -eq 0 ]; then
     sudo -v
     if [ $? -ne 0 ]; then
-        echo User $(whoami) does not have sudo permission
+        echo User $(id -un) does not have sudo permission
         exit 1
     fi
 fi
@@ -73,7 +73,7 @@ if [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
     ${sudo} apt-get -qq update >& /dev/null
     ${sudo} apt-get -qq install -y curl git python-pip
     if [ $? -ne 0 ]; then
-        echo User $(whoami) unable to execute apt-get
+        echo User $(id -un) unable to execute apt-get
         exit 1
     fi
 elif command -v apt-get >& /dev/null; then
@@ -81,7 +81,7 @@ elif command -v apt-get >& /dev/null; then
     install_type="stable ${salt_debian_version}"
     ${sudo} apt-get -qq update >& /dev/null
     if [ $? -ne 0 ]; then
-        echo User $(whoami) unable to execute apt-get
+        echo User $(id -un) unable to execute apt-get
         exit 1
     fi
     ${sudo} apt-get -y -qq install curl git
@@ -89,7 +89,7 @@ elif command -v dnf >& /dev/null; then
     echo Using package manager dnf
     ${sudo} dnf history info >& /dev/null
     if [ $? -ne 0 ]; then
-        echo User $(whoami) unable to execute dnf
+        echo User $(id -un) unable to execute dnf
         exit 1
     fi
     ${sudo} dnf -y -q install curl git
@@ -97,7 +97,7 @@ elif command -v yum >& /dev/null; then
     echo Using package manager yum
     ${sudo} yum history info >& /dev/null
     if [ $? -ne 0 ]; then
-        echo User $(whoami) unable to execute yum
+        echo User $(id -un) unable to execute yum
         exit 1
     fi
     ${sudo} yum -y -q install curl git
@@ -105,7 +105,7 @@ elif command -v zypper >& /dev/null; then
     echo Using package manager zypper
     ${sudo} zypper refresh >& /dev/null
     if [ $? -ne 0 ]; then
-        echo User $(whoami) unable to execute zypper
+        echo User $(id -un) unable to execute zypper
         exit 1
     fi
     ${sudo} zypper -q install -y curl git
@@ -122,7 +122,7 @@ if command -v salt-call >& /dev/null; then
     echo SaltStack is already installed
 elif [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
     echo Installing SaltStack with pip
-    ${sudo} pip install "salt==${salt_debian_version}"
+    pip install "salt==${salt_debian_version}"
     echo SaltStack installation complete
 else
     echo Installing SaltStack with bootstrap
@@ -152,9 +152,10 @@ saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
 
+# Temporary fix until permanent fix TBD in salt states
 if ${chown}; then
-# Temporary fix for demo, permanent fix TBD in salt states
-${sudo} chown -R $USER:$USER $HOME
+    homedir=$(eval echo ~$(id -un))
+    ${sudo} chown -R $(id -un):$(id -gn) ${homedir}
 fi
 echo Development kit installation complete
 

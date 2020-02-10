@@ -62,7 +62,7 @@ esac
 # Prepare /usr/local/bin as homebrew no longer runs under sudo
 
 if ${chown}; then
-    echo "Changing owner of directories in /usr/local/bin to" $(whoami)
+    echo "Changing owner of directories in /usr/local/bin to" $(id -un)
     brewdirs=(
         Caskroom
         Cellar
@@ -95,10 +95,10 @@ if ${chown}; then
     )
     cd /usr/local
     sudo mkdir -p -m 0755 ${brewdirs[*]}
-    sudo chown -R $(whoami) ${brewdirs[*]}
+    sudo chown -R $(id -un):$(id -gn) ${brewdirs[*]}
     cd ${OLDPWD}
 else
-    echo "Skipping change owner of directories in /usr/local/bin to" $(whoami)
+    echo "Skipping change owner of directories in /usr/local/bin to" $(id -un)
 fi
 
 # Install homebrew
