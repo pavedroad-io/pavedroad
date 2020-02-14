@@ -14,19 +14,27 @@ fi
 branch=
 chown=true
 debug=
+salt_only=
 
 while getopts "b:ds" opt; do
   case ${opt} in
     b ) branch="--branch ${OPTARG}"
+        echo Using git branch ${OPTARG}
+      ;;
+    c ) chown=false
+        echo Skipping chown to $USER
       ;;
     d ) debug="-l debug"
+        echo Setting debug mode
       ;;
-    s ) chown=false
+    s ) salt_only=1
+        echo Installing salt only
       ;;
-    \? ) echo "Usage: "$0" [-b <branch>] [-d] [-s]"
+    \? ) echo "Usage: "$0" [-b <branch>] [-c] [-d] [-s]"
         echo "-b <branch> - git clone"
+        echo "-c          - chown skip"
         echo "-d          - debug states"
-        echo "-s          - skip chown"
+        echo "-s          - salt only"
         exit 1
       ;;
   esac
@@ -54,7 +62,7 @@ esac
 # Prepare /usr/local/bin as homebrew no longer runs under sudo
 
 if ${chown}; then
-    echo "Changing owner of directories in /usr/local/bin to" $(whoami)
+    echo "Changing owner of directories in /usr/local/bin to" $(id -un)
     brewdirs=(
         Caskroom
         Cellar
@@ -87,10 +95,10 @@ if ${chown}; then
     )
     cd /usr/local
     sudo mkdir -p -m 0755 ${brewdirs[*]}
-    sudo chown -R $(whoami) ${brewdirs[*]}
+    sudo chown -R $(id -un):$(id -gn) ${brewdirs[*]}
     cd ${OLDPWD}
 else
-    echo "Skipping change owner of directories in /usr/local/bin to" $(whoami)
+    echo "Skipping change owner of directories in /usr/local/bin to" $(id -un)
 fi
 
 # Install homebrew
@@ -98,7 +106,7 @@ if command -v brew >& /dev/null; then
     echo Homebrew is installed
 else
     echo Installing Homebrew
-    /usr/bin/ruby -e $(curl -fsSLo /tmp/install.sh https://raw.githubusercontent.com/Homebrew/install/master/install)
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 # Install developer tools if needed, newer versions of homebrew already do this
@@ -142,7 +150,13 @@ else
     brew install saltstack
     echo SaltStack installation complete
 fi
+echo -n "Version: "
 salt-call --version
+
+if [ ${salt_only} ] ; then
+    echo Not installing the devlopment kit
+    exit
+fi
 
 # Clone salt states
 echo Cloning the devlopment kit repository

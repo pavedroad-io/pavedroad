@@ -1,9 +1,21 @@
 set nocompatible
 
 call plug#begin('~/.vim/plugged')
-Plug 'Shougo/deoplete.nvim',
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'zchee/deoplete-go'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'ervandew/supertab'
 Plug 'fatih/vim-go'
+Plug 'itchyny/lightline.vim'
+" fzf.sls depends on files installed by the next line
+Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-fugitive'
+Plug 'wincent/ferret'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
 call plug#end()
+
+" vim: filetype=vim

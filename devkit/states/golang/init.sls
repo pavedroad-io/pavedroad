@@ -46,19 +46,15 @@
     {% set golang_root = '/snap/bin' %}
   {% elif grains.os_family == 'MacOS' %}
     {% set golang_root = '/usr/local/bin' %}
-  {% elif grains.goroot != 'NONE' %}
-    {% set golang_root = grains.goroot %}
   {% elif golang_install == 'binary' %}
     {% set golang_root = '/usr/local' %}
+    {% set golang_temp = '/tmp/golang' %}
   {% else %}
     {% set golang_root = '/usr/bin' %}
   {% endif %}
 
-  {% if grains.gopath != 'NONE' %}
-    {% set golang_path = grains.gopath %}
-  {% else %}
-    {% set golang_path = grains.homedir + '/go' %}
-  {% endif %}
+  {% set golang_path = grains.homedir + '/go' %}
+  {% set golang_bin = golang_path + '/bin' %}
 
   {% if golang_root.endswith('/bin') %}
     {% set golang_exec = golang_root %}
@@ -66,63 +62,87 @@
     {% set golang_exec = golang_root + '/go/bin' %}
   {% endif %}
 
-  {% if snapd_build_required or completion and 'bash' in completion %}
 include:
-    {% if snapd_build_required %}
+  - golang.golangci-lint
+  {% if snapd_build_required %}
   - snapd
-    {% endif %}
-    {% if completion and 'bash' in completion %}
-  - bash
-    {% endif %}
   {% endif %}
 
+pr-go-aliases:
+  file.managed:
+    - name:     {{ grains.homedir }}/.pr_go_aliases
+    - source:   salt://golang/pr_go_aliases
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     644
 pr-go-env:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_go_env
     - contents: |
-                export GOROOT={{ golang_root }}/go
-                export GOPATH={{ golang_path }}
-                export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+                export GOPATH=$HOME/go
+                export GO111MODULE=on
+  {% if golang_install == 'binary' %}
+                export PATH=$PATH:{{ golang_exec }}:$GOPATH/bin
+  {% else %}
+                export PATH=$PATH:$GOPATH/bin
+  {% endif %}
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
-append-bashrc-pr_env:
+go-append-pr_bashrc:
   file.append:
-    - name:     {{ grains.homedir }}/.bashrc
-    - text:     source $HOME/.pr_go_env
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     |
+                source $HOME/.pr_go_aliases
+                source $HOME/.pr_go_env
     - require:
+      - file:   pr-go-aliases
       - file:   pr-go-env
-golang:
+go-append-pr_zshrc:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     |
+                source $HOME/.pr_go_aliases
+                source $HOME/.pr_go_env
+    - require:
+      - file:   pr-go-aliases
+      - file:   pr-go-env
+golang-cache:
   file.directory:
     - name:     {{ grains.homedir }}/.cache/go-build
     - makedirs: True
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     755
+golang:
   {% if false %}
-# salt barfs on the extraction with UnicodeEncodeError
+  {# salt barfs on the extraction with UnicodeEncodeError: 'ascii' codec can't encode character u'\xc4' in position 44: ordinal not in range(128) #}
   archive.extracted:
-    - unless:      |
-                   test -d {{ golang_root }}/go
-                   test -x {{ golang_exec }}/go
-    - name:        {{ golang_root }}
-    - source:      {{ golang_url }}
-    - source_hash: {{ golang_hash }}
+    - unless:         |
+                      test -d {{ golang_root }}/go
+                      test -x {{ golang_exec }}/go
+    - name:           {{ golang_root }}
+    - source:         {{ golang_url }}
+    - source_hash:    {{ golang_hash }}
     - archive_format: tar
-    - tar_options: xzf
+    - tar_options:    xf
   {% elif golang_install == 'binary' %}
+  file.directory:
+    - name:     {{ golang_temp }}
+    - makedirs: True
   cmd.run:
-    - unless:      |
-                   test -d {{ golang_root }}/go
-                   test -x {{ golang_exec }}/go
-    - name:        |
-                   curl -LO {{ golang_url }}
-                   tar xf {{ golang_file }}
-                   mv go {{ golang_root }}
-                   rm -f {{ golang_file }}
+    - unless:   |
+                test -d {{ golang_root }}/go
+                test -x {{ golang_exec }}/go
+    - name:     |
+                curl -LO {{ golang_url }}
+                tar xf {{ golang_file }}
+                mv go {{ golang_root }}
+                rm -f {{ golang_file }}
+    - cwd:      {{ golang_temp }}
   {% elif golang_install == 'snap' %}
     {% if snapd_build_required %}
-# Temporary until saltstack releases snapd support
+    {# Temporary until saltstack releases snapd support #}
   cmd.run:
     - unless:   |
                 test -d {{ golang_root }}/go
@@ -152,40 +172,51 @@ golang:
     - version:  {{ grains.cfg_golang.golang.version }}
     {% endif %}
   {% endif %}
+golang-bin:
+  file.directory:
+    - name:     {{ golang_bin }}
+    - makedirs: True
+    - user:     {{ grains.realuser }}
+    - group:    {{ grains.realgroup }}
+    - mode:     755
 
   {% load_yaml as go_tools %}
-  godep:        github.com/tools/godep
-  dlv:          github.com/go-delve/delve/cmd/dlv
-  golint:       golang.org/x/lint/golint
-  gosec:        github.com/securego/gosec/cmd/gosec
-  asmfmt:       github.com/klauspost/asmfmt/cmd/asmfmt
-  errcheck:     github.com/kisielk/errcheck
-  fillstruct:   github.com/davidrjenni/reftools/cmd/fillstruct
-  gocode:       github.com/stamblerre/gocode
-  gocomplete:   github.com/posener/complete/gocomplete
-  godef:        github.com/rogpeppe/godef
-  gogetdoc:     github.com/zmb3/gogetdoc
-  goimports:    golang.org/x/tools/cmd/goimports
-  gopls:        golang.org/x/tools/cmd/gopls
-  gometalinter: github.com/alecthomas/gometalinter
-  golangci-lint: github.com/golangci/golangci-lint/cmd/golangci-lint
-  gomodifytags: github.com/fatih/gomodifytags
-  gorename:     golang.org/x/tools/cmd/gorename
-  gotags:       github.com/jstemmer/gotags
-  guru:         golang.org/x/tools/cmd/guru
-  impl:         github.com/josharian/impl
-  keyify:       honnef.co/go/tools/cmd/keyify
-  motion:       github.com/fatih/motion
-  iferr:        github.com/koron/iferr
-  swagger:      github.com/go-swagger/go-swagger/cmd/swagger
-  dep:          github.com/golang/dep/cmd/dep
+  asmfmt:        github.com/klauspost/asmfmt/cmd/asmfmt
+  dep:           github.com/golang/dep/cmd/dep
+  dlv:           github.com/go-delve/delve/cmd/dlv
+  errcheck:      github.com/kisielk/errcheck
+  fillstruct:    github.com/davidrjenni/reftools/cmd/fillstruct
+  gocode:        github.com/mdempsky/gocode
+  gocode-gomod:  github.com/stamblerre/gocode
+  gocomplete:    github.com/posener/complete/gocomplete
+  godef:         github.com/rogpeppe/godef
+  godep:         github.com/tools/godep
+  gogetdoc:      github.com/zmb3/gogetdoc
+  goimports:     golang.org/x/tools/cmd/goimports
+  golint:        golang.org/x/lint/golint
+  gometalinter:  github.com/alecthomas/gometalinter
+  gomodifytags:  github.com/fatih/gomodifytags
+  gopls:         golang.org/x/tools/gopls
+  gorename:      golang.org/x/tools/cmd/gorename
+  gosec:         github.com/securego/gosec/cmd/gosec
+  gotags:        github.com/jstemmer/gotags
+  govendor:      github.com/kardianos/govendor
+  guru:          golang.org/x/tools/cmd/guru
+  iferr:         github.com/koron/iferr
+  impl:          github.com/josharian/impl
+  keyify:        honnef.co/go/tools/cmd/keyify
+  motion:        github.com/fatih/motion
+  swagger:       github.com/go-swagger/go-swagger/cmd/swagger
   {% endload %}
 
   {% for key in go_tools %}
     {% if key in installs %}
 {{ key }}:
   cmd.run:
-    - name:     {{ golang_exec }}/go get {{ go_tools[key] }}
+      {# go get dows not have -o option to resolve name collisions, thus two steps #}
+    - name:     |
+                {{ golang_exec }}/go get -d {{ go_tools[key] }}
+                {{ golang_exec }}/go build -o {{ golang_bin }}/{{ key }} {{ go_tools[key] }}
       {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
       {% if not grains.os_family == 'MacOS' %}
     - runas:    {{ grains.realuser }}
@@ -194,7 +225,7 @@ golang:
     - group:    {{ grains.realgroup }}
         {% endif %}
       {% endif %}
-    - unless:   test -x {{ golang_path }}/bin/{{ key }}
+    - unless:   test -x {{ golang_bin }}/{{ key }}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -213,34 +244,32 @@ chown-go-path:
       - cmd:    iferr
 {% endif %}
 
-# Uses gocomplete package installed above
-{% if completion and 'bash' in completion %}
-golang-bash-completion:
-  cmd.run:
-  {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
-  {% if grains.os_family == 'RedHat' %}
-    - name:     sudo -u {{ grains.realuser }} {{ golang_path }}/bin/gocomplete --install -y
-  {% else %}
-    - name:     {{ golang_path }}/bin/gocomplete --install -y
-  {% endif %}
-  {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
-  {% if not grains.os_family == 'MacOS' %}
-    - runas:    {{ grains.realuser }}
-    {# Salt requires sudo for "group" here, so MacOS and Docker excluded #}
-    {% if not grains.docker %}
-    - group:    {{ grains.realgroup }}
-    {% endif %}
-  {% endif %}
-  {# gocomplete returns exit code 3 if already installed #}
-  {# Suse has version 2018.3.0 of salt without success_retcodes #}
-  {% if grains.os_family == 'Suse' %}
-    - check_cmd:
-      - /bin/true
-  {% else %}
-    - success_retcodes: 3
-  {% endif %}
-    - require:
-      - sls:    bash
+{# Completion uses gocomplete package installed above #}
+{# Appends complete command lines to .pr_bashrc and .pr_zshrc #}
+{# Assume this overrides normal completion installed for bash and zsh #}
+{% if completion and 'gocomplete' in completion %}
+gocomplete-bash-completion:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_bashrc
+    - text:     complete -C $HOME/go/bin/gocomplete go
+gocomplete-zsh-completion:
+  file.append:
+    - name:     {{ grains.homedir }}/.pr_zshrc
+    - text:     |
+                autoload -U +X bashcompinit && bashcompinit
+                complete -o nospace -C $HOME/go/bin/gocomplete go
+{% endif %}
+{% if completion and 'zsh-go' in completion %}
+zchee-zsh-completion:
+  git.latest:
+    - name:        https://github.com/zchee/zsh-completions.git
+    - branch:      master
+    - target:      /tmp/zchee
+    - force_clone: True
+  file.copy:
+    - name:     {{ pillar.directories.completions.zsh_go }}
+    - source:   /tmp/zchee/src/go
+    - makedirs: True
 {% endif %}
 
 {% if grains.cfg_golang.debug.enable %}
@@ -249,11 +278,11 @@ golang-version:
     - name:     {{ golang_exec }}/go version
 golang-files:
   cmd.run:
-    - name:     ls -l {{ golang_path }}/bin
+    - name:     ls -l {{ golang_bin }}
 golang-test:
   file.managed:
     - name:     {{ golang_path }}/src/hello/hello.go
-    - source:   {{ grains.stateroot }}/golang/hello.go
+    - source:   salt://golang/hello.go
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - makedirs: True

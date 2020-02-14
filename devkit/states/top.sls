@@ -3,7 +3,7 @@
 # saltenv = dev|stage|test|prod
 # os_family = debian|redhat|suse|macos|windows
 # roles = pr-golang
-# tops = base|bash|git|golang|vim
+# tops = specify options for each salt state
 #
 
 {{ saltenv }}:
@@ -53,6 +53,10 @@
     - match: compound
     - bash
 
+  'G@saltenv:dev and G@tops:zsh':
+    - match: compound
+    - zsh
+
 #
 # Role specific packages
 #
@@ -69,6 +73,7 @@
     - match: compound
     - golang
 
+# vim.sls depends on files installed by golang.sls
   'G@saltenv:dev and G@roles:pr-golang and G@tops:vim':
     - match: compound
     - vim
@@ -105,6 +110,10 @@
     - match: compound
     - nodejs
 
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:pretty_swag':
+    - match: compound
+    - pretty-swag
+
   'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
     - match: compound
     - skaffold
@@ -116,3 +125,36 @@
   'G@saltenv:dev and G@roles:pr-golang and G@tops:roadctl':
     - match: compound
     - roadctl
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:ctags':
+    - match: compound
+    - ctags
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:jq':
+    - match: compound
+    - jq
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:ripgrep':
+    - match: compound
+    - ripgrep
+
+# fzf.sls depends on files installed by vim.sls
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:fzf':
+    - match: compound
+    - fzf
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:fossa':
+    - match: compound
+    - fossa
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:stern':
+    - match: compound
+    - stern
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:tilt':
+    - match: compound
+    - tilt
+
+  'G@saltenv:dev and G@roles:pr-golang and G@tops:sonar_scanner':
+    - match: compound
+    - sonar-scanner

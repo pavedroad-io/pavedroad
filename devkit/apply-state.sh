@@ -52,43 +52,31 @@ else
     docker=False
 fi
 
-if ! test -z "${GOPATH}"; then
-    gopath=$(echo ${GOPATH} | awk -F ":" '{print $1}')
-else
-    gopath=NONE
-fi
-
-if ! test -z "${GOROOT}"; then
-    goroot="${GOROOT}"
-else
-    goroot=NONE
-fi
-
 # associative arrays not available in bash before version 4
 # thus reverting from associative array to two parallel arrays
 grain_names=(
 realuser
 realgroup
 homedir
-stateroot
 saltenv
 docker
-gopath
-goroot
 )
 
 grain_values=(
 "$(id -un ${SUDO_UID})"
 "$(id -gn ${SUDO_UID})"
 "$(eval echo ~$(id -un ${SUDO_UID}))"
-"${saltdir}/states"
 dev
 "${docker}"
-"${gopath}"
-"${goroot}"
 )
 
-echo Configuring grains for the development kit salt states
+cat << EOF
+Configuring grains for the development kit salt states
+Running salt in masterless mode: Ignore the following messages:
+    [INFO    ] Although 'dmidecode' was found in path ...
+    [ERROR   ] Got insufficient arguments ...
+
+EOF
 
 for i in ${!grain_names[@]}; do
     salt-call \
@@ -96,14 +84,20 @@ for i in ${!grain_names[@]}; do
         grains.setval "${grain_names[$i]}" "${grain_values[$i]}"
 done
 
-echo
-echo Applying salt states for the developemt kit now
-echo Please be patient as this process may take 5 to 10 minutes
-echo To see progress: tail -f pr-root/var/log/salt/minion
-echo Running in masterless mode: Ignore [ERROR   ] Got insufficient arguments ...
+cat << EOF
+
+Applying salt states for the developemt kit now
+Please be patient as this process may take 5 to 10 minutes
+To see progress: tail -f pr-root/var/log/salt/minion
+Running salt in masterless mode: Ignore the following messages:
+    [INFO    ] Although 'dmidecode' was found in path ...
+    [ERROR   ] Got insufficient arguments ...
+
+EOF
 
 salt-call \
     --config-dir "${saltdir}/config/" \
+    --pillar-root  "${saltdir}/pillar/" \
     --file-root  "${saltdir}/states/" \
     ${loglevel} ${output} ${verbose} \
     state.highstate ${dryrun} 2>/dev/null

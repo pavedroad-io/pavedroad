@@ -12,11 +12,15 @@ grains:
     - macos
     - windows
     - bash
+    - ctags
     - direnv
     - docker
+    - fossa
+    - fzf
     - git
     - golang
     - graphviz
+    - jq
     - kompose
     - kubebuilder
     - kubectl
@@ -24,9 +28,15 @@ grains:
     - microk8s
     - multipass
     - nodejs
+    - pretty_swag
+    - ripgrep
     - roadctl
     - skaffold
+    - sonar_scanner
+    - stern
+    - tilt
     - vim
+    - zsh
   cfg_base:
     installs:
       - firefox
@@ -63,8 +73,12 @@ grains:
     putty:
       version: latest
   cfg_bash:
+    installs:
+      - bash
+    bash:
+      version: latest
     packages:
-      - completion
+      - bash-completion
     files:
       - bashrc
       - completion
@@ -72,6 +86,15 @@ grains:
       append: True
     completion:
       append: True
+    debug:
+      enable: True
+  cfg_ctags:
+    installs:
+      - ctags
+    ctags:
+      version: latest
+    debug:
+      enable: True
   cfg_direnv:
     installs:
       - direnv
@@ -91,9 +114,23 @@ grains:
       service: True
     completion:
       - bash
+      - zsh
     debug:
       enable: True
       host: tcp://host.docker.internal:2375
+  cfg_fzf:
+    installs:
+      - fzf
+    completion:
+      - bash
+      - zsh
+  cfg_fossa:
+    installs:
+      - fossa
+    fossa:
+      version: latest
+    debug:
+      enable: True
   cfg_git:
     installs:
       - git
@@ -102,39 +139,47 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     prompt:
       append: True
+    debug:
+      enable: True
   cfg_golang:
     installs:
       - golang
-      - godep
-      - dlv
-      - golint
-      - gosec
       - asmfmt
+      - dep
+      - dlv
       - errcheck
       - fillstruct
+      - fzf
       - gocode
+      - gocode-gomod
       - gocomplete
       - godef
+      - godep
       - gogetdoc
       - goimports
-      - gopls
-      - gometalinter
       - golangci-lint
+      - golint
+      - gometalinter
       - gomodifytags
+      - gopls
       - gorename
+      - gosec
       - gotags
+      - govendor
       - guru
+      - iferr
       - impl
       - keyify
       - motion
-      - iferr
       - swagger
     golang:
       version: latest
     completion:
-      - bash
+      - gocomplete
+      - zsh-go
     debug:
       enable: True
   cfg_graphviz:
@@ -144,6 +189,15 @@ grains:
       version: latest
     debug:
       enable: True
+  cfg_jq:
+    installs:
+      - jq
+    jq:
+      version: latest
+    completion:
+      - zsh
+    debug:
+      enable: True
   cfg_kompose:
     installs:
       - kompose
@@ -151,6 +205,7 @@ grains:
       version: 1.18.0
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_kubebuilder:
@@ -169,6 +224,7 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_kustomize:
@@ -208,6 +264,8 @@ grains:
   cfg_pip3:
     installs:
       - pip3
+    debug:
+      enable: True
   cfg_pretty_swag:
     installs:
       - pretty_swag
@@ -217,13 +275,23 @@ grains:
       - None
     debug:
       enable: True
+  cfg_ripgrep:
+    installs:
+      - ripgrep
+    ripgrep:
+      version: latest
+    completion:
+      - zsh
+    debug:
+      enable: True
   cfg_roadctl:
     installs:
       - roadctl
     roadctl:
-      version: latest
+      version: v0.5.2alpha
     completion:
       - bash
+      - zsh
     debug:
       enable: True
   cfg_skaffold:
@@ -233,12 +301,37 @@ grains:
       version: latest
     completion:
       - bash
+      - zsh
+    debug:
+      enable: True
+  cfg_sonar_scanner:
+    installs:
+      - sonar_scanner
+    sonar_scanner:
+      version: 4.2.0.1873
     debug:
       enable: True
   cfg_snapd:
     installs:
       - snapd
     snapd:
+      version: latest
+    debug:
+      enable: True
+  cfg_stern:
+    installs:
+      - stern
+    stern:
+      version: 1.11.0
+    completion:
+      - bash
+      - zsh
+    debug:
+      enable: True
+  cfg_tilt:
+    installs:
+      - tilt
+    tilt:
       version: latest
     debug:
       enable: True
@@ -252,6 +345,22 @@ grains:
       - vimrc
       - vimrc-go
     vimrc:
+      append: True
+    debug:
+      enable: True
+  cfg_zsh:
+    installs:
+      - zsh
+    zsh:
+      version: latest
+    packages:
+      - zsh-completions
+    files:
+      - zshrc
+      - completion
+    zshrc:
+      append: True
+    completion:
       append: True
     debug:
       enable: True

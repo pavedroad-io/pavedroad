@@ -22,14 +22,9 @@
     {% set kubectl_path = '/snap/bin/' %}
   {% endif %}
 
-  {% if kubectl_snap_install or completion and 'bash' in completion %}
+  {% if kubectl_snap_install %}
 include:
-    {% if kubectl_snap_install %}
   - snapd
-    {% endif %}
-    {% if completion and 'bash' in completion %}
-  - bash
-    {% endif %}
   {% endif %}
 
 kubectl:
@@ -59,20 +54,27 @@ kubectl:
 # brew install kubectl also installs bash completion for kubectl
 # so we do not overwrite completion file
 
-  {% if completion and 'bash' in completion %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
-    {% else %}
-      {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
-    {% endif %}
-    {% set bash_comp_file = bash_comp_dir + 'kubectl' %}
+  {% if completion %}
+    {% if 'bash' in completion %}
+      {% set bash_comp_file = pillar.directories.completions.bash + '/kubectl' %}
 kubectl-bash-completion:
   cmd.run:
-    - name:     {{ kubectl_path }}kubectl completion bash > {{ bash_comp_file }}
+    - name:     |
+                mkdir -p {{ pillar.directories.completions.bash }}
+                {{ kubectl_path }}kubectl completion bash > {{ bash_comp_file }}
     - unless:   test -e {{ bash_comp_file }}
     - onlyif:   test -x {{ kubectl_path }}kubectl
-    - require:
-      - sls:    bash
+    {% endif %}
+    {% if 'zsh' in completion %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kubectl' %}
+kubectl-zsh-completion:
+  cmd.run:
+    - name:     |
+                mkdir -p {{ pillar.directories.completions.zsh }}
+                {{ kubectl_path }}kubectl completion zsh > {{ zsh_comp_file }}
+    - unless:   test -e {{ zsh_comp_file }}
+    - onlyif:   test -x {{ kubectl_path }}kubectl
+    {% endif %}
   {% endif %}
 
   {% if grains.cfg_kubectl.debug.enable %}

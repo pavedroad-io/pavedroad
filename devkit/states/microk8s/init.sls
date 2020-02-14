@@ -1,6 +1,9 @@
 # Install microk8s
 
-{% if grains.docker %}
+{# multipass/microk8s fail to install on MacOS running on VirtualBox #}
+{% if grains.docker or (grains.os_family == 'MacOS'
+  and grains.boot_rom_version is defined
+  and grains.boot_rom_version == 'VirtualBox') %}
   {% set installs = False %}
 {% else %}
   {% set installs = grains.cfg_microk8s.installs %}

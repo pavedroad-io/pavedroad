@@ -1,0 +1,48 @@
+# vim: filetype=sh
+
+# Sourced by .pr_zshrc
+
+# Setting up zsh completion
+#
+# The zsh package installers for most systems include completion files.
+# Usually the initial fpath includes the installed completion directories.
+# Thus only the pavedroad completion directories are prepended to fpath.
+#
+# Note that compinit will only re-initialize if the number of completion
+#   files has changed.
+# Other changes like name changes will not trigger a new initialization.
+# In this case the dumped configuration must be manually removed:
+#   rm -f ~/.zcompdump
+
+# The pavedroad devkit installs completions in the following directories:
+
+# Individual completion files:
+ZSH_COMP_PR=/usr/local/share/zsh/completions/pavedroad
+
+# Zsh-user completion files:
+ZSH_COMP_EX=/usr/local/share/zsh/completions/extra
+# See https://github.com/zsh-users/zsh-completions
+# Note that homebrew is not used to install this package on macOS
+
+# Additional go completion files:
+ZSH_COMP_GO=/usr/local/share/zsh/completions/go
+# See https://github.com/zchee/go-zsh-completions
+
+autoload compinit
+zmodload -i zsh/complist
+
+if [ -d $ZSH_COMP_EX ] && [ "$(ls -A $ZSH_COMP_EX)" ]
+then
+    fpath=($ZSH_COMP_EX $fpath)
+fi
+if [ -d $ZSH_COMP_GO ] && [ "$(ls -A $ZSH_COMP_GO)" ]
+then
+    fpath=($ZSH_COMP_GO $fpath)
+fi
+if [ -d $ZSH_COMP_PR ] && [ "$(ls -A $ZSH_COMP_PR)" ]
+then
+    fpath=($ZSH_COMP_PR $fpath)
+fi
+
+compinit -u
+

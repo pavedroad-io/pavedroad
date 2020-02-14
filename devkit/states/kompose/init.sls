@@ -23,11 +23,6 @@
     {% set kompose_url = kompose_prefix + kompose_version %}
   {% endif %}
 
-  {% if completion and 'bash' in completion %}
-include:
-  - bash
-  {% endif %}
-
 kompose:
   {% if kompose_binary_install %}
   file.managed:
@@ -49,20 +44,27 @@ kompose:
 # brew install kompose also installs bash completion for kompose
 # so we do not overwrite completion file
 
-  {% if completion and 'bash' in completion %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set bash_comp_dir = '/usr/local/etc/bash_completion.d/' %}
-    {% else %}
-      {% set bash_comp_dir = '/usr/share/bash-completion/completions/' %}
-    {% endif %}
-    {% set bash_comp_file = bash_comp_dir + 'kompose' %}
+  {% if completion %}
+    {% if 'bash' in completion %}
+      {% set bash_comp_file = pillar.directories.completions.bash + '/kompose' %}
 kompose-bash-completion:
   cmd.run:
-    - name:     {{ kompose_path }}kompose completion bash > {{ bash_comp_file }}
+    - name:     |
+                mkdir -p {{ pillar.directories.completions.bash }}
+                {{ kompose_path }}kompose completion bash > {{ bash_comp_file }}
     - unless:   test -e {{ bash_comp_file }}
     - onlyif:   test -x {{ kompose_path }}kompose
-    - require:
-      - sls:    bash
+    {% endif %}
+    {% if 'zsh' in completion %}
+      {% set zsh_comp_file = pillar.directories.completions.zsh + '/_kompose' %}
+kompose-zsh-completion:
+  cmd.run:
+    - name:     |
+                mkdir -p {{ pillar.directories.completions.zsh }}
+                {{ kompose_path }}kompose completion zsh > {{ zsh_comp_file }}
+    - unless:   test -e {{ zsh_comp_file }}
+    - onlyif:   test -x {{ kompose_path }}kompose
+    {% endif %}
   {% endif %}
 
   {% if grains.cfg_kompose.debug.enable %}
