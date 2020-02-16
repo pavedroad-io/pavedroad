@@ -116,12 +116,6 @@ vim-plugins:
       - file:   vim-plugged
       - file:   vimrc-plug
       - cmd:    neovim-dep
-    - unless:
-      -         test -d {{ grains.homedir }}/.vim/plugged/deoplete-go
-      -         test -d {{ grains.homedir }}/.vim/plugged/deoplete.nvim
-      -         test -d {{ grains.homedir }}/.vim/plugged/nvim-yarp
-      -         test -d {{ grains.homedir }}/.vim/plugged/vim-go
-      -         test -d {{ grains.homedir }}/.vim/plugged/vim-hug-neovim-rp
 
 # Centos ignores "runas" above so owner/group == root/root must be fixed
   {% if grains.os_family == 'RedHat' %}
