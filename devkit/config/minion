@@ -158,6 +158,7 @@ grains:
       - gocomplete
       - godef
       - godep
+      - godepgraph
       - gogetdoc
       - goimports
       - golangci-lint

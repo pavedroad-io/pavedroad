@@ -190,6 +190,7 @@ golang-bin:
   gocomplete:    github.com/posener/complete/gocomplete
   godef:         github.com/rogpeppe/godef
   godep:         github.com/tools/godep
+  godepgraph:    github.com/kisielk/godepgraph
   gogetdoc:      github.com/zmb3/gogetdoc
   goimports:     golang.org/x/tools/cmd/goimports
   golint:        golang.org/x/lint/golint
