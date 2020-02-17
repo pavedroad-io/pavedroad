@@ -53,10 +53,4 @@ The command to download and run the bootstrap script for MacOS:
 curl -L https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh |
 /bin/bash
 
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The source template may be edited:
-[INSTALL.md](/assets/templates/devkit/INSTALL.md)
 
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)

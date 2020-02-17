@@ -131,10 +131,4 @@ the voting process should be considered.
 Additions and removals of maintainers require a **2/3 majority**, while other decisions and changes
 require only a simple majority.
 
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The source template may be edited:
-[GOVERNANCE.md](/assets/templates/default/GOVERNANCE.md)
 
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)
