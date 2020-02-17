@@ -175,6 +175,7 @@ grains:
       - keyify
       - motion
       - swagger
+      - yq
     golang:
       version: latest
     completion:

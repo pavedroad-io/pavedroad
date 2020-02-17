@@ -206,6 +206,7 @@ golang-bin:
   keyify:        honnef.co/go/tools/cmd/keyify
   motion:        github.com/fatih/motion
   swagger:       github.com/go-swagger/go-swagger/cmd/swagger
+  yq:            github.com/mikefarah/yq
   {% endload %}
 
   {% for key in go_tools %}
