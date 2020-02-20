@@ -18,13 +18,19 @@ chown=true
 debug=
 salt_only=
 
-# Sets salt install-type to either "stable" or "stable <$salt-version>"
+# Fixing salt version at "stable 2019.2.0" for all systems
+#   except openSUSE which will only accept "stable" for the version
 # Workaround for https://github.com/saltstack/salt/issues/53570
-# Only for debian, ascertained by the existence of apt-get below
-salt_debian_version="2019.2.0"
-install_type="stable"
-ubuntu_pip_rel="19.10"
+salt_version="2019.2.0"
+bootstrap_version="stable ${salt_version}"
+
+# Salt bootstrap fails for newer Ubuntu versions thus apt-get install is used
+# In this case the installed salt version is the package manager latest
 os_rel_file="/etc/os-release"
+ubuntu_identity="ubuntu"
+ubuntu_versions=(
+19.10
+)
 
 while getopts "b:ds" opt; do
   case ${opt} in
@@ -58,41 +64,34 @@ function error_trap
 }
 trap 'error_trap' ERR
 
-# Install curl and git, needed to install saltstack
-# Not a comprehensive list of package managers
+# set default install type and name
+install_type="bootstrap"
+install_name="salt"
 
+# Later ubuntu versions fail with bootstrap and pip installs
 if test -e "${os_rel_file}" ; then
     source "${os_rel_file}"
-    ubuntu_rel=${VERSION_ID}
-else
-    ubuntu_rel='false'
+    if [[ "${ID}" == "${ubuntu_identity}" ]] ; then
+        if [[ " ${ubuntu_versions[*]} " == *"${VERSION_ID}"* ]] ; then
+            install_type="apt-get"
+            install_name="salt-common"
+        fi
+    fi
 fi
 
-if [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
-    echo Using package manager apt-get and pip
-    ${sudo} apt-get -qq update >& /dev/null
-    ${sudo} apt-get -qq install -y curl git python-pip
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute apt-get
-        exit 1
-    fi
-elif command -v apt-get >& /dev/null; then
-    echo Using package manager apt-get
-    install_type="stable ${salt_debian_version}"
-    ${sudo} apt-get -qq update >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute apt-get
-        exit 1
-    fi
-    ${sudo} apt-get -y -qq install curl git
-elif command -v dnf >& /dev/null; then
+# Install git and either curl or pip as needed to install saltstack
+# Not a comprehensive list of package managers
+
+if command -v dnf >& /dev/null; then
     echo Using package manager dnf
     ${sudo} dnf history info >& /dev/null
     if [ $? -ne 0 ]; then
         echo User $(id -un) unable to execute dnf
         exit 1
     fi
-    ${sudo} dnf -y -q install curl git
+    [ "${install_type}" == "bootstrap" ] && ${sudo} dnf -y -q install curl
+    [ "${install_type}" == "pip" ] && ${sudo} dnf -y -q install python3-pip
+    ${sudo} dnf -y -q install git
 elif command -v yum >& /dev/null; then
     echo Using package manager yum
     ${sudo} yum history info >& /dev/null
@@ -100,15 +99,30 @@ elif command -v yum >& /dev/null; then
         echo User $(id -un) unable to execute yum
         exit 1
     fi
-    ${sudo} yum -y -q install curl git
+    [ "${install_type}" == "bootstrap" ] && ${sudo} yum -y -q install curl
+    [ "${install_type}" == "pip" ] && ${sudo} yum -y -q install python3-pip
+    ${sudo} yum -y -q install git
 elif command -v zypper >& /dev/null; then
     echo Using package manager zypper
+    bootstrap_version="stable"
     ${sudo} zypper refresh >& /dev/null
     if [ $? -ne 0 ]; then
         echo User $(id -un) unable to execute zypper
         exit 1
     fi
-    ${sudo} zypper -q install -y curl git
+    [ "${install_type}" == "bootstrap" ] && ${sudo} zypper -q install -y curl
+    [ "${install_type}" == "pip" ] && ${sudo} zypper -q install -y python3-pip
+    ${sudo} zypper -q install -y git
+elif command -v apt-get >& /dev/null; then
+    echo Using package manager apt-get
+    ${sudo} apt-get -qq update >& /dev/null
+    if [ $? -ne 0 ]; then
+        echo User $(id -un) unable to execute apt-get
+        exit 1
+    fi
+    [ "${install_type}" == "bootstrap" ] && ${sudo} apt-get -y -qq install curl
+    [ "${install_type}" == "pip" ] && ${sudo} apt-get -qq install -y python3-pip
+    ${sudo} apt-get -y -qq install git
 else
     echo Supported package manager not found
     exit 1
@@ -120,19 +134,23 @@ set -o errexit -o errtrace
 # Install saltstack
 if command -v salt-call >& /dev/null; then
     echo SaltStack is already installed
-elif [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
-    echo Installing SaltStack with pip
-    pip install "salt==${salt_debian_version}"
-    echo SaltStack installation complete
-else
+elif [ "${install_type}" == "apt-get" ]; then
+    echo Installing SaltStack with apt-get
+    ${sudo} apt-get -y -qq install ${install_name}
+    echo SaltStack apt-get installation complete
+elif [ "${install_type}" == "bootstrap" ]; then
     echo Installing SaltStack with bootstrap
     curl -o install_salt.sh -L https://bootstrap.saltstack.com
-
     # -P Prevent failure by allowing the script to use pip as a dependency source
     # -X Do not start minion service
-    ${sudo} sh install_salt.sh -P -X ${install_type}
-    echo SaltStack installation complete
+    ${sudo} sh install_salt.sh -P -X ${bootstrap_version}
+    echo SaltStack bootstrap installation complete
+elif [ "${install_type}" == "pip" ]; then
+    echo Installing SaltStack with pip
+    ${sudo} pip3 install ${install_name}==${salt_version}
+    echo SaltStack pip installation complete
 fi
+
 echo -n "Version: "
 salt-call --version
 
