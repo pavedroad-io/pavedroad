@@ -17,7 +17,8 @@
     {% set ripgrep_path_name = '/usr/local/bin' %}
   {% endif %}
 
-  {% if grains.os_family == 'Debian' or
+  {% if (grains.os_family == 'Debian' and grains.os != 'Ubuntu') or
+    (grains.os == 'Ubuntu' and (grains.osrelease | float) < 18.10) or
     (grains.os == 'CentOS' and grains.osmajorrelease >= 7) or
     (grains.os_family == 'Suse' and grains.osfullname == 'Leap' and
       (grains.osrelease | float) < 15.1) %}
