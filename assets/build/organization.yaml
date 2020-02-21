@@ -62,11 +62,12 @@ assets_templates: /assets/templates
 devkit_name: Developer Kit
 devkit_readme: /devkit/README.md
 devkit_install: /devkit/INSTALL.md
-devkit_install_detail: /devkit/INSTALL_DETAIL.md
+devkit_bootstrap: /devkit/BOOTSTRAP.md
 devkit_devsoftware: /devkit/BOM_DEV_SOFTWARE.md
 devkit_gopackages: /devkit/BOM_GO_PACKAGES.md
 devkit_vimplugins: /devkit/BOM_VIM_PLUGINS.md
 devkit_shellcomps: /devkit/BOM_SHELL_COMPS.md
+devkit_platforms: /devkit/PLATFORMS.md
 templates_link: assets/templates/default
 conduct: /CODE_OF_CONDUCT.md
 contrib: /CONTRIBUTING.md

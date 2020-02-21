@@ -7,19 +7,19 @@ one for many Linux distributions and one for MacOS.
 These scripts install SaltStack which is then run in masterless mode
 to automate the installation of the {{organization}} {{project}}.
 
-In order to run the bootstrap scripts the user must have the correct sudo permission
+In order to run the bootstrap scripts the user must have the correct _sudo_ privileges
 set up to install packages.
-Each script checks the sudo permission for the user and prompts for a
+Each script checks the _sudo_ privileges for the user and prompts for a
 password if necessary.
 
 See more detailed information on bootstrap scripts for the {{project}}:
-[Install Detail]({{devkit_install_detail}}).
+[Bootstrap Detail]({{devkit_bootstrap}}).
 
 ## Unix Bootstrap
 
 The unix bootstrap script does the following:
 
-1) checks the user's sudo permission
+1) checks the user's sudo privileges
 2) installs commands required to bootstrap salt
 3) runs those commands to install salt
 4) downloads the salt states for the devkit

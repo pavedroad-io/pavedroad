@@ -147,17 +147,22 @@ extensive configuration ability to provide customized output.
 
 ## Platforms Supported
 
-### Platforms Tested
-- Docker containers with Ubuntu 18.04, CentOS 7.6, Fedora 30, and openSUSE Leap 15
-- VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
-- MacOS 10.14
-
 ### Platforms Expected to Work
-- Other Ubuntu versions and recent Debian distributions in addition to Ubuntu
+- Ubuntu releases starting with 18.04
+- Debian distributions in addition to Ubuntu
 - Red Hat distributions other than RHEL such as CentOS and Fedora
 - MacOS versions greater than 10.9
 
 Feedback is much appreciated on installing the {{project}} on other distributions,
 see [Support]({{support}}).
+
+### Platforms Tested
+
+See detailed information on platforms that have been tested for the {{project}}:
+[Platforms Tested]({{devkit_platforms}}).
+
+- Docker containers with Ubuntu 18.04, CentOS 7.6, Fedora 30, and openSUSE Leap 15
+- VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
+- MacOS 10.14
 
 {% include 'readme-trailer.md' %}
