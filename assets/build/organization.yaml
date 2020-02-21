@@ -62,6 +62,7 @@ assets_templates: /assets/templates
 devkit_name: Developer Kit
 devkit_readme: /devkit/README.md
 devkit_install: /devkit/INSTALL.md
+devkit_install_detail: /devkit/INSTALL_DETAIL.md
 devkit_devsoftware: /devkit/BOM_DEV_SOFTWARE.md
 devkit_gopackages: /devkit/BOM_GO_PACKAGES.md
 devkit_vimplugins: /devkit/BOM_VIM_PLUGINS.md

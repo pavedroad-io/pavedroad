@@ -20,4 +20,4 @@ See [Slack {{slack_announce_name}}]({{slack_announce}}) for meeting announcement
   {% endif %}
 {% endif %}
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

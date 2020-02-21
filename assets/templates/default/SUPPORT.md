@@ -57,4 +57,4 @@ and administration, see our [{{documentation_name}}]({{documentation_link}}).
 
 {% endif %}
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}
