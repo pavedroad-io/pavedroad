@@ -14,7 +14,7 @@ if [ $? -eq 0 ]; then
 fi
 
 branch=
-chown=true
+chown=1
 debug=
 salt_only=
 
@@ -37,7 +37,7 @@ while getopts "b:ds" opt; do
     b ) branch="--branch ${OPTARG}"
         echo Using git branch ${OPTARG}
       ;;
-    c ) chown=false
+    c ) chown=
         echo Skipping chown to $USER
       ;;
     d ) debug="-l debug"
@@ -62,77 +62,100 @@ function error_trap
   local command="${BASH_COMMAND:-unknown}"
   echo "command [${command}] exited with code [${code}]" 1>&2
 }
-trap 'error_trap' ERR
 
 # set default install type and name
 install_type="bootstrap"
 install_name="salt"
+os_identity="Unknown OS"
+os_version="unknown"
+ubuntu_install=
 
-# Later ubuntu versions fail with bootstrap and pip installs
-if test -e "${os_rel_file}" ; then
+if command -v salt-call >& /dev/null; then
+    # salt is already installed
+    install_type="none"
+elif test -e "${os_rel_file}" ; then
+    # later ubuntu versions only support package manager installs
     source "${os_rel_file}"
+    os_identity=${ID}
+    os_version=${VERSION_ID}
     if [[ "${ID}" == "${ubuntu_identity}" ]] ; then
+        ubuntu_install=1
         if [[ " ${ubuntu_versions[*]} " == *"${VERSION_ID}"* ]] ; then
             install_type="apt-get"
             install_name="salt-common"
         fi
     fi
 fi
+echo Bootstrapping on ${os_identity} version ${os_version}
 
 # Install git and either curl or pip as needed to install saltstack
 # Not a comprehensive list of package managers
 
 if command -v dnf >& /dev/null; then
     echo Using package manager dnf
-    ${sudo} dnf history info >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute dnf
-        exit 1
+    if [ ${sudo} ]; then
+        ${sudo} -l dnf >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute dnf
+            exit 1
+        fi
     fi
     [ "${install_type}" == "bootstrap" ] && ${sudo} dnf -y -q install curl
     [ "${install_type}" == "pip" ] && ${sudo} dnf -y -q install python3-pip
-    ${sudo} dnf -y -q install git
+    [ ! ${salt_only} ] && ${sudo} dnf -y -q install git
 elif command -v yum >& /dev/null; then
     echo Using package manager yum
-    ${sudo} yum history info >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute yum
-        exit 1
+    if [ ${sudo} ]; then
+        ${sudo} -l yum >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute yum
+            exit 1
+        fi
     fi
     [ "${install_type}" == "bootstrap" ] && ${sudo} yum -y -q install curl
     [ "${install_type}" == "pip" ] && ${sudo} yum -y -q install python3-pip
-    ${sudo} yum -y -q install git
+    [ ! ${salt_only} ] && ${sudo} yum -y -q install git
 elif command -v zypper >& /dev/null; then
     echo Using package manager zypper
     bootstrap_version="stable"
-    ${sudo} zypper refresh >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute zypper
-        exit 1
+    if [ ${sudo} ]; then
+        ${sudo} -l zypper >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute zypper
+            exit 1
+        fi
     fi
     [ "${install_type}" == "bootstrap" ] && ${sudo} zypper -q install -y curl
     [ "${install_type}" == "pip" ] && ${sudo} zypper -q install -y python3-pip
-    ${sudo} zypper -q install -y git
+    [ ! ${salt_only} ] && ${sudo} zypper -q install -y git
 elif command -v apt-get >& /dev/null; then
     echo Using package manager apt-get
+    if [ ${sudo} ]; then
+        ${sudo} -l apt-get >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute apt-get
+            exit 1
+        fi
+    fi
     ${sudo} apt-get -qq update >& /dev/null
     if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute apt-get
+        echo ${os_identity} version ${os_version} is not supported
         exit 1
     fi
     [ "${install_type}" == "bootstrap" ] && ${sudo} apt-get -y -qq install curl
     [ "${install_type}" == "pip" ] && ${sudo} apt-get -qq install -y python3-pip
-    ${sudo} apt-get -y -qq install git
+    [ ! ${salt_only} ] && ${sudo} apt-get -y -qq install git
 else
     echo Supported package manager not found
     exit 1
 fi
 
 # Command exit value checking not needed from this point
+trap 'error_trap' ERR
 set -o errexit -o errtrace
 
 # Install saltstack
-if command -v salt-call >& /dev/null; then
+if [ "${install_type}" == "none" ]; then
     echo SaltStack is already installed
 elif [ "${install_type}" == "apt-get" ]; then
     echo Installing SaltStack with apt-get
