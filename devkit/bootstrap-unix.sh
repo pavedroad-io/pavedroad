@@ -63,30 +63,29 @@ function error_trap
   echo "command [${command}] exited with code [${code}]" 1>&2
 }
 
-# set default install type and name
-install_type="bootstrap"
-install_name="salt"
+# set default OS identity and version
 os_identity="Unknown OS"
 os_version="unknown"
-ubuntu_install=
-
-if command -v salt-call >& /dev/null; then
-    # salt is already installed
-    install_type="none"
-elif test -e "${os_rel_file}" ; then
-    # later ubuntu versions only support package manager installs
+if test -e "${os_rel_file}" ; then
     source "${os_rel_file}"
     os_identity=${ID}
     os_version=${VERSION_ID}
-    if [[ "${ID}" == "${ubuntu_identity}" ]] ; then
-        ubuntu_install=1
-        if [[ " ${ubuntu_versions[*]} " == *"${VERSION_ID}"* ]] ; then
-            install_type="apt-get"
-            install_name="salt-common"
-        fi
-    fi
 fi
 echo Bootstrapping on ${os_identity} version ${os_version}
+
+# set default install type and name
+install_type="bootstrap"
+install_name="salt"
+if command -v salt-call >& /dev/null; then
+    # salt is already installed
+    install_type="none"
+elif [[ "${os_identity}" == "${ubuntu_identity}" ]] ; then
+    # later ubuntu versions only support package manager installs
+    if [[ " ${ubuntu_versions[*]} " == *"${os_version}"* ]] ; then
+        install_type="apt-get"
+        install_name="salt-common"
+    fi
+fi
 
 # Install git and either curl or pip as needed to install saltstack
 # Not a comprehensive list of package managers
@@ -157,38 +156,37 @@ set -o errexit -o errtrace
 # Install saltstack
 if [ "${install_type}" == "none" ]; then
     echo SaltStack is already installed
-elif [ "${install_type}" == "apt-get" ]; then
-    echo Installing SaltStack with apt-get
-    ${sudo} apt-get -y -qq install ${install_name}
-    echo SaltStack apt-get installation complete
-elif [ "${install_type}" == "bootstrap" ]; then
-    echo Installing SaltStack with bootstrap
-    curl -o install_salt.sh -L https://bootstrap.saltstack.com
-    # -P Prevent failure by allowing the script to use pip as a dependency source
-    # -X Do not start minion service
-    ${sudo} sh install_salt.sh -P -X ${bootstrap_version}
-    echo SaltStack bootstrap installation complete
-elif [ "${install_type}" == "pip" ]; then
-    echo Installing SaltStack with pip
-    ${sudo} pip3 install ${install_name}==${salt_version}
-    echo SaltStack pip installation complete
+else
+    echo Installing SaltStack with ${install_type}
+    if [ "${install_type}" == "apt-get" ]; then
+        ${sudo} apt-get -y -qq install ${install_name}
+    elif [ "${install_type}" == "bootstrap" ]; then
+        curl -o install_salt.sh -L https://bootstrap.saltstack.com
+        # -d Disable checking if Salt services are enabled to start on system boot
+        # -P Prevent failure by allowing the script to use pip as a dependency source
+        # -X Do not start minion service
+        ${sudo} sh install_salt.sh -d -P -X ${bootstrap_version}
+    elif [ "${install_type}" == "pip" ]; then
+        ${sudo} pip3 install ${install_name}==${salt_version}
+    fi
+    echo SaltStack ${install_type} installation complete
 fi
 
 echo -n "Version: "
 salt-call --version
 
 if [ ${salt_only} ] ; then
-    echo Not installing the devlopment kit
+    echo Not installing the development kit
     exit
 fi
 
 # Clone salt states
-echo Cloning the devlopment kit repository
+echo Cloning the development kit repository
 tmpdir=$(mktemp -d -t pavedroad.XXXXXX 2>/dev/null)
 git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
 # Apply salt states
-echo Installing the devlopment kit
+echo Installing the development kit
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
@@ -201,6 +199,6 @@ fi
 echo Development kit installation complete
 
 if command -v xdg-open >& /dev/null; then
-    echo Opening the getting started page for the devlopment kit
+    echo Opening the getting started page for the development kit
     xdg-open http://www.pavedroad.io/Tooling.html
 fi
