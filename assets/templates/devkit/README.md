@@ -148,8 +148,8 @@ extensive configuration ability to provide customized output.
 ## Platforms Supported
 
 ### Platforms That Should Work
-- Ubuntu Long Term Support releases starting with version 18.04
-- Ubuntu supported interim releases starting with version 19.04
+- Ubuntu LTS releases starting with version 16.04
+- Ubuntu supported interim releases
 - CentOS releases starting with version 7
 - Fedora releases starting with version 29
 - MacOS releases starting with version 10.13
