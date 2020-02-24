@@ -30,7 +30,7 @@ that use either curl or wget to perform the download :
 
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-unix.sh)"
 
-bash -c "$(wget -q0 https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-unix.sh)"
+bash -c "$(wget -qO- https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-unix.sh)"
 
 ## MacOS Bootstrap
 
@@ -47,6 +47,6 @@ that use either curl or wget to perform the download :
 
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh)"
 
-bash -c "$(wget -q0 https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh)"
+bash -c "$(wget -qO- https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh)"
 
 

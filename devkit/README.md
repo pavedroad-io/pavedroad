@@ -147,23 +147,21 @@ extensive configuration ability to provide customized output.
 
 ## Platforms Supported
 
-### Platforms Expected to Work
-- Ubuntu releases starting with 18.04
-- Debian distributions in addition to Ubuntu
-- Red Hat distributions other than RHEL such as CentOS and Fedora
-- MacOS versions greater than 10.9
-
-Feedback is much appreciated on installing the Development Kit on other distributions,
-see [Support](/SUPPORT.md).
+### Platforms That Should Work
+- Ubuntu Long Term Support releases starting with version 18.04
+- Ubuntu supported interim releases starting with version 19.04
+- CentOS releases starting with version 7
+- Fedora releases starting with version 29
+- MacOS releases starting with version 10.13
+- openSUSE Leap releases starting with version 15.0
 
 ### Platforms Tested
 
-See detailed information on platforms that have been tested for the Development Kit:
+For detailed information on platforms that have been tested see:
 [Platforms Tested](/devkit/PLATFORMS.md).
 
-- Docker containers with Ubuntu 18.04, CentOS 7.6, Fedora 30, and openSUSE Leap 15
-- VirtualBox VMs with Ubuntu 18.04, CentOS 7.6, and openSUSE Leap 15
-- MacOS 10.14
+Feedback is much appreciated on installing the Development Kit on other distributions,
+see: [Support](/SUPPORT.md).
 
 ## Links to More Information
 
