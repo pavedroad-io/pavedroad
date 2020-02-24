@@ -80,7 +80,7 @@ EOF
 states_message() {
 cat << EOF
 
-Applying salt states for the developemt kit now
+Applying salt states for the development kit now
 Please be patient as this process may take 10 to 15 minutes
 To see progress: tail -f pr-root/var/log/salt/minion
 EOF
