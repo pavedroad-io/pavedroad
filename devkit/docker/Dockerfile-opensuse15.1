@@ -1,0 +1,5 @@
+# The build context should be the directory with the bootstrap script
+FROM opensuse/leap:15.1
+ADD bootstrap-unix.sh /root
+ARG OPTS
+RUN /root/bootstrap-unix.sh "${OPTS}"
