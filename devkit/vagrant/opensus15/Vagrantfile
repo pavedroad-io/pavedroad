@@ -1,0 +1,9 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Options for the bootstrap script are passed in the BOOT_OPTS environment variable
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/opensuse15"
+  config.vm.define :pr_opensuse15
+  config.vm.provision :shell, :path => "../../bootstrap-unix.sh", :args => ENV["BOOT_OPTS"]
+end

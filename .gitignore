@@ -121,3 +121,5 @@ Session.vim
 # aspell backups
 *.bak
 
+# vagrant directory
+.vagrant/
