@@ -49,4 +49,14 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/pavedroad-io/pavedroad/m
 
 bash -c "$(wget -qO- https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh)"
 
+### Docker Support
+
+For docker examples of containers initializes with the Unix bootstrap see:
+[Dockerfile Examples](/devkit/docker/README.md).
+
+### Vagrant VirtualBox Support
+
+For docker examples of containers initializes with the Unix bootstrap see:
+[Vagrantfile Examples](/devkit/vagrant/README.md).
+
 

@@ -59,6 +59,7 @@ assets_name: Document Generation
 assets_readme: /assets/README.md
 assets_build: /assets/build
 assets_templates: /assets/templates
+templates_link: /assets/templates/default
 devkit_name: Developer Kit
 devkit_readme: /devkit/README.md
 devkit_install: /devkit/INSTALL.md
@@ -68,7 +69,8 @@ devkit_gopackages: /devkit/BOM_GO_PACKAGES.md
 devkit_vimplugins: /devkit/BOM_VIM_PLUGINS.md
 devkit_shellcomps: /devkit/BOM_SHELL_COMPS.md
 devkit_platforms: /devkit/PLATFORMS.md
-templates_link: assets/templates/default
+docker_readme: /devkit/docker/README.md
+vagrant_readme: /devkit/vagrant/README.md
 conduct: /CODE_OF_CONDUCT.md
 contrib: /CONTRIBUTING.md
 dco: /DCO
