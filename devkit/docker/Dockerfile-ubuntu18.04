@@ -3,3 +3,4 @@ FROM ubuntu:18.04
 ADD bootstrap-unix.sh /root
 ARG OPTS
 RUN /root/bootstrap-unix.sh "${OPTS}"
+# vi: ft=dockerfile

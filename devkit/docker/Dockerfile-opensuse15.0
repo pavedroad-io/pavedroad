@@ -3,3 +3,4 @@ FROM opensuse/leap:15.0
 ADD bootstrap-unix.sh /root
 ARG OPTS
 RUN /root/bootstrap-unix.sh "${OPTS}"
+# vi: ft=dockerfile
