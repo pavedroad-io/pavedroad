@@ -24,10 +24,11 @@ tilt-script:
     - cwd:      {{ tilt_temp }}
   {% endif %}
 tilt-install:
+  {# install script fails its own version checking, sets retcode to 1 #}
   cmd.run:
-    - unless:   command -v {{ tilt_pkg_name }}
-    - name:     bash {{ tilt_script }}
-    - cwd:      {{ tilt_temp }}
+    - name:             bash {{ tilt_script }}
+    - cwd:              {{ tilt_temp }}
+    - success_retcodes: 1
   {% if grains.cfg_tilt.debug.enable %}
 tilt-version:
   cmd.run:

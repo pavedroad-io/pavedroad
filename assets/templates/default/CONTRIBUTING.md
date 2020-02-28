@@ -214,4 +214,4 @@ make build test
 To learn more about the developer iteration workflow, including how to locally test new types/controllers, please refer to the [Local Build](cluster/local/README.md) instructions.
 {% endif %}
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

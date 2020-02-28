@@ -44,10 +44,4 @@ pull request.
 
 [standard/standard](https://github.com/standard/standard/blob/master/SECURITY.md)
 
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The source template may be edited:
-[SECURITY.md](/assets/templates/default/SECURITY.md)
 
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)

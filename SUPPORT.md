@@ -22,10 +22,4 @@ where people offer support.
 
 
 
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The source template may be edited:
-[SUPPORT.md](/assets/templates/default/SUPPORT.md)
 
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)

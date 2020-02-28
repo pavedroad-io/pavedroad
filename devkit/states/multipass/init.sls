@@ -1,8 +1,8 @@
 # Install multipass
 
-{# multipass fails to install on MacOS running on VirtualBox #}
-{% if grains.docker or (grains.os_family == 'MacOS'
-  and grains.boot_rom_version is defined
+{# multipass will not run in a container or VM #}
+{% if grains.docker or grains.virtual != 'physical' or
+  (grains.boot_rom_version is defined
   and grains.boot_rom_version == 'VirtualBox') %}
   {% set installs = False %}
 {% else %}

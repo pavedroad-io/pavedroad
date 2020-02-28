@@ -26,4 +26,4 @@ This section lists people that are not currently maintainers but have demonstrat
 They typically help out with technical, code and design reviews and also with support and troubleshooting.
 Feel free to loop them in as needed.
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

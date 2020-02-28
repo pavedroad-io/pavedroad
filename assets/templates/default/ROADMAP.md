@@ -16,4 +16,4 @@ feature in Github so look there for the most up-to-date and issue plan.
 
 ## Future Improvements
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

@@ -79,9 +79,9 @@ kubectl-zsh-completion:
 
   {% if grains.cfg_kubectl.debug.enable %}
   {# kubectl version returns 1 if no server connection #}
+  {# Adding --client=true disables server version check #}
 kubectl-version:
   cmd.run:
-    - name:     {{ kubectl_path }}kubectl version
-    - success_retcodes: 1
+    - name:     {{ kubectl_path }}kubectl version --client=true
   {% endif %}
 {% endif %}

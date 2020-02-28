@@ -158,6 +158,7 @@ grains:
       - gocomplete
       - godef
       - godep
+      - godepgraph
       - gogetdoc
       - goimports
       - golangci-lint
@@ -175,6 +176,7 @@ grains:
       - keyify
       - motion
       - swagger
+      - yq
     golang:
       version: latest
     completion:

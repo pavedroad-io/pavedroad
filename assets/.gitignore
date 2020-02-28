@@ -1,0 +1,2 @@
+# project gitignore has build/ ignored, negating for assets/build
+!build/

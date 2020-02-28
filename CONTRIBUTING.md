@@ -109,10 +109,4 @@ This allows the message to be easier to read on GitHub as well as in various
 git tools.
 
 
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The source template may be edited:
-[CONTRIBUTING.md](/assets/templates/default/CONTRIBUTING.md)
 
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)

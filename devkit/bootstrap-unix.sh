@@ -14,24 +14,30 @@ if [ $? -eq 0 ]; then
 fi
 
 branch=
-chown=true
+chown=1
 debug=
 salt_only=
 
-# Sets salt install-type to either "stable" or "stable <$salt-version>"
+# Fixing salt version at "stable 2019.2.0" for all systems
+#   except openSUSE which will only accept "stable" for the version
 # Workaround for https://github.com/saltstack/salt/issues/53570
-# Only for debian, ascertained by the existence of apt-get below
-salt_debian_version="2019.2.0"
-install_type="stable"
-ubuntu_pip_rel="19.10"
+salt_version="2019.2.0"
+bootstrap_version="stable ${salt_version}"
+
+# Salt bootstrap fails for newer Ubuntu versions thus apt-get install is used
+# In this case the installed salt version is the package manager latest
 os_rel_file="/etc/os-release"
+ubuntu_identity="ubuntu"
+ubuntu_versions=(
+19.10
+)
 
 while getopts "b:ds" opt; do
   case ${opt} in
     b ) branch="--branch ${OPTARG}"
         echo Using git branch ${OPTARG}
       ;;
-    c ) chown=false
+    c ) chown=
         echo Skipping chown to $USER
       ;;
     d ) debug="-l debug"
@@ -56,98 +62,131 @@ function error_trap
   local command="${BASH_COMMAND:-unknown}"
   echo "command [${command}] exited with code [${code}]" 1>&2
 }
-trap 'error_trap' ERR
 
-# Install curl and git, needed to install saltstack
-# Not a comprehensive list of package managers
-
+# set default OS identity and version
+os_identity="Unknown OS"
+os_version="unknown"
 if test -e "${os_rel_file}" ; then
     source "${os_rel_file}"
-    ubuntu_rel=${VERSION_ID}
-else
-    ubuntu_rel='false'
+    os_identity=${ID}
+    os_version=${VERSION_ID}
+fi
+echo Bootstrapping on ${os_identity} version ${os_version}
+
+# set default install type and name
+install_type="bootstrap"
+install_name="salt"
+if command -v salt-call >& /dev/null; then
+    # salt is already installed
+    install_type="none"
+elif [[ "${os_identity}" == "${ubuntu_identity}" ]] ; then
+    # later ubuntu versions only support package manager installs
+    if [[ " ${ubuntu_versions[*]} " == *"${os_version}"* ]] ; then
+        install_type="apt-get"
+        install_name="salt-common"
+    fi
 fi
 
-if [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
-    echo Using package manager apt-get and pip
-    ${sudo} apt-get -qq update >& /dev/null
-    ${sudo} apt-get -qq install -y curl git python-pip
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute apt-get
-        exit 1
-    fi
-elif command -v apt-get >& /dev/null; then
-    echo Using package manager apt-get
-    install_type="stable ${salt_debian_version}"
-    ${sudo} apt-get -qq update >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute apt-get
-        exit 1
-    fi
-    ${sudo} apt-get -y -qq install curl git
-elif command -v dnf >& /dev/null; then
+# Install git and either curl or pip as needed to install saltstack
+# Not a comprehensive list of package managers
+
+if command -v dnf >& /dev/null; then
     echo Using package manager dnf
-    ${sudo} dnf history info >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute dnf
-        exit 1
+    if [ ${sudo} ]; then
+        ${sudo} -l dnf >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute dnf
+            exit 1
+        fi
     fi
-    ${sudo} dnf -y -q install curl git
+    [ "${install_type}" == "bootstrap" ] && ${sudo} dnf -y -q install curl
+    [ "${install_type}" == "pip" ] && ${sudo} dnf -y -q install python3-pip
+    [ ! ${salt_only} ] && ${sudo} dnf -y -q install git
 elif command -v yum >& /dev/null; then
     echo Using package manager yum
-    ${sudo} yum history info >& /dev/null
-    if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute yum
-        exit 1
+    if [ ${sudo} ]; then
+        ${sudo} -l yum >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute yum
+            exit 1
+        fi
     fi
-    ${sudo} yum -y -q install curl git
+    [ "${install_type}" == "bootstrap" ] && ${sudo} yum -y -q install curl
+    [ "${install_type}" == "pip" ] && ${sudo} yum -y -q install python3-pip
+    [ ! ${salt_only} ] && ${sudo} yum -y -q install git
 elif command -v zypper >& /dev/null; then
     echo Using package manager zypper
-    ${sudo} zypper refresh >& /dev/null
+    bootstrap_version="stable"
+    if [ ${sudo} ]; then
+        ${sudo} -l zypper >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute zypper
+            exit 1
+        fi
+    fi
+    [ "${install_type}" == "bootstrap" ] && ${sudo} zypper -q install -y curl
+    [ "${install_type}" == "pip" ] && ${sudo} zypper -q install -y python3-pip
+    [ ! ${salt_only} ] && ${sudo} zypper -q install -y git
+elif command -v apt-get >& /dev/null; then
+    echo Using package manager apt-get
+    if [ ${sudo} ]; then
+        ${sudo} -l apt-get >& /dev/null
+        if [ $? -ne 0 ]; then
+            User $(id -un) unable to execute apt-get
+            exit 1
+        fi
+    fi
+    ${sudo} apt-get -qq update >& /dev/null
     if [ $? -ne 0 ]; then
-        echo User $(id -un) unable to execute zypper
+        echo ${os_identity} version ${os_version} is not supported
         exit 1
     fi
-    ${sudo} zypper -q install -y curl git
+    [ "${install_type}" == "bootstrap" ] && ${sudo} apt-get -y -qq install curl
+    [ "${install_type}" == "pip" ] && ${sudo} apt-get -qq install -y python3-pip
+    [ ! ${salt_only} ] && ${sudo} apt-get -y -qq install git
 else
     echo Supported package manager not found
     exit 1
 fi
 
 # Command exit value checking not needed from this point
+trap 'error_trap' ERR
 set -o errexit -o errtrace
 
 # Install saltstack
-if command -v salt-call >& /dev/null; then
+if [ "${install_type}" == "none" ]; then
     echo SaltStack is already installed
-elif [ "${ubuntu_rel}" == "${ubuntu_pip_rel}" ]; then
-    echo Installing SaltStack with pip
-    pip install "salt==${salt_debian_version}"
-    echo SaltStack installation complete
 else
-    echo Installing SaltStack with bootstrap
-    curl -o install_salt.sh -L https://bootstrap.saltstack.com
-
-    # -P Prevent failure by allowing the script to use pip as a dependency source
-    # -X Do not start minion service
-    ${sudo} sh install_salt.sh -P -X ${install_type}
-    echo SaltStack installation complete
+    echo Installing SaltStack with ${install_type}
+    if [ "${install_type}" == "apt-get" ]; then
+        ${sudo} apt-get -y -qq install ${install_name}
+    elif [ "${install_type}" == "bootstrap" ]; then
+        curl -o install_salt.sh -L https://bootstrap.saltstack.com
+        # -d Disable checking if Salt services are enabled to start on system boot
+        # -P Prevent failure by allowing the script to use pip as a dependency source
+        # -X Do not start minion service
+        ${sudo} sh install_salt.sh -d -P -X ${bootstrap_version}
+    elif [ "${install_type}" == "pip" ]; then
+        ${sudo} pip3 install ${install_name}==${salt_version}
+    fi
+    echo SaltStack ${install_type} installation complete
 fi
+
 echo -n "Version: "
 salt-call --version
 
 if [ ${salt_only} ] ; then
-    echo Not installing the devlopment kit
+    echo Not installing the development kit
     exit
 fi
 
 # Clone salt states
-echo Cloning the devlopment kit repository
+echo Cloning the development kit repository
 tmpdir=$(mktemp -d -t pavedroad.XXXXXX 2>/dev/null)
 git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
 # Apply salt states
-echo Installing the devlopment kit
+echo Installing the development kit
 saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
 mv ${tmpdir} ${saltdir}
@@ -160,6 +199,6 @@ fi
 echo Development kit installation complete
 
 if command -v xdg-open >& /dev/null; then
-    echo Opening the getting started page for the devlopment kit
+    echo Opening the getting started page for the development kit
     xdg-open http://www.pavedroad.io/Tooling.html
 fi

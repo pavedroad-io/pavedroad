@@ -44,4 +44,4 @@ pull request.
 
 [standard/standard](https://github.com/standard/standard/blob/master/SECURITY.md)
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

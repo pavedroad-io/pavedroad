@@ -11,4 +11,4 @@
 
 {% include 'link-license.md' %}
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

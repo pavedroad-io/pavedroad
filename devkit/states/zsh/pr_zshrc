@@ -5,3 +5,5 @@
 # Return if not interactive
 [ -z "$PS1" ] && return
 
+[ "$VENDOR" == "ubuntu" ] && path=($path /snap/bin)
+

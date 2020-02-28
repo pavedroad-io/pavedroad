@@ -70,31 +70,42 @@ dev
 "${docker}"
 )
 
+grains_message() {
 cat << EOF
+
 Configuring grains for the development kit salt states
-Running salt in masterless mode: Ignore the following messages:
-    [INFO    ] Although 'dmidecode' was found in path ...
-    [ERROR   ] Got insufficient arguments ...
+EOF
+}
+
+states_message() {
+cat << EOF
+
+Applying salt states for the development kit now
+Please be patient as this process may take 10 to 15 minutes
+To see progress: tail -f pr-root/var/log/salt/minion
+EOF
+}
+
+ignore_message() {
+cat << EOF
+Running salt in masterless mode: Ignore the following message types:
+    [INFO    ] Routine salt information messages
+    [WARNING ] Typically python deprecation warnings
+    [ERROR   ] Spurious salt errors unless state fails
 
 EOF
+}
 
+grains_message
+ignore_message
 for i in ${!grain_names[@]}; do
     salt-call \
         --config-dir "${saltdir}/config/" \
         grains.setval "${grain_names[$i]}" "${grain_values[$i]}"
 done
 
-cat << EOF
-
-Applying salt states for the developemt kit now
-Please be patient as this process may take 5 to 10 minutes
-To see progress: tail -f pr-root/var/log/salt/minion
-Running salt in masterless mode: Ignore the following messages:
-    [INFO    ] Although 'dmidecode' was found in path ...
-    [ERROR   ] Got insufficient arguments ...
-
-EOF
-
+states_message
+ignore_message
 salt-call \
     --config-dir "${saltdir}/config/" \
     --pillar-root  "${saltdir}/pillar/" \

@@ -80,7 +80,6 @@ pr-go-env:
     - name:     {{ grains.homedir }}/.pr_go_env
     - contents: |
                 export GOPATH=$HOME/go
-                export GO111MODULE=on
   {% if golang_install == 'binary' %}
                 export PATH=$PATH:{{ golang_exec }}:$GOPATH/bin
   {% else %}
@@ -191,6 +190,7 @@ golang-bin:
   gocomplete:    github.com/posener/complete/gocomplete
   godef:         github.com/rogpeppe/godef
   godep:         github.com/tools/godep
+  godepgraph:    github.com/kisielk/godepgraph
   gogetdoc:      github.com/zmb3/gogetdoc
   goimports:     golang.org/x/tools/cmd/goimports
   golint:        golang.org/x/lint/golint
@@ -207,6 +207,7 @@ golang-bin:
   keyify:        honnef.co/go/tools/cmd/keyify
   motion:        github.com/fatih/motion
   swagger:       github.com/go-swagger/go-swagger/cmd/swagger
+  yq:            github.com/mikefarah/yq
   {% endload %}
 
   {% for key in go_tools %}

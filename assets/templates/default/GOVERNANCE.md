@@ -136,4 +136,4 @@ the voting process should be considered.
 Additions and removals of maintainers require a **2/3 majority**, while other decisions and changes
 require only a simple majority.
 
-{% include 'do-not-edit.md' %}
+{% include 'footer.md' %}

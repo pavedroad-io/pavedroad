@@ -10,6 +10,7 @@
 | gocomplete    | https://github.com/posener/complete        |
 | godef         | https://github.com/rogpeppe/godef          |
 | godep         | https://github.com/tools/godep             |
+| godepgraph    | https://github.com/kisielk/godepgraph      |
 | gogetdoc      | https://github.com/zmb3/gogetdoc           |
 | goimports     | https://golang.org/x/tools/cmd/goimports   |
 | golangci-lint | https://github.com/golangci/golangci-lint  |
@@ -27,3 +28,4 @@
 | keyify        | https://honnef.co/go/tools/cmd/keyify      |
 | motion        | https://github.com/fatih/motion            |
 | swagger       | https://github.com/go-swagger/go-swagger   |
+| yq            | https://github.com/mikefarah/yq            |

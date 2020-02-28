@@ -16,10 +16,4 @@ feature in Github so look there for the most up-to-date and issue plan.
 
 ## Future Improvements
 
-#### Do Not Edit
-This file is generated so edits made to it will be overwritten.
-The source template may be edited:
-[ROADMAP.md](/assets/templates/default/ROADMAP.md)
 
-For complete instructions on editing templates and processing them see:
-[Document Generation](/assets/README.md)
