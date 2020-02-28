@@ -49,6 +49,11 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/pavedroad-io/pavedroad/m
 
 bash -c "$(wget -qO- https://raw.githubusercontent.com/pavedroad-io/pavedroad/master/devkit/bootstrap-macos.sh)"
 
+### Install Alternative
+
+Alternatively the bootstrap script can first be downloaded and saved by
+_curl_ or _wget_ and then the script can be run as a separate step.
+
 ### Docker Support
 
 For docker examples of containers initializes with the Unix bootstrap see:
