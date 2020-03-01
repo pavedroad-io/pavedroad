@@ -156,19 +156,19 @@ The Unix bootstrap script performs the following tasks:
 
 1. Checks the user's sudo privileges
 
- In order to run bootstrap-unix.sh the user must have the correct
- _sudo_ privileges set up to run package installers.
- The script checks the _sudo_ privileges for the user and prompts
- for a password if necessary.
+    In order to run bootstrap-unix.sh the user must have the correct
+    _sudo_ privileges set up to run package installers.
+    The script checks the _sudo_ privileges for the user and prompts
+    for a password if necessary.
 
 2. Installs git and either curl or pip
 
- The Unix bootstrap script then looks for one of the local package installers
- to install _git_ and either _curl_ or _pip_ as needed to install salt:
- - apt-get
- - dnf
- - yum
- - zypper
+    The Unix bootstrap script then looks for one of the local package installers
+    to install _git_ and either _curl_ or _pip_ as needed to install salt:
+    - apt-get
+    - dnf
+    - yum
+    - zypper
 3. Installs SaltStack using the salt bootstrap script (or apt-get or pip)
 
         curl -o install_salt.sh -L https://bootstrap.saltstack.com
