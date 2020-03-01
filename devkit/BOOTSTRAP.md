@@ -9,10 +9,10 @@ The following bootstrap scripts are provided for Unix and MacOS:
 
 Both of the bootstrap scripts operate in a similar manner:
 
-1. install the commands required to bootstrap salt
-2. install the SaltStack package using those commands
-3. clone the salt states for the devkit using git
-4. apply the salt state script to bootstrap the devkit
+1. Install the commands required to bootstrap salt
+2. Install the SaltStack package using those commands
+3. Clone the salt states for the devkit using git
+4. Apply the salt state script to bootstrap the devkit
 
 In particular both bootstrap scripts run the same salt state script:
 
@@ -40,7 +40,7 @@ Both of the bootstrap scripts support the same command line options:
         - Option -s          - salt only will be installed
 
 Note that the chown command is used differently in the Unix and MacOS
-bootstrap kits.
+bootstrap scripts.
 
 See the platform specific information below for differences in the options
 in the Unix and MacOS bootstrap scripts.
@@ -70,7 +70,7 @@ Please report any bootstrap script failures to: [Support](/SUPPORT.md).
 ## sudo Requirement
 
 The two bootstrap scripts work differently in regards to _sudo_ privileges.
-The _sudo_ command allows a user to run a command with root privileges.
+The _sudo_ command allows a user to run a command with _root_ privileges.
 SaltStack generally runs the package installer commands native to the platform.
 All package installer commands on Linux distributions require _sudo_ privileges.
 An exception is when a Linux distro is running in a Docker container.
@@ -104,8 +104,8 @@ when running _sudo_ commands.
 ### Setting up sudo Privileges
 
 A simple way to set up a user with  _sudo_ privileges is to create a
-file for the user in the /etc/sudoers.d directory.
-The file /etc/sudoers usually includes all of the files in this directory.
+file for the user in the _/etc/sudoers.d_ directory.
+The file _/etc/sudoers_ usually includes all of the files in this directory.
 
 The user must have _sudo_ privileges to execute _visudo_ and _chmod_ 
 to set up any user with _sudo_ privileges.
@@ -160,6 +160,7 @@ The Unix bootstrap script performs the following tasks:
  _sudo_ privileges set up to run package installers.
  The script checks the _sudo_ privileges for the user and prompts
  for a password if necessary.
+
 2. Installs git and either curl or pip
 
  The Unix bootstrap script then looks for one of the local package installers
@@ -186,9 +187,8 @@ The Unix bootstrap script performs the following tasks:
 
         homedir=$(eval echo ~$(id -un))
         $sudo chown -R $(id -un):$(id -gn) ${homedir}
-
- When executing the Unix bootstrap script this chown step
- may be skipped as follows:
+    When executing the Unix bootstrap script the chown step
+    may be skipped as follows:
 
         bootstrap-unix.sh -c
 
@@ -257,15 +257,25 @@ Thus the user must have the correct _sudo_ privileges to run
 the bootstrap script but once _/usr/local_ is set up then
 Homebrew can be run without _sudo_ privileges.
 
+However this only applies to installations from source:
+
+    brew install <package>
+
+Some binary packages may be installed in system directories and require
+_sudo_ privileges.
+Homebrew binary installations are performed like this: 
+
+    brew cask install <package>
+
 ### Executing the MacOS Bootstrap Script
 
 The MacOS bootstrap script performs the following tasks:
 
 1. Prepares _/usr/local_ for Homebrew installation
 
- The script prompts for a _sudo_ password at this point if necessary.
- When executing the MacOS bootstrap script this chown step
- may be skipped as follows:
+    The script prompts for a _sudo_ password at this point if necessary.
+    When executing the MacOS bootstrap script this chown step
+    may be skipped as follows:
 
         bootstrap-macos.sh -c
 2. Installs Homebrew by downloading and running a ruby script
@@ -273,10 +283,10 @@ The MacOS bootstrap script performs the following tasks:
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 3. Installs the Xcode development tools
 
- Later versions of the Homebrew install script include installation
- of the Xcode developer tools.
- The developer tools will be installed separately if they are not installed
- along with Homebrew.
+    Later versions of the Homebrew install script include installation
+    of the Xcode developer tools.
+    The developer tools will be installed separately if they are not installed
+    along with Homebrew.
 4. Installs SaltStack using Homebrew
 
         brew install saltstack

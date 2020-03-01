@@ -17,7 +17,7 @@ See more detailed information on bootstrap scripts for the {{project}}:
 
 ## Unix Bootstrap
 
-The unix bootstrap script performs the following tasks:
+The Unix bootstrap script performs the following tasks:
 
 1. Checks the user's sudo privileges
 2. Installs commands required to bootstrap salt
