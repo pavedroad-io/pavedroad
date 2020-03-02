@@ -26,6 +26,14 @@ and without _sudo_ privileges on MacOS.
 In addition some salt states install binaries directly from the
 software website or build the package from source.
 
+The salt state script expects to be run in a directory with
+the four following subdirectories:
+
+	config  - contains the minion config file and grains cache file
+	pillar  - contains the pillar top file and pillar data file
+	pr-root - used as root for etc and var directories in masterless mode
+	states  - contains the salt states top file and state directories
+
 See the platform specific information below for the operational differences
 between the Unix and MacOS bootstrap scripts.
 
@@ -81,7 +89,7 @@ that install components in system directories.
 
 ### Understanding the sudo Command
 
-To see detailed information on the _sudo_ command and the sudoers file:
+To see detailed information on the _sudo_ command and the _/etc/sudoers_ file:
 
     man sudo
     man sudoers
@@ -152,6 +160,17 @@ script but not by the MacOS bootstrap script:
 
 ## Unix Bootstrap Specifics
 
+### Unix Bootstrap Script Install Directories
+
+Packages are installed in the following directories:
+
+    /snap/bin      - snap installations
+    /usr/bin       - standard package installations
+    /usr/local     - golang installations on some platforms
+    /usr/local/bin - default non package installer location
+
+### Executing the Unix Bootstrap Script
+
 The Unix bootstrap script performs the following tasks:
 
 1. Checks the user's sudo privileges
@@ -205,7 +224,8 @@ user and group IDs will be used as well as the wrong home directory.
 
 Some salt states on some platforms create files with incorrect ownership.
 Thus the last step in the Unix bootstrap script performs a workaround by
-changing the ownership of all files recursively in the user's home directory.
+changing the owner of each file to the user in the user's
+home directory recursively.
 However, on a pre-existing system this action may not be preferred.
 In this case this _chown_ step may be skipped but the user
 should look for newly installed files that have _root_ ownership.
@@ -213,12 +233,12 @@ should look for newly installed files that have _root_ ownership.
 ### Docker Support
 
 For examples of Dockerfiles that build Docker container images
-by running the Unix bootstrap see: [Dockerfile Examples]({{docker_readme}}).
+by running the Unix bootstrap script see: [Dockerfile Examples]({{docker_readme}}).
 
 ### Vagrant VirtualBox Support
 
 For examples of Vagrantfiles that provision Vagrant VirtualBox images
-with the Unix bootstrap see: [Vagrantfile Examples]({{vagrant_readme}}).
+with the Unix bootstrap script see: [Vagrantfile Examples]({{vagrant_readme}}).
 
 ## MacOS Bootstrap Specifics
 
@@ -227,10 +247,15 @@ with the Unix bootstrap see: [Vagrantfile Examples]({{vagrant_readme}}).
 The salt state script for MacOS makes use of the following types
 of installations:
 
-- brew install
-- brew cask install
-- binary installs
-- source build installs
+- Homebrew source install (_brew install_)
+- Homebrew binary install (_brew cask install_)
+- binary install from the developer release website
+- source build install from the developer repo
+
+All packages are installed in the following directories:
+
+    /Applications  - Homebrew binary install location
+    /usr/local/bin - default install location
 
 In general _sudo_ privileges are required to install packages
 in MacOS system directories.
@@ -319,6 +344,7 @@ The following script is provided to debug salt states:
 
     check-state.sh
 
+This script depends on the same four subdirectries as the salt state script.
 To see all of the options and states available execute the command as follows:
 
     check-state.sh -u

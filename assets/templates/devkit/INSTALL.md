@@ -57,11 +57,11 @@ _curl_ or _wget_ command and then running the script as the second step.
 ### Docker Support
 
 For examples of Dockerfiles that build Docker container images
-by running the Unix bootstrap see: [Dockerfile Examples]({{docker_readme}}).
+by running the Unix bootstrap script see: [Dockerfile Examples]({{docker_readme}}).
 
 ### Vagrant VirtualBox Support
 
 For examples of Vagrantfiles that provision Vagrant VirtualBox images
-with the Unix bootstrap see: [Vagrantfile Examples]({{vagrant_readme}}).
+with the Unix bootstrap script see: [Vagrantfile Examples]({{vagrant_readme}}).
 
 {% include 'footer.md' %}
