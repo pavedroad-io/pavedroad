@@ -134,10 +134,8 @@ Then change the mode of the file:
 chmod 440 /etc/sudoers.d/<username>
 ```
 
-Note that the _visudo_ and _sudoedit_ commands check for correct _sudoers_ format.
-
-See the platform specific information below for _sudo_ privilege differences
-in the Unix and MacOS bootstrap scripts.
+Note that the _visudo_ command checks the file to make sure
+it is in the correct _sudoers_ format.
 
 ### Running the Scripts with sudo Privileges
 
@@ -150,19 +148,30 @@ The bootstrap scripts are not expected to be run with the sudo command:
 The salt state script is run with the _sudo_ command by the Unix bootstrap
 script but not by the MacOS bootstrap script:
 
-- bootstrap-unix.sh executes the salt sates as follows:
+- bootstrap-unix.sh executes the salt state script as follows:
 
         sudo apply-state.sh
     
-- bootstrap-macos.sh executes the salt sates as follows:
+- bootstrap-macos.sh executes the salt state script as follows:
 
         apply-state.sh
 
+See the platform specific information below for _sudo_ privilege differences
+in the Unix and MacOS bootstrap scripts.
+
 ## Unix Bootstrap Specifics
 
-### Unix Bootstrap Script Install Directories
+### Installing Developer Packages
 
-Packages are installed in the following directories:
+The Unix bootstrap script requires one of the following package installers
+to install the developer packages:
+
+    apt-get
+    dnf
+    yum
+    zypper
+
+The developer packages are installed in the following directories:
 
     /snap/bin      - snap installations
     /usr/bin       - standard package installations
@@ -182,12 +191,10 @@ The Unix bootstrap script performs the following tasks:
 
 2. Installs git and either curl or pip
 
-    The Unix bootstrap script then looks for one of the local package installers
-    to install _git_ and either _curl_ or _pip_ as needed to install salt:
-    - apt-get
-    - dnf
-    - yum
-    - zypper
+    The Unix bootstrap script then looks for one of the required local package
+    installers to install _git_ and either _curl_ or _pip_ as needed
+    to install SaltStack.
+
 3. Installs SaltStack using the salt bootstrap script (or apt-get or pip)
 
         curl -o install_salt.sh -L https://bootstrap.saltstack.com
@@ -207,14 +214,14 @@ The Unix bootstrap script performs the following tasks:
         homedir=$(eval echo ~$(id -un))
         $sudo chown -R $(id -un):$(id -gn) ${homedir}
     When executing the Unix bootstrap script the chown step
-    may be skipped as follows:
+    may be skipped by specifying the _-c_ option:
 
         bootstrap-unix.sh -c
 
 ### Caveats
 
 The salt state script must be run with _sudo_ privileges with few exceptions
-such as MacOS and Linux in a Docker container without _sudo_ installed.
+such as Linux running in a Docker container without _sudo_ installed.
 However, this must not be a nested execution of _sudo_ as the script needs
 to ascertain the real user and group IDs and the correct home directory.
 Thus the bootstrap script cannot be run with _sudo_ privileges as
@@ -242,9 +249,9 @@ with the Unix bootstrap script see: [Vagrantfile Examples](/devkit/vagrant/READM
 
 ## MacOS Bootstrap Specifics
 
-### Installing Developer Packages on MacOS
+### Installing Developer Packages
 
-The salt state script for MacOS makes use of the following types
+The salt state script for MacOS performs the following types
 of installations:
 
 - Homebrew source install (_brew install_)
@@ -300,7 +307,7 @@ The MacOS bootstrap script performs the following tasks:
 
     The script prompts for a _sudo_ password at this point if necessary.
     When executing the MacOS bootstrap script this chown step
-    may be skipped as follows:
+    may be skipped by specifying the _-c_ option:
 
         bootstrap-macos.sh -c
 2. Installs Homebrew by downloading and running a ruby script
@@ -344,7 +351,7 @@ The following script is provided to debug salt states:
 
     check-state.sh
 
-This script depends on the same four subdirectries as the salt state script.
+This script depends on the same four subdirectories as the salt state script.
 To see all of the options and states available execute the command as follows:
 
     check-state.sh -u
