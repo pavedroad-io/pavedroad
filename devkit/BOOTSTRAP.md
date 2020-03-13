@@ -347,23 +347,25 @@ to be installed.
 
 ## Salt State Debugging
 
-The following script is provided to debug salt states:
+The following script is provided to check, debug, or run salt states:
 
     check-state.sh
 
 This script depends on the same four subdirectories as the salt state script.
-To see all of the options and states available execute the command as follows:
+To see the full usage including all of the options and states available
+execute the command as follows:
 
     check-state.sh -u
 
 A typical example would be to run a single salt state to install an
 application like _vim_ after setting the salt grains.
 
-On Unix systems other than MacOS _sudo_ is required to run salt states:
+On Unix systems other than MacOS _sudo_ is required to run salt states
+for this example:
 
     sudo check-state.sh -G vim
     
-On MacOS _sudo_ is not required to run salt states:
+On MacOS _sudo_ is not required to run salt states for this example:
 
     check-state.sh -G vim
 
