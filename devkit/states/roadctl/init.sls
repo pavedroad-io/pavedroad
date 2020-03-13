@@ -15,7 +15,7 @@
   {% endif %}
 
   {% if roadctl_binary_install %}
-    {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/download/' %}
+    {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/latest/download/' %}
     {% if grains.cfg_roadctl.roadctl.version is defined and
       grains.cfg_roadctl.roadctl.version != 'latest' %}
       {% set roadctl_version = grains.cfg_roadctl.roadctl.version %}
