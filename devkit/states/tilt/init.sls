@@ -16,16 +16,24 @@ tilt-script:
     - makedirs:    True
     - skip_verify: True
     - replace:     False
+tilt-temp-dir:
+  {# Workaround for salt bug: cmd.run checks for cwd before unless/onlyif #}
+  file.directory:
+    - name:     {{ tilt_temp }}
+    - makedirs: True
   {# Docker: remove sudo from script if not installed #}
   {% if grains.docker %}
+docker-fix:
   cmd.run:
-    - unless:   command -v sudo
+    - unless:   command -v {{ tilt_pkg_name }}
+    - onlyif:   (! command -v sudo)
     - name:     sed -i -e "s/sudo//" ./{{ tilt_script }}
     - cwd:      {{ tilt_temp }}
   {% endif %}
 tilt-install:
   {# install script fails its own version checking, sets retcode to 1 #}
   cmd.run:
+    - unless:           command -v {{ tilt_pkg_name }}
     - name:             bash {{ tilt_script }}
     - cwd:              {{ tilt_temp }}
     - success_retcodes: 1

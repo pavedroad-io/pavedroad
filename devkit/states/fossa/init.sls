@@ -13,14 +13,20 @@
     {% set fossa_pkg_version = '' %}
   {% endif %}
 
-fossa:
+fossa-script:
   file.managed:
-    - unless:   command -v {{ fossa_pkg_name }}
-    - name:     {{ fossa_temp }}/{{ fossa_script }}
-    - source:   https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh
-    - makedirs: True
+    - unless:      command -v {{ fossa_pkg_name }}
+    - name:        {{ fossa_temp }}/{{ fossa_script }}
+    - source:      https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh
+    - makedirs:    True
     - skip_verify: True
-    - replace:  False
+    - replace:     False
+fossa-temp-dir:
+  {# Workaround for salt bug: cmd.run checks for cwd before unless/onlyif #}
+  file.directory:
+    - name:     {{ fossa_temp }}
+    - makedirs: True
+fossa-install:
   cmd.run:
     - unless:   command -v {{ fossa_pkg_name }}
     - name:     sh {{ fossa_script }} {{ fossa_pkg_version}}
