@@ -16,18 +16,12 @@
 
   {% if roadctl_binary_install %}
     {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/latest/download/' %}
-    {% if grains.cfg_roadctl.roadctl.version is defined and
-      grains.cfg_roadctl.roadctl.version != 'latest' %}
-      {% set roadctl_version = grains.cfg_roadctl.roadctl.version %}
-    {% else %}
-      {% set roadctl_version = 'v0.5.2alpha' %}
-    {% endif %}
     {% if grains.os_family == 'MacOS' %}
-      {% set roadctl_file = '/roadctl-darwin-amd64' %}
+      {% set roadctl_file = 'roadctl-darwin-amd64' %}
     {% else %}
-      {% set roadctl_file = '/roadctl-linux-amd64' %}
+      {% set roadctl_file = 'roadctl-linux-amd64' %}
     {% endif %}
-    {% set roadctl_url = roadctl_prefix + roadctl_version + roadctl_file %}
+    {% set roadctl_url = roadctl_prefix + roadctl_file %}
   {% else %}
     {% set roadctl_url = 'https://github.com/pavedroad-io/roadctl.git' %}
     {% set roadctl_src = grains.homedir + '/go/src' %}
@@ -50,7 +44,7 @@ include:
 roadctl:
   {% if roadctl_binary_install %}
   file.managed:
-    - name:        {{ roadctl_path }}/{{ roadctl_pkg_name }}
+    - name:        {{ roadctl_path }}{{ roadctl_pkg_name }}
     - source:      {{ roadctl_url }}
     - makedirs:    True
     - skip_verify: True
