@@ -290,7 +290,7 @@ grains:
     installs:
       - roadctl
     roadctl:
-      version: v0.5.2alpha
+      version: latest
     completion:
       - bash
       - zsh

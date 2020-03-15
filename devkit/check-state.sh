@@ -25,6 +25,7 @@ Valid options:
 -R render
 -S show grains
 -T show <type>
+-U update mode
 -V <verbose>
 EOF
 }
@@ -79,8 +80,9 @@ showtype=
 render=
 state=
 verbose=
+saltrun="install"
 
-while getopts "acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
+while getopts "acdegipqtwC:DF:GHNO:PRST:UV:hlnu" opt; do
   case ${opt} in
     a ) loglevel="--log-level=all"
       ;;
@@ -128,6 +130,8 @@ while getopts "acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
       ;;
     T ) showtype="${OPTARG}"
         nostate=1
+      ;;
+    U ) saltrun="update"
       ;;
     V ) verbose="${OPTARG}"
       ;;
@@ -274,6 +278,7 @@ if [ ${setgrains} ]; then
     grains[realgroup]="$(id -gn ${SUDO_UID})"
     grains[homedir]="$(eval echo ~$(id -un ${SUDO_UID}))"
     grains[saltenv]=dev
+    grains[saltrun]="${saltrun}"
     grains[docker]="${docker}"
 
     for key in "${!grains[@]}"; do

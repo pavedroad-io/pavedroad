@@ -8,8 +8,9 @@ loglevel=
 dryrun=
 output=
 verbose=
+saltrun="install"
 
-while getopts "gl:no:v:" opt; do
+while getopts "gl:no:Uv:" opt; do
   case ${opt} in
     g ) showgrains=1
       ;;
@@ -19,13 +20,16 @@ while getopts "gl:no:v:" opt; do
       ;;
     o ) output="--state-output=${OPTARG}"
       ;;
+    U ) saltrun="update"
+      ;;
     v ) verbose="--state-verbose=${OPTARG}"
       ;;
-    \? ) echo "Usage: "$0" [-g] [-n] [-l <loglevel>] [-o <output>] [-v <verbose>]"
+    \? ) echo "Usage: "$0" [-g] [-n] [-U] [-l <loglevel>] [-o <output>] [-v <verbose>]"
         echo "-g            - show grains.items"
         echo "-l <loglevel> - set --log-level"
         echo "-n            - perform dry run"
         echo "-o <output>   - set --state-output"
+        echo "-U            - set update mode"
         echo "-v <verbose>  - set --state-verbose"
         exit 1
       ;;
@@ -59,6 +63,7 @@ realuser
 realgroup
 homedir
 saltenv
+saltrun
 docker
 )
 
@@ -67,6 +72,7 @@ grain_values=(
 "$(id -gn ${SUDO_UID})"
 "$(eval echo ~$(id -un ${SUDO_UID}))"
 dev
+"${saltrun}"
 "${docker}"
 )
 

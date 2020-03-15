@@ -12,7 +12,7 @@
 # Packages that get installed on all boxes regardless
 #
 
-  'G@tops:base':
+  'G@tops:base and G@saltrun:install':
     - match: compound
     - base
 
@@ -21,27 +21,27 @@
 #
 
 # Debian
-  'G@os_family:Debian and G@tops:debian':
+  'G@os_family:Debian and G@tops:debian and G@saltrun:install':
     - match: compound
     - debian
 
 # RedHat
-  'G@os_family:RedHat and G@tops:redhat':
+  'G@os_family:RedHat and G@tops:redhat and G@saltrun:install':
     - match: compound
     - redhat
 
 # Suse
-  'G@os_family:Suse and G@tops:suse':
+  'G@os_family:Suse and G@tops:suse and G@saltrun:install':
     - match: compound
     - suse
 
 # MacOS
-  'G@os_family:MacOS and G@tops:macos':
+  'G@os_family:MacOS and G@tops:macos and G@saltrun:install':
     - match: compound
     - macos
 
 # Windows
-  'G@os_family:Windows and G@tops.windows':
+  'G@os_family:Windows and G@tops.windows and G@saltrun:install':
     - match: compound
     - windows
 
@@ -49,11 +49,11 @@
 # Environment specific packages
 #
 
-  'G@saltenv:dev and G@tops:bash':
+  'G@tops:bash and G@saltrun:install':
     - match: compound
     - bash
 
-  'G@saltenv:dev and G@tops:zsh':
+  'G@tops:zsh and G@saltrun:install':
     - match: compound
     - zsh
 
@@ -61,100 +61,100 @@
 # Role specific packages
 #
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:docker':
+  'G@tops:docker and G@saltrun:install':
     - match: compound
     - docker
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:git':
+  'G@tops:git and G@saltrun:install':
     - match: compound
     - git
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:golang':
+  'G@tops:golang and G@saltrun:install':
     - match: compound
     - golang
 
 # vim.sls depends on files installed by golang.sls
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:vim':
+  'G@tops:vim and G@saltrun:install':
     - match: compound
     - vim
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:microk8s':
+  'G@tops:microk8s and G@saltrun:install':
     - match: compound
     - microk8s
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:multipass':
+  'G@tops:multipass and G@saltrun:install':
     - match: compound
     - multipass
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:graphviz':
+  'G@tops:graphviz and G@saltrun:install':
     - match: compound
     - graphviz
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:kompose':
+  'G@tops:kompose and G@saltrun:install':
     - match: compound
     - kompose
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:kubebuilder':
+  'G@tops:kubebuilder and G@saltrun:install':
     - match: compound
     - kubebuilder
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:kubectl':
+  'G@tops:kubectl and G@saltrun:install':
     - match: compound
     - kubectl
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:kustomize':
+  'G@tops:kustomize and G@saltrun:install':
     - match: compound
     - kustomize
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:nodejs':
+  'G@tops:nodejs and G@saltrun:install':
     - match: compound
     - nodejs
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:pretty_swag':
+  'G@tops:pretty_swag and G@saltrun:install':
     - match: compound
     - pretty-swag
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:skaffold':
+  'G@tops:skaffold and G@saltrun:install':
     - match: compound
     - skaffold
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:direnv':
+  'G@tops:direnv and G@saltrun:install':
     - match: compound
     - direnv
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:roadctl':
+  'G@tops:roadctl and P@saltrun:(install|update)':
     - match: compound
     - roadctl
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:ctags':
+  'G@tops:ctags and G@saltrun:install':
     - match: compound
     - ctags
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:jq':
+  'G@tops:jq and G@saltrun:install':
     - match: compound
     - jq
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:ripgrep':
+  'G@tops:ripgrep and G@saltrun:install':
     - match: compound
     - ripgrep
 
 # fzf.sls depends on files installed by vim.sls
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:fzf':
+  'G@tops:fzf and G@saltrun:install':
     - match: compound
     - fzf
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:fossa':
+  'G@tops:fossa and G@saltrun:install':
     - match: compound
     - fossa
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:stern':
+  'G@tops:stern and G@saltrun:install':
     - match: compound
     - stern
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:tilt':
+  'G@tops:tilt and G@saltrun:install':
     - match: compound
     - tilt
 
-  'G@saltenv:dev and G@roles:pr-golang and G@tops:sonar_scanner':
+  'G@tops:sonar_scanner and G@saltrun:install':
     - match: compound
     - sonar-scanner

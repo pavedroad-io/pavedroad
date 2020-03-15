@@ -6,8 +6,8 @@
 {% if installs and 'roadctl' in installs %}
   {% set roadctl_pkg_name = 'roadctl' %}
   {% set roadctl_binary_install = True %}
-  {% set roadctl_path = '/usr/local/bin/' %}
-  {% set roadctl_binary = roadctl_path + roadctl_pkg_name %}
+  {% set roadctl_path = '/usr/local/bin' %}
+  {% set roadctl_binary = roadctl_path + '/' + roadctl_pkg_name %}
 
   {# Temporary until github binary runs on MacOS #}
   {% if grains.os_family == 'MacOS' %}
@@ -15,7 +15,15 @@
   {% endif %}
 
   {% if roadctl_binary_install %}
-    {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/latest/download/' %}
+    {% if grains.cfg_roadctl.roadctl.version is defined and
+      grains.cfg_roadctl.roadctl.version != 'latest' %}
+      {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/download/' %}
+      {% set roadctl_version = grains.cfg_roadctl.roadctl.version %}
+      {% set roadctl_prefix = roadctl_prefix + roadctl_version + '/' %}
+    {% else %}
+      {% set roadctl_prefix = 'https://github.com/pavedroad-io/roadctl/releases/latest/download/' %}
+    {% endif %}
+
     {% if grains.os_family == 'MacOS' %}
       {% set roadctl_file = 'roadctl-darwin-amd64' %}
     {% else %}
@@ -41,35 +49,37 @@ include:
     {% endif %}
   {% endif %}
 
-roadctl:
   {% if roadctl_binary_install %}
+roadctl-binary:
   file.managed:
-    - name:        {{ roadctl_path }}{{ roadctl_pkg_name }}
+    - name:        {{ roadctl_path }}/{{ roadctl_pkg_name }}
     - source:      {{ roadctl_url }}
     - makedirs:    True
     - skip_verify: True
     - mode:        755
+    {% if grains.saltrun == 'install' %}
     - replace:     False
-  {% else %}
-    {% if grains.os_family == 'Suse' %}
-  {# roadctl make file uses which, missing in bare Suse #}
-  pkg.installed:
-    - unless:   command -v which
-    - name:     which
     {% endif %}
+  {% else %}
+roadctl-clone:
   cmd.run:
-    - name:     rm -rf {{ roadctl_src }}/{{ roadctl_pkg_name }}
+    {% if grains.saltrun == 'install' %}
+    - unless:      command -v {{ roadctl_pkg_name }}
+    {% endif %}
+    - name:        rm -rf {{ roadctl_src }}/{{ roadctl_pkg_name }}
   git.latest:
     - name:        {{ roadctl_url }}
     - rev:         master
     - target:      {{ roadctl_src }}/{{ roadctl_pkg_name }}
-    - force_clone: True
-    - force_fetch: True
-    - force_reset: remote-changes
 roadctl-build:
+    {% if grains.os_family == 'Suse' %}
+  {# roadctl make file uses which, missing in bare Suse #}
+  pkg.installed:
+    - name:     which
+    {% endif %}
   cmd.run:
-    - require:
-      - git:    roadctl
+    - onchanges:
+      - git:    roadctl-clone
     - cwd:      {{ roadctl_src }}/{{ roadctl_pkg_name }}
     {% if grains.os_family in ('RedHat', 'Suse') %}
     - runas:    {{ grains.realuser }}
@@ -82,6 +92,8 @@ roadctl-build:
                 . {{grains.homedir}}/.pr_go_env
                 make compile
   file.managed:
+    - onchanges:
+      - cmd:       roadctl-build
     - name:        {{ roadctl_binary }}
     - source:      {{ roadctl_src }}/{{ roadctl_pkg_name }}/{{ roadctl_pkg_name }}
     - makedirs:    True
@@ -89,27 +101,27 @@ roadctl-build:
     - mode:        755
   {% endif %}
 
-  {# roadctl only seems to support bash completion #}
   {% if completion %}
     {% if 'bash' in completion %}
       {% set bash_comp_file = pillar.directories.completions.bash + '/roadctl' %}
 roadctl-bash-completion:
   cmd.run:
+    - onchanges:
+      - file:   {{ roadctl_binary }}
     - name:     |
                 mkdir -p {{ pillar.directories.completions.bash }}
                 {{ roadctl_binary }} completion bash > {{ bash_comp_file }}
-    - unless:   test -e {{ bash_comp_file }}
-    - onlyif:   test -x {{ roadctl_binary }}
     {% endif %}
+
     {% if 'zsh' in completion %}
       {% set zsh_comp_file = pillar.directories.completions.zsh + '/_roadctl' %}
 roadctl-zsh-completion:
   cmd.run:
+    - onchanges:
+      - file:   {{ roadctl_binary }}
     - name:     |
                 mkdir -p {{ pillar.directories.completions.zsh }}
                 {{ roadctl_binary }} completion zsh > {{ zsh_comp_file }}
-    - unless:   test -e {{ zsh_comp_file }}
-    - onlyif:   test -x {{ roadctl_binary }}
     {% endif %}
   {% endif %}
 
