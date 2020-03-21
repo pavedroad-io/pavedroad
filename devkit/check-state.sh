@@ -10,13 +10,13 @@ usage_top() {
 usage_options() {
 cat << EOF
 Valid options:
--h help
+-h help with usage
 -l list log options
 -n script dry run
--u usage
+-u update mode
 -C command
 -D clear cache
--F file
+-F state file
 -G set grains
 -H highstate
 -N states dry run
@@ -25,7 +25,6 @@ Valid options:
 -R render
 -S show grains
 -T show <type>
--U update mode
 -V <verbose>
 EOF
 }
@@ -82,7 +81,7 @@ state=
 verbose=
 saltrun="install"
 
-while getopts "acdegipqtwC:DF:GHNO:PRST:UV:hlnu" opt; do
+while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
   case ${opt} in
     a ) loglevel="--log-level=all"
       ;;
@@ -131,21 +130,9 @@ while getopts "acdegipqtwC:DF:GHNO:PRST:UV:hlnu" opt; do
     T ) showtype="${OPTARG}"
         nostate=1
       ;;
-    U ) saltrun="update"
-      ;;
     V ) verbose="${OPTARG}"
       ;;
     h ) usage_top
-        usage_options
-        log_options
-        exit 0
-      ;;
-    l ) log_options
-        exit 0
-      ;;
-    n ) dryrun=1
-      ;;
-    u ) usage_top
         usage_options
         log_options
         usage_output
@@ -153,7 +140,23 @@ while getopts "acdegipqtwC:DF:GHNO:PRST:UV:hlnu" opt; do
         usage_state
         exit 0
       ;;
-    \? ) usage_top
+    l ) log_options
+        exit 0
+      ;;
+    n ) dryrun=1
+      ;;
+    u ) saltrun="update"
+      ;;
+    : )
+        echo Argument required: $OPTARG 1>&2
+        usage_top
+        usage_options
+        log_options
+        exit 1
+      ;;
+    \? )
+        echo Invalid option: $OPTARG 1>&2
+        usage_top
         usage_options
         log_options
         exit 1

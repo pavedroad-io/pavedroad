@@ -18,6 +18,13 @@ In particular both bootstrap scripts run the same salt state script:
 
     apply-state.sh
 
+The salt state script is generally not run standalone but can be run
+with the update option to update all commands that support updating:
+
+    apply-state.sh -u
+
+At this point only the _roadctl_ command supports updating.
+
 The salt state script runs in masterless mode and installs a number of
 development tool packages along with their man pages and completion scripts.
 The salt state script makes use of the platform's native package installer.
@@ -41,10 +48,11 @@ between the Unix and MacOS bootstrap scripts.
 
 Both of the bootstrap scripts support the same command line options:
 
-    Usage: bootstrap-<os>.sh [-b <branch>] [-c] [-d] [-s]
+    Usage: bootstrap-<os>.sh [-b <branch>] [-c] [-d] [-h] [-s]
         - Option -b <branch> - branch to use for git clone
         - Option -c          - chown command will be skipped
-        - Option -d          - debug enable on salt states
+        - Option -d          - debug mode set on salt states
+        - Option -h          - help by showing this usage
         - Option -s          - salt only will be installed
 
 Note that the chown command is used differently in the Unix and MacOS
@@ -240,12 +248,12 @@ should look for newly installed files that have _root_ ownership.
 ### Docker Support
 
 For examples of Dockerfiles that build Docker container images
-by running the Unix bootstrap script see: [Dockerfile Examples](/devkit/docker/README.md).
+by running the Unix bootstrap script see: [Dockerfile Examples](/devkit/docker).
 
 ### Vagrant VirtualBox Support
 
 For examples of Vagrantfiles that provision Vagrant VirtualBox images
-with the Unix bootstrap script see: [Vagrantfile Examples](/devkit/vagrant/README.md).
+with the Unix bootstrap script see: [Vagrantfile Examples](/devkit/vagrant).
 
 ## MacOS Bootstrap Specifics
 
@@ -355,7 +363,7 @@ This script depends on the same four subdirectories as the salt state script.
 To see the full usage including all of the options and states available
 execute the command as follows:
 
-    check-state.sh -u
+    check-state.sh -h
 
 A typical example would be to run a single salt state to install an
 application like _vim_ after setting the salt grains.
