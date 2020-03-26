@@ -32,25 +32,41 @@ ubuntu_versions=(
 19.10
 )
 
-while getopts "b:ds" opt; do
+function usage
+{
+    echo "Usage: "$0" [-b <branch>] [-c] [-d] [-h] [-s]"
+    echo "-b <branch> - branch to use for git clone"
+    echo "-c          - chown command will be skipped"
+    echo "-d          - debug mode set on salt states"
+    echo "-h          - help by showing this usage"
+    echo "-s          - salt only will be installed"
+}
+
+while getopts ":b:cdhs" opt; do
   case ${opt} in
     b ) branch="--branch ${OPTARG}"
         echo Using git branch ${OPTARG}
       ;;
     c ) chown=
-        echo Skipping chown to $USER
+        echo Skipping chown to user
       ;;
     d ) debug="-l debug"
-        echo Setting debug mode
+        echo Setting debug salt mode
+      ;;
+    h ) usage
+        exit 0
       ;;
     s ) salt_only=1
         echo Installing salt only
       ;;
-    \? ) echo "Usage: "$0" [-b <branch>] [-c] [-d] [-s]"
-        echo "-b <branch> - git clone"
-        echo "-c          - chown skip"
-        echo "-d          - debug states"
-        echo "-s          - salt only"
+    : )
+        echo Argument required: $OPTARG 1>&2
+        usage
+        exit 1
+      ;;
+    \? )
+        echo Invalid option: $OPTARG 1>&2
+        usage
         exit 1
       ;;
   esac

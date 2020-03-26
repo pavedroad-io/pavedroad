@@ -10,13 +10,13 @@ usage_top() {
 usage_options() {
 cat << EOF
 Valid options:
--h help
+-h help with usage
 -l list log options
 -n script dry run
--u usage
+-u update mode
 -C command
 -D clear cache
--F file
+-F state file
 -G set grains
 -H highstate
 -N states dry run
@@ -79,8 +79,9 @@ showtype=
 render=
 state=
 verbose=
+saltrun="install"
 
-while getopts "acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
+while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
   case ${opt} in
     a ) loglevel="--log-level=all"
       ;;
@@ -134,6 +135,9 @@ while getopts "acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
     h ) usage_top
         usage_options
         log_options
+        usage_output
+        usage_verbose
+        usage_state
         exit 0
       ;;
     l ) log_options
@@ -141,15 +145,18 @@ while getopts "acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
       ;;
     n ) dryrun=1
       ;;
-    u ) usage_top
+    u ) saltrun="update"
+      ;;
+    : )
+        echo Argument required: $OPTARG 1>&2
+        usage_top
         usage_options
         log_options
-        usage_output
-        usage_verbose
-        usage_state
-        exit 0
+        exit 1
       ;;
-    \? ) usage_top
+    \? )
+        echo Invalid option: $OPTARG 1>&2
+        usage_top
         usage_options
         log_options
         exit 1
@@ -274,6 +281,7 @@ if [ ${setgrains} ]; then
     grains[realgroup]="$(id -gn ${SUDO_UID})"
     grains[homedir]="$(eval echo ~$(id -un ${SUDO_UID}))"
     grains[saltenv]=dev
+    grains[saltrun]="${saltrun}"
     grains[docker]="${docker}"
 
     for key in "${!grains[@]}"; do

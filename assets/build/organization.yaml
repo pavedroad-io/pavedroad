@@ -62,6 +62,10 @@ assets_templates: /assets/templates
 templates_link: /assets/templates/default
 devkit_name: Developer Kit
 devkit_readme: /devkit/README.md
+devkit_boot_unix: /devkit/bootstrap-unix.sh
+devkit_boot_macos: /devkit/bootstrap-macos.sh
+devkit_docker: /devkit/docker
+devkit_vagrant: /devkit/vagrant
 devkit_install: /devkit/INSTALL.md
 devkit_bootstrap: /devkit/BOOTSTRAP.md
 devkit_devsoftware: /devkit/BOM_DEV_SOFTWARE.md

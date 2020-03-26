@@ -8,10 +8,26 @@ loglevel=
 dryrun=
 output=
 verbose=
+saltrun="install"
 
-while getopts "gl:no:v:" opt; do
+function usage
+{
+    echo "Usage: "$0" [-g] [-h] [-n] [-u] [-l <loglevel>] [-o <output>] [-v <verbose>]"
+    echo "-g            - show grains.items"
+    echo "-h            - show usage help"
+    echo "-n            - perform dry run"
+    echo "-u            - set update mode"
+    echo "-l <loglevel> - set --log-level"
+    echo "-o <output>   - set --state-output"
+    echo "-v <verbose>  - set --state-verbose"
+}
+
+while getopts ":ghl:no:uv:" opt; do
   case ${opt} in
     g ) showgrains=1
+      ;;
+    h ) usage
+        exit 0
       ;;
     l ) loglevel="--log-level=${OPTARG}"
       ;;
@@ -19,14 +35,18 @@ while getopts "gl:no:v:" opt; do
       ;;
     o ) output="--state-output=${OPTARG}"
       ;;
+    u ) saltrun="update"
+      ;;
     v ) verbose="--state-verbose=${OPTARG}"
       ;;
-    \? ) echo "Usage: "$0" [-g] [-n] [-l <loglevel>] [-o <output>] [-v <verbose>]"
-        echo "-g            - show grains.items"
-        echo "-l <loglevel> - set --log-level"
-        echo "-n            - perform dry run"
-        echo "-o <output>   - set --state-output"
-        echo "-v <verbose>  - set --state-verbose"
+    : )
+        echo Argument required: $OPTARG 1>&2
+        usage
+        exit 1
+      ;;
+    \? )
+        echo Invalid option: $OPTARG 1>&2
+        usage
         exit 1
       ;;
   esac
@@ -59,6 +79,7 @@ realuser
 realgroup
 homedir
 saltenv
+saltrun
 docker
 )
 
@@ -67,6 +88,7 @@ grain_values=(
 "$(id -gn ${SUDO_UID})"
 "$(eval echo ~$(id -un ${SUDO_UID}))"
 dev
+"${saltrun}"
 "${docker}"
 )
 
