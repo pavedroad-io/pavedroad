@@ -4,7 +4,12 @@
 " Recommended settings and mappings below have been curated as well.
 " Alternate settings and mappings below can be uncommented or edited.
 " The default settings are shown in the comments for comparison.
-"
+
+if &compatible
+  echom "nocompatible mode must be set for plugins to work"
+  finish
+endif
+
 " Get all of the plugins
 source ~/.pr_vimrc_plug
 
