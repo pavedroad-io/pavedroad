@@ -255,8 +255,6 @@ fi
 # Clone salt states
 echo Cloning the development kit repository
 tmpdir=$(mktemp -d -t pavedroad.XXXXXX 2>/dev/null)
-debug="-l debug"
-branch="--branch focal-pip3"
 rm -rf ${tmpdir}
 ${usersudo} git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
