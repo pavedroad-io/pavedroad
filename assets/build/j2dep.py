@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #  Generates jinja2 template makefile include dependencies
 #
 # stdin - concatenated yaml
@@ -39,17 +40,17 @@ includes = []
 recurse(env, filename, includes)
 templates = env.list_templates()
 
-print targetfile + ": \\"
-print "\tproject.yaml \\"
-print "\t../organization.yaml \\"
+print(targetfile + ": \\")
+print("\tproject.yaml \\")
+print("\t../organization.yaml \\")
 if not len(includes):
-    print
+    print()
     exit(0)
 
 for file in includes:
     for path in paths:
         fullname = os.path.join(path, file)
         if os.path.isfile(fullname):
-            print "\t" + fullname + " \\"
+            print("\t" + fullname + " \\")
             break
-print
+print()
