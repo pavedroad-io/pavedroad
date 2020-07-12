@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Options for the bootstrap script are passed in the BOOT_OPTS environment variable
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.define :pr_ubuntu20.04
+  config.vm.provision :shell, :path => "../../bootstrap-unix.sh", :args => ENV["BOOT_OPTS"]
+  config.vm.boot_timeout = 600
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 4
+    vb.memory = 4096
+  end
+end
