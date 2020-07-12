@@ -14,23 +14,35 @@
     {% set golang_install = 'salt' %}
   {% elif grains.os_family == 'Windows' %}
     {% set golang_install = 'salt' %}
+  {% elif grains.os == 'Fedora' %}
+    {% set golang_install = 'binary' %}
+  {% endif %}
+
+  {% if golang_install == 'binary' %}
+    {% if (grains.os == 'Ubuntu' and grains.osmajorrelease < 20) or
+      (grains.os == 'CentOS' and grains.osmajorrelease < 8) or
+      (grains.os == 'Fedora' and grains.osmajorrelease < 30) or
+      (grains.os_family == 'Suse' and grains.osfullname == 'Leap' and
+        (grains.osrelease | float) < 15.1) %}
+      {# For systems where salt state archive.extracted gets a unicode error #}
+      {% set golang_install = 'manual' %}
+    {% endif %}
   {% endif %}
 
   {% if golang_install == 'snap' %}
-# Temporary until saltstack releases snapd support
+    {# Temporary fix until saltstack releases snap.installed state support #}
     {% set snapd_build_required = True %}
     {% if grains.cfg_golang.golang.version is defined %}
       {% set golang_channel = grains.cfg_golang.golang.version + '/stable' %}
     {% else %}
       {% set golang_channel = 'stable' %}
     {% endif %}
-  {% elif golang_install == 'binary' %}
+  {% elif golang_install == 'binary' or golang_install == 'manual' %}
     {% if grains.cpuarch == 'x86_64' %}
-      {% set golang_vers = '1.12.5' %}
+      {% set version = salt.cmd.run('curl -s https://golang.org/VERSION?m=text') %}
       {% set golang_arch = 'amd64' %}
-      {% set golang_file = 'go' + golang_vers + '.linux-' + golang_arch + '.tar.gz' %}
+      {% set golang_file = version + '.linux-' + golang_arch + '.tar.gz' %}
       {% set golang_url = 'https://storage.googleapis.com/golang/' + golang_file %}
-      {% set golang_hash = 'aea86e3c73495f205929cfebba0d63f1382c8ac59be081b6351681415f4063cf' %}
     {% else %}
       {% set golang_install = 'salt' %}
     {% endif %}
@@ -46,7 +58,7 @@
     {% set golang_root = '/snap/bin' %}
   {% elif grains.os_family == 'MacOS' %}
     {% set golang_root = '/usr/local/bin' %}
-  {% elif golang_install == 'binary' %}
+  {% elif golang_install == 'binary' or golang_install == 'manual' %}
     {% set golang_root = '/usr/local' %}
     {% set golang_temp = '/tmp/golang' %}
   {% else %}
@@ -64,6 +76,9 @@
 
 include:
   - golang.golangci-lint
+  {% if completion and 'zsh-go' in completion %}
+  - git
+  {% endif %}
   {% if snapd_build_required %}
   - snapd
   {% endif %}
@@ -114,18 +129,21 @@ golang-cache:
     - group:    {{ grains.realgroup }}
     - mode:     755
 golang:
-  {% if false %}
-  {# salt barfs on the extraction with UnicodeEncodeError: 'ascii' codec can't encode character u'\xc4' in position 44: ordinal not in range(128) #}
+  {% if golang_install == 'binary' %}
   archive.extracted:
     - unless:         |
                       test -d {{ golang_root }}/go
                       test -x {{ golang_exec }}/go
     - name:           {{ golang_root }}
     - source:         {{ golang_url }}
-    - source_hash:    {{ golang_hash }}
     - archive_format: tar
-    - tar_options:    xf
-  {% elif golang_install == 'binary' %}
+    - options:        v
+    - skip_verify:    True
+  {# Old salt versions barf on the tar extraction with UnicodeEncodeError: #}
+  {#    'ascii' codec can't encode character u'\xc4' in position 44: #}
+  {#       ordinal not in range(128) #}
+  {# Temporary workaround is to curl tar file manually and extract #}
+  {% elif golang_install == 'manual' %}
   file.directory:
     - name:     {{ golang_temp }}
     - makedirs: True
@@ -141,7 +159,7 @@ golang:
     - cwd:      {{ golang_temp }}
   {% elif golang_install == 'snap' %}
     {% if snapd_build_required %}
-    {# Temporary until saltstack releases snapd support #}
+    {# Temporary workaround until saltstack releases snapd support #}
   cmd.run:
     - unless:   |
                 test -d {{ golang_root }}/go
@@ -214,7 +232,7 @@ golang-bin:
     {% if key in installs %}
 {{ key }}:
   cmd.run:
-      {# go get dows not have -o option to resolve name collisions, thus two steps #}
+      {# go get does not have -o option to resolve name collisions, thus two steps #}
     - name:     |
                 {{ golang_exec }}/go get -d {{ go_tools[key] }}
                 {{ golang_exec }}/go build -o {{ golang_bin }}/{{ key }} {{ go_tools[key] }}
