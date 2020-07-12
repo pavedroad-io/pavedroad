@@ -259,6 +259,8 @@ grains:
       - nodejs
     nodejs:
       version: latest
+    npm:
+      version: latest
     completion:
       - None
     debug:
