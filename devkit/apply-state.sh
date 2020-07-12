@@ -64,7 +64,7 @@ trap 'error_trap' ERR
 
 export PYTHONWARNINGS="ignore::DeprecationWarning"
 
-saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
+saltdir=$(cd "$(dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
 
 if (cat /proc/1/cgroup | grep docker) >& /dev/null ; then
     docker=True

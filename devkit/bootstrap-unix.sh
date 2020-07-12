@@ -13,24 +13,32 @@ if [ $? -eq 0 ]; then
     fi
 fi
 
+# Get correct user/group/home in case script is run using sudo
+# For example when provisioning vm using vagrant
+if [ ! -z "${SUDO_UID}" ] ; then
+    bootuser=$(id -un ${SUDO_UID})
+    bootgroup=$(id -gn ${SUDO_UID})
+    boothome=$(eval echo ~$(id -un ${SUDO_UID}))
+    if [ ! -z "${sudo}" ] ; then
+        usersudo="${sudo} -u ${bootuser}"
+    fi
+else
+    bootuser=$(id -un)
+    bootgroup=$(id -gn)
+    boothome=$(eval echo ~$(id -un))
+    usersudo=${sudo}
+fi
+
 branch=
 chown=1
 debug=
 salt_only=
 
-# Fixing salt version at "stable 2019.2.0" for all systems
-#   except openSUSE which will only accept "stable" for the version
-# Workaround for https://github.com/saltstack/salt/issues/53570
-salt_version="2019.2.0"
-bootstrap_version="stable ${salt_version}"
-
-# Salt bootstrap fails for newer Ubuntu versions thus apt-get install is used
-# In this case the installed salt version is the package manager latest
 os_rel_file="/etc/os-release"
+centos_identity="centos"
+fedora_identity="fedora"
+opensuse_identity="opensuse-leap"
 ubuntu_identity="ubuntu"
-ubuntu_versions=(
-19.10
-)
 
 function usage
 {
@@ -87,20 +95,65 @@ if test -e "${os_rel_file}" ; then
     os_identity=${ID}
     os_version=${VERSION_ID}
 fi
-echo Bootstrapping on ${os_identity} version ${os_version}
+echo Bootstrapping on: ${os_identity} version: ${os_version}
 
-# set default install type and name
+# Set default salt install type and name
 install_type="bootstrap"
 install_name="salt"
+
+# Set salt install version for each supported OS versions
+ubuntu_3000_versions=( 16.04 18.04 )
+ubuntu_3001_versions=( 20.04 )
+centos_3000_versions=( 7 8 )
+fedora_3000_versions=( 30 31 )
+fedora_3001_versions=( 32 )
+opensuse_ignore_versions=( 15.1 15.2 )
+
 if command -v salt-call >& /dev/null; then
     # salt is already installed
     install_type="none"
 elif [[ "${os_identity}" == "${ubuntu_identity}" ]] ; then
-    # later ubuntu versions only support package manager installs
-    if [[ " ${ubuntu_versions[*]} " == *"${os_version}"* ]] ; then
+    # ubuntu version 19.10 requires package manager install
+    if [[ " ${ubuntu_aptget_versions[*]} " == *"${os_version}"* ]] ; then
         install_type="apt-get"
         install_name="salt-common"
+    elif [[ " ${ubuntu_3000_versions[*]} " == *"${os_version}"* ]] ; then
+        salt_version="3000"
+    elif [[ " ${ubuntu_3001_versions[*]} " == *"${os_version}"* ]] ; then
+        salt_version="3001"
+    else
+        echo ${os_identity} version ${os_version} is not supported
+        exit 1
     fi
+elif [[ "${os_identity}" == "${centos_identity}" ]] ; then
+    if [[ " ${centos_3000_versions[*]} " == *"${os_version}"* ]] ; then
+        salt_version="3000"
+    else
+        echo ${os_identity} version ${os_version} is not supported
+        exit 1
+    fi
+elif [[ "${os_identity}" == "${fedora_identity}" ]] ; then
+    if [[ " ${fedora_3000_versions[*]} " == *"${os_version}"* ]] ; then
+        salt_version="3000"
+    elif [[ " ${fedora_3001_versions[*]} " == *"${os_version}"* ]] ; then
+        salt_version="3001"
+    else
+        echo ${os_identity} version ${os_version} is not supported
+        exit 1
+    fi
+elif [[ "${os_identity}" == "${opensuse_identity}" ]] ; then
+    # openSUSE does not accept specific version for salt bootstrap
+    # Workaround for https://github.com/saltstack/salt/issues/53570
+    if [[ " ${opensuse_ignore_versions[*]} " == *"${os_version}"* ]] ; then
+        salt_version=""
+    else
+        echo ${os_identity} version ${os_version} is not supported
+        exit 1
+    fi
+fi
+
+if [[ "${install_type}" == "bootstrap" ]] ; then
+    bootstrap_version="stable ${salt_version}"
 fi
 
 # Install git and either curl or pip as needed to install saltstack
@@ -132,7 +185,6 @@ elif command -v yum >& /dev/null; then
     [ ! ${salt_only} ] && ${sudo} yum -y -q install git
 elif command -v zypper >& /dev/null; then
     echo Using package manager zypper
-    bootstrap_version="stable"
     if [ ${sudo} ]; then
         ${sudo} -l zypper >& /dev/null
         if [ $? -ne 0 ]; then
@@ -173,16 +225,19 @@ set -o errexit -o errtrace
 if [ "${install_type}" == "none" ]; then
     echo SaltStack is already installed
 else
-    echo Installing SaltStack with ${install_type}
+    echo -n Installing SaltStack with ${install_type}:
     if [ "${install_type}" == "apt-get" ]; then
+        echo ${install_name}
         ${sudo} apt-get -y -qq install ${install_name}
     elif [ "${install_type}" == "bootstrap" ]; then
+        echo ${bootstrap_version}
         curl -o install_salt.sh -L https://bootstrap.saltstack.com
         # -d Disable checking if Salt services are enabled to start on system boot
         # -P Prevent failure by allowing the script to use pip as a dependency source
         # -X Do not start minion service
         ${sudo} sh install_salt.sh -d -P -X ${bootstrap_version}
     elif [ "${install_type}" == "pip" ]; then
+        echo ${salt_version}
         ${sudo} pip3 install ${install_name}==${salt_version}
     fi
     echo SaltStack ${install_type} installation complete
@@ -190,6 +245,7 @@ fi
 
 echo -n "Version: "
 salt-call --version
+# exit
 
 if [ ${salt_only} ] ; then
     echo Not installing the development kit
@@ -199,22 +255,26 @@ fi
 # Clone salt states
 echo Cloning the development kit repository
 tmpdir=$(mktemp -d -t pavedroad.XXXXXX 2>/dev/null)
-git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
+debug="-l debug"
+branch="--branch focal-pip3"
+rm -rf ${tmpdir}
+${usersudo} git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${tmpdir}
 
 # Apply salt states
 echo Installing the development kit
-saltdir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" &>/dev/null && pwd)
-${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
-mv ${tmpdir} ${saltdir}
+${usersudo} ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
+# ${usersudo} ${sudo} ${tmpdir}/devkit/check-state.sh docker
+mv ${tmpdir} ${boothome}
+mv pr-root ${boothome}/$(basename ${tmpdir})/devkit
 
 # Temporary fix until permanent fix TBD in salt states
-if ${chown}; then
-    homedir=$(eval echo ~$(id -un))
-    ${sudo} chown -R $(id -un):$(id -gn) ${homedir}
+if [ ${chown} ] ; then
+    ${sudo} chown -R ${bootuser}:${bootgroup} ${boothome}
 fi
 echo Development kit installation complete
 
-if command -v xdg-open >& /dev/null; then
+if [ ${DISPLAY} ] && command -v xdg-open >& /dev/null; then
     echo Opening the getting started page for the development kit
+    export BROWSER=/usr/bin/firefox
     xdg-open http://www.pavedroad.io/Tooling.html
 fi
