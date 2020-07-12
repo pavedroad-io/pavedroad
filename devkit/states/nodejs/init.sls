@@ -44,7 +44,7 @@
     {% endif %}
   {% endif %}
 
-{# Arcane path name setup due to some updates creating second copy of app #}
+{# Arcane path name setup due to some updates creating second copy of apps #}
 {# Due to shell command hash not being updated $(npm bin -g)/command may fail #}
   {% if update_npm %}
     {% set npm_path_name = install_bin_path + npm_bin_name %}

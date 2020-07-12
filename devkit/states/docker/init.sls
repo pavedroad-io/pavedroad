@@ -33,9 +33,9 @@
       {% set docker_repo_os = 'centos/7' %}
       {% set docker_opt_nobest = True %}
       {% set compose_pip_install = True %}
-    {# docker fails in in Fedora in later versions due to cgroups / nftables #}
-    {# Substituting pod man which is cli compatible with docker for now #}
-    {# Leaving docker-compose for now as podman-compose is not ready #}
+    {# docker fails in later versions of Fedora due to cgroups / nftables #}
+    {# Substituting podman which is cli compatible with docker for now #}
+    {# Leaving docker-compose as is since podman-compose is not ready #}
     {% elif grains.os == 'Fedora' and grains.osmajorrelease >= 31 %}
       {% set docker_pkg_name = 'podman' %}
       {% set docker_bin_name = 'podman' %}

@@ -1,7 +1,7 @@
 # Install microk8s
 
-{# Fedora no longer supports snap so microk8s will not be installed #}
-{# multipass/microk8s fail to install on MacOS running on VirtualBox #}
+{# Fedora no longer supports snap so microk8s cannot be installed #}
+{# MacOS running on VirtualBox does not support multipass/microk8s #}
 {% if grains.docker or grains.os == 'Fedora' or
   (grains.os_family == 'MacOS'
   and grains.boot_rom_version is defined

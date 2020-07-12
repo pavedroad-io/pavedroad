@@ -16,7 +16,7 @@
     {% set suse_path = 'https://download.opensuse.org/repositories/system:/snappy/' %}
     {% set suse_repo_url = suse_path + 'openSUSE_Leap_' + grains.osrelease %}
     {% set suse_repo_name = 'openSUSE_Leap_' + grains.osrelease + '_snappy' %}
-    {# Fedora no longer support snap #}
+    {# Fedora no longer supports snap #}
   {% elif grains.os_family == 'RedHat' and grains.os != 'Fedora' %}
     {% set snapd_install_needed = True %}
   {% endif %}

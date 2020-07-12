@@ -31,7 +31,7 @@ docker-fix:
     - cwd:      {{ tilt_temp }}
   {% endif %}
 tilt-install:
-  {# install script fails its own version checking, sets retcode to 1 #}
+  {# Install script fails unless PATH is set correctly #}
   cmd.run:
     - unless:   command -v {{ tilt_bin_name }}
     - name:     PATH={{ tilt_path }}:$PATH bash {{ tilt_script }}
