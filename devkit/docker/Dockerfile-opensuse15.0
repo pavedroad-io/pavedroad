@@ -1,7 +1,0 @@
-# The build context should be the directory with the bootstrap script
-# Options for the bootstrap script are passed in the BOOT_OPTS environment variable
-FROM opensuse/leap:15.0
-ADD bootstrap-unix.sh /root
-ARG BOOT_OPTS
-RUN /root/bootstrap-unix.sh ${BOOT_OPTS}
-# vi: ft=dockerfile
