@@ -4,7 +4,6 @@
 # Options for the bootstrap script are passed in the BOOT_OPTS environment variable
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/opensuse15"
-  config.vm.box_version = "2.0.6"
   config.vm.define :pr_opensuse15
   config.vm.provision :shell, :path => "../../bootstrap-unix.sh", :args => ENV["BOOT_OPTS"]
   if Vagrant.has_plugin?("vagrant-vbguest")
