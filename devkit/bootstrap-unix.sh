@@ -245,7 +245,6 @@ fi
 
 echo -n "Version: "
 salt-call --version
-# exit
 
 if [ ${salt_only} ] ; then
     echo Not installing the development kit
