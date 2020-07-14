@@ -5,4 +5,4 @@
 # export BOOT_OPTS="-b <branch-name>"
 # export BOOT_OPTS="-s -b <branch-name>"
 BOOT_ARGS="--build-arg BOOT_OPTS"
-docker build --tag fedora29:pavedroad --file Dockerfile-fedora29 ${BOOT_ARGS} ..
+docker build --tag centos7:pavedroad --file Dockerfile-centos7 ${BOOT_ARGS} ..

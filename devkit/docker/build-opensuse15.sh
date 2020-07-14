@@ -5,4 +5,4 @@
 # export BOOT_OPTS="-b <branch-name>"
 # export BOOT_OPTS="-s -b <branch-name>"
 BOOT_ARGS="--build-arg BOOT_OPTS"
-docker build --tag opensuse15.1:pavedroad --file Dockerfile-opensuse15.1 ${BOOT_ARGS} ..
+docker build --tag opensuse15:pavedroad --file Dockerfile-opensuse15 ${BOOT_ARGS} ..

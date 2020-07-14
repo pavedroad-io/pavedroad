@@ -5,4 +5,4 @@
 # export BOOT_OPTS="-b <branch-name>"
 # export BOOT_OPTS="-s -b <branch-name>"
 BOOT_ARGS="--build-arg BOOT_OPTS"
-docker build --tag centos76:pavedroad --file Dockerfile-centos7.6 ${BOOT_ARGS} ..
+docker build --tag centos8:pavedroad --file Dockerfile-centos8 ${BOOT_ARGS} ..

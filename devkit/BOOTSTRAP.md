@@ -128,7 +128,7 @@ to set up any user with _sudo_ privileges.
 Replace \<username\> with the actual user name in the following commands:
 
 ```
-visudo /etc/sudoers.d/<username>
+visudo -f /etc/sudoers.d/<username>
 ```
     
 Enter one of these lines in the file:

@@ -9,10 +9,11 @@
   {% set kompose_path = '/usr/local/bin/' %}
 
   {% if kompose_binary_install %}
-    {% if grains.cfg_kompose.kompose.version is defined %}
+    {% if grains.cfg_kompose.kompose.version is defined and
+      grains.cfg_kompose.kompose.version != 'latest' %}
       {% set version = grains.cfg_kompose.kompose.version %}
     {% else %}
-      {% set version = '1.18.0' %}
+      {% set version = salt.cmd.run('curl -s https://raw.githubusercontent.com/kubernetes/kompose/master/build/VERSION') %}
     {% endif %}
     {% set kompose_prefix = 'https://github.com/kubernetes/kompose/releases/download/' %}
     {% if grains.os_family == 'MacOS' %}

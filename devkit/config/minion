@@ -204,7 +204,7 @@ grains:
     installs:
       - kompose
     kompose:
-      version: 1.18.0
+      version: latest
     completion:
       - bash
       - zsh
@@ -258,6 +258,8 @@ grains:
     installs:
       - nodejs
     nodejs:
+      version: latest
+    npm:
       version: latest
     completion:
       - None

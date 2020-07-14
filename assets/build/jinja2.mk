@@ -30,11 +30,11 @@ $(markdowns): $(datafiles)
 $(markdowns): $(target_dir)/%.md: $(template_dir)/%.md
 # 	@echo markdown $< $@
 	@echo Making $@
-	@cat $(datafiles) | python ../j2gen.py $< > $@
+	@cat $(datafiles) | python3 ../j2gen.py $< > $@
 
 $(makefiles): %.mk: %.j2
 # 	@echo makefile $(target_dir) $< $@
-	@cat $(datafiles) | python ../j2dep.py $(target_dir) $< $(template_dir) > $@
+	@cat $(datafiles) | python3 ../j2dep.py $(target_dir) $< $(template_dir) > $@
 
 $(jinjafiles): %.j2: $(template_dir)/%.md
 # 	@echo jinjafile $< $@

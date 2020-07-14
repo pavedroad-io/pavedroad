@@ -18,22 +18,21 @@ vim-source:
     - target:   /tmp/vim
   pkg.installed:
     - unless:   {{ check_version }}
-  {% if grains.os == 'CentOS' %}
     - pkgs:
       - ncurses-devel
       - perl-devel
       - perl-ExtUtils-CBuilder
       - perl-ExtUtils-Embed
-      - python34-devel
-      - lua-devel
+  {% if grains.os == 'CentOS' %}
       - ruby-devel
       - gpm-devel
+    {% if grains.osmajorrelease <= 7 %}
+      - lua-devel
+    {% endif %}
+  {% endif %}
+  {% if grains.os == 'CentOS' and grains.osmajorrelease >= 8 %}
+      - python36-devel
   {% else %}
-    - pkgs:
-      - ncurses-devel
-      - perl-devel
-      - perl-ExtUtils-CBuilder
-      - perl-ExtUtils-Embed
       - python34-devel
   {% endif %}
   file.directory:

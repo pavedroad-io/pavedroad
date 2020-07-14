@@ -18,10 +18,10 @@
   {% endif %}
 
   {% if (grains.os_family == 'Debian' and grains.os != 'Ubuntu') or
-    (grains.os == 'Ubuntu' and (grains.osrelease | float) < 18.10) or
+    (grains.os == 'Ubuntu' and (grains.osrelease | float) <= 18.04) or
     (grains.os == 'CentOS' and grains.osmajorrelease >= 7) or
     (grains.os_family == 'Suse' and grains.osfullname == 'Leap' and
-      (grains.osrelease | float) < 15.1) %}
+      (grains.osrelease | float) <= 15.0) %}
     {% set ripgrep_repo_install = True %}
   {% endif %}
 
@@ -76,7 +76,7 @@ ripgrep:
 rg-zsh-completion:
   file.managed:
     - name:     {{ zsh_comp_file }}
-    - source:   https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg
+    - source:   https://raw.githubusercontent.com/BurntSushi/ripgrep/master/complete/_rg
     - makedirs: True
     - skip_verify: True
     - replace:  False

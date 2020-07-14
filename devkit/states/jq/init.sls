@@ -24,7 +24,7 @@ jq:
 jq-zsh-completion:
   file.managed:
     - name:     {{ zsh_comp_file }}
-    - source:   https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_jq
+    - source:   https://raw.githubusercontent.com/zsh-users/zsh/master/Completion/Unix/Command/_jq
     - makedirs: True
     - skip_verify: True
     - replace:  False
