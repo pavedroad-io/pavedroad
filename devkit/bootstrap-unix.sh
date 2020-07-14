@@ -87,7 +87,7 @@ function error_trap
   echo "command [${command}] exited with code [${code}]" 1>&2
 }
 
-# set default OS identity and version
+# Set default OS identity and version
 os_identity="Unknown OS"
 os_version="unknown"
 if test -e "${os_rel_file}" ; then
@@ -260,7 +260,6 @@ ${usersudo} git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${
 # Apply salt states
 echo Installing the development kit
 ${usersudo} ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
-# ${usersudo} ${sudo} ${tmpdir}/devkit/check-state.sh docker
 mv ${tmpdir} ${boothome}
 mv pr-root ${boothome}/$(basename ${tmpdir})/devkit
 
