@@ -22,9 +22,11 @@
       {% set direnv_url = direnv_url + direnv_version + '/direnv.linux-386' %}
     {% endif %}
   {% else %}
-      {% set direnv_version = 'latest' %}
-      {% set direnv_temp= '/tmp/direnv' %}
+    {% set direnv_version = 'latest' %}
+    {% if direnv_binary_install %}
+      {% set direnv_temp = '/tmp/direnv' %}
       {% set direnv_script = 'install.sh' %}
+    {% endif %}
   {% endif %}
 
   {% if direnv_binary_install %}
@@ -43,8 +45,9 @@ direnv-script:
     - require:
       - file:   direnv-script
     {% else %}
-direnv:
+direnv-binary:
   file.managed:
+    - unless:      command -v {{ direnv_bin_name }}
     - name:        {{ direnv_path }}/{{ direnv_pkg_name }}
     - source:      {{ direnv_url }}
     - makedirs:    True
@@ -53,6 +56,7 @@ direnv:
     - replace:     False
     {% endif %}
   {% else %}
+direnv-package:
   pkg.installed:
     - unless:   command -v {{ direnv_bin_name }}
     - name:     {{ direnv_pkg_name }}
