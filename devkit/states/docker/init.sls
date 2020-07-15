@@ -194,13 +194,11 @@ mac-compose-completion:
     - name:     docker-compose-completion
   {% else %}
     {% set docker_prefix = 'https://raw.githubusercontent.com/docker/' %}
-    {% set docker_content = 'cli/master/contrib/completion/' %}
-  {# set compose_vers = salt.cmd.run('docker-compose version --short') #}
-    {% set compose_vers = '1.18.0' %}
-    {% set compose_content = 'compose/' + compose_vers + '/contrib/completion/' %}
+    {% set docker_comp = docker_prefix + 'cli/master/contrib/completion/' %}
+    {% set compose_comp = docker_prefix + 'compose/master/contrib/completion/' %}
     {% if 'bash' in completion %}
-      {% set docker_bash_url = docker_prefix + docker_content + 'bash/docker' %}
-      {% set compose_bash_url = docker_prefix + compose_content + 'bash/docker-compose' %}
+      {% set docker_bash_url = docker_comp + 'bash/docker' %}
+      {% set compose_bash_url = compose_comp + 'bash/docker-compose' %}
 
 docker-bash-completion:
   file.managed:
@@ -219,8 +217,8 @@ compose-bash-completion:
     {% endif %}
 
     {% if 'zsh' in completion %}
-      {% set docker_zsh_url = docker_prefix + docker_content + 'zsh/_docker' %}
-      {% set compose_zsh_url = docker_prefix + compose_content + 'zsh/_docker-compose' %}
+      {% set docker_zsh_url = docker_comp + 'zsh/_docker' %}
+      {% set compose_zsh_url = compose_comp + 'zsh/_docker-compose' %}
 
 docker-zsh-completion:
   file.managed:
