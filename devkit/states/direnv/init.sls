@@ -17,15 +17,18 @@
   {% if grains.cfg_direnv.direnv.version is defined and
     grains.cfg_direnv.direnv.version != 'latest' %}
     {% set direnv_version = grains.cfg_direnv.direnv.version %}
-    {% if direnv_binary_install %}
-      {% set direnv_url = 'https://github.com/direnv/direnv/releases/download/v' %}
-      {% set direnv_url = direnv_url + direnv_version + '/direnv.linux-386' %}
-    {% endif %}
   {% else %}
     {% set direnv_version = 'latest' %}
-    {% if direnv_binary_install %}
+  {% endif %}
+
+  {% if direnv_binary_install %}
+    {% if direnv_version == 'latest' %}
       {% set direnv_temp = '/tmp/direnv' %}
       {% set direnv_script = 'install.sh' %}
+      {% set direnv_url = 'https://direnv.net/install.sh' %}
+    {% else %}
+      {% set direnv_url = 'https://github.com/direnv/direnv/releases/download/v' %}
+      {% set direnv_url = direnv_url + direnv_version + '/direnv.linux-386' %}
     {% endif %}
   {% endif %}
 
@@ -35,7 +38,7 @@ direnv-script:
   file.managed:
     - unless:      command -v {{ direnv_bin_name }}
     - name:        {{ direnv_temp }}/{{ direnv_script }}
-    - source:      https://direnv.net/install.sh
+    - source:      {{ direnv_url }}
     - makedirs:    True
     - skip_verify: True
   cmd.run:
