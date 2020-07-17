@@ -214,7 +214,7 @@ grains:
     installs:
       - kubebuilder
     kubebuilder:
-      version: 2.0.1
+      version: 2.3.1
     completion:
       - None
     debug:
@@ -233,7 +233,7 @@ grains:
     installs:
       - kustomize
     kustomize:
-      version: 3.1.0
+      version: latest
     completion:
       - None
     debug:
@@ -312,7 +312,7 @@ grains:
     installs:
       - sonar_scanner
     sonar_scanner:
-      version: 4.2.0.1873
+      version: 4.4.0.2170
     debug:
       enable: True
   cfg_snapd:

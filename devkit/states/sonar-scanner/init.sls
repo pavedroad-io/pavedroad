@@ -15,7 +15,7 @@
       grains.cfg_sonar_scanner.sonar_scanner.version != 'latest' %}
       {% set version = grains.cfg_sonar_scanner.sonar_scanner.version %}
     {% else %}
-      {% set version = '4.2.0.1873' %}
+      {% set version = 'latest' %}
     {% endif %}
     {% if grains.os_family == 'MacOS' %}
       {% set sonar_scanner_version = version + '-macosx' %}

@@ -9,10 +9,11 @@
 
   {% if stern_binary_install %}
     {% set stern_prefix = 'https://github.com/wercker/stern/releases/download/' %}
-    {% if grains.cfg_stern.stern.version is defined %}
+    {% if grains.cfg_stern.stern.version is defined and
+      grains.cfg_stern.stern.version != 'latest' %}
       {% set stern_version = grains.cfg_stern.stern.version %}
     {% else %}
-      {% set stern_version = '1.11.0' %}
+      {% set stern_version = 'latest' %}
     {% endif %}
     {% if grains.os_family == 'MacOS' %}
       {% set stern_file = '/stern_darwin_amd64' %}
