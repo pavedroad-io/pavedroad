@@ -58,4 +58,10 @@ firefox-version:
   cmd.run:
     - name:     {{ firefox_path }}/{{ firefox_bin_name }} --version
   {% endif %}
+  {% if firefox_repo_disable %}
+repo-reenable:
+  pkgrepo.managed:
+    - name:     {{ firefox_repo_name }}
+    - enabled:  True
+  {% endif %}
 {% endif %}
