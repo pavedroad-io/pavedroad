@@ -1,4 +1,4 @@
-# Install base packages
+# Install base packages - only firefox as base browser for now
 
 {% set installs = grains.cfg_base.installs %}
 
@@ -29,7 +29,7 @@
 
   {# Cask install required on MacOS #}
   {% if grains.os_family == 'MacOS' %}
-firefox:
+firefox-cask:
   cmd.run:
     - unless:   test -d /Applications/Firefox.app
     - name:     brew cask install firefox
@@ -40,13 +40,13 @@ repo-disable:
     - name:     {{ firefox_repo_name }}
     - enabled:  False
     {% endif %}
-firefox-install:
+firefox-package:
   pkg.installed:
     - unless:   command -v {{ firefox_bin_name }}
     - name:     {{ firefox_pkg_name }}
     - version:  {{ firefox_version }}
     {% if firefox_repo_disable %}
-repo-reenable:
+repo-re-enable:
   pkgrepo.managed:
     - name:     {{ firefox_repo_name }}
     - enabled:  True
@@ -57,11 +57,5 @@ repo-reenable:
 firefox-version:
   cmd.run:
     - name:     {{ firefox_path }}/{{ firefox_bin_name }} --version
-  {% endif %}
-  {% if firefox_repo_disable %}
-repo-reenable:
-  pkgrepo.managed:
-    - name:     {{ firefox_repo_name }}
-    - enabled:  True
   {% endif %}
 {% endif %}
