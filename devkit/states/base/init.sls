@@ -7,7 +7,6 @@
   {% set firefox_bin_name = 'firefox' %}
   {% set firefox_pkg_name = 'firefox' %}
   {% set firefox_path = '/usr/bin' %}
-  {% set firefox_repo_disable = False %}
 
   {% if grains.os_family == 'Suse' %}
     {% set firefox_pkg_name = 'MozillaFirefox' %}
