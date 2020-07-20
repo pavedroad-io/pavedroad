@@ -37,5 +37,6 @@ firefox-package:
 firefox-version:
   cmd.run:
     - name:     {{ firefox_path }}/{{ firefox_bin_name }} --version
+    - runas:    {{ grains.realuser }}
   {% endif %}
 {% endif %}
