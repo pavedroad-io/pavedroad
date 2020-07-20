@@ -15,18 +15,17 @@ fi
 
 # Get correct user/group/home in case script is run using sudo
 # For example when provisioning vm using vagrant
-if [ ! -z "${SUDO_UID}" ] ; then
+if [ ${SUDO_UID} ] ; then
     bootuser=$(id -un ${SUDO_UID})
     bootgroup=$(id -gn ${SUDO_UID})
     boothome=$(eval echo ~$(id -un ${SUDO_UID}))
-    if [ ! -z "${sudo}" ] ; then
+    if [ ${sudo} ] ; then
         usersudo="${sudo} -u ${bootuser}"
     fi
 else
     bootuser=$(id -un)
     bootgroup=$(id -gn)
     boothome=$(eval echo ~$(id -un))
-    usersudo=${sudo}
 fi
 
 branch=
@@ -260,8 +259,8 @@ ${usersudo} git clone ${branch} https://github.com/pavedroad-io/pavedroad.git ${
 # Apply salt states
 echo Installing the development kit
 ${usersudo} ${sudo} ${tmpdir}/devkit/apply-state.sh ${debug}
-mv ${tmpdir} ${boothome}
-mv pr-root ${boothome}/$(basename ${tmpdir})/devkit
+${sudo} mv ${tmpdir} ${boothome}
+${sudo} mv pr-root ${boothome}/$(basename ${tmpdir})/devkit
 
 # Temporary fix until permanent fix TBD in salt states
 if [ ${chown} ] ; then
