@@ -42,6 +42,8 @@ grains:
       - firefox
     firefox:
       version: latest
+      debug:
+        enable: True
   cfg_debian:
     installs:
       - devtools
