@@ -271,5 +271,5 @@ echo Development kit installation complete
 if [ ${DISPLAY} ] && command -v xdg-open >& /dev/null; then
     echo Opening the getting started page for the development kit
     export BROWSER=/usr/bin/firefox
-    xdg-open http://www.pavedroad.io/Tooling.html
+    xdg-open https://www.pavedroad.io/learning-center/
 fi
