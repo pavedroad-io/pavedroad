@@ -187,4 +187,4 @@ mv ${tmpdir} ${saltdir}
 echo Development kit installation complete
 
 echo Opening the getting started page for the devlopment kit
-open http://www.pavedroad.io/Tooling.html
+open https://www.pavedroad.io/learning-center/
