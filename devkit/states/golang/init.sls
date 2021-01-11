@@ -223,6 +223,7 @@ golang-bin:
   iferr:         github.com/koron/iferr
   impl:          github.com/josharian/impl
   keyify:        honnef.co/go/tools/cmd/keyify
+  modgraphviz:   golang.org/x/exp/cmd/modgraphviz
   motion:        github.com/fatih/motion
   swagger:       github.com/go-swagger/go-swagger/cmd/swagger
   yq:            github.com/mikefarah/yq
