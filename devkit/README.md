@@ -21,7 +21,7 @@ and run to install the Development Kit.
 This script first installs _curl_, _git_ and _salt_ on the target device and then
 clones the PavedRoad Development Kit repository.
 
-See the information needed to perform this bootstrap: [Install](/devkit/INSTALL.md).
+See the information needed to perform this bootstrap: [Install](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/INSTALL.md).
 
 ## SaltStack
 
@@ -78,7 +78,7 @@ then individual completion files will be installed if they can be found.
 Extra completion packages and individual completion files are installed
 in two separate directories for _bash_ and _zsh_ in _/usr/local/share_.
 See information on where completions are installed, how they are initialized, and
-the complete list of completions installed: [Shell Completions](/devkit/BOM_SHELL_COMPS.md).
+the complete list of completions installed: [Shell Completions](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_SHELL_COMPS.md).
 
 ### Vim
 
@@ -97,7 +97,7 @@ _vim_ into an IDE.
 If the version of _vim_ on the target device is not 8.0 or later then
 the latest version of _vim_ is built and installed.
 
-See the complete list of plugins installed: [Vim Plugins](/devkit/BOM_VIM_PLUGINS.md).
+See the complete list of plugins installed: [Vim Plugins](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_VIM_PLUGINS.md).
 
 ### Golang
 
@@ -109,7 +109,7 @@ Some of these go tools may have been developed as shell completions or vim plugi
 This project installs go package tools as well as completions and plugins.
 Shell aliases are also installed for _golang_.
 
-See the complete list of packages installed: [Go Packages](/devkit/BOM_GO_PACKAGES.md).
+See the complete list of packages installed: [Go Packages](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_GO_PACKAGES.md).
 
 ### Git
 
@@ -158,19 +158,19 @@ extensive configuration ability to provide customized output.
 ### Platforms Tested
 
 For detailed information on platforms that have been tested see:
-[Platforms Tested](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
+[Platforms Tested](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/PLATFORMS.md).
 
 Feedback is much appreciated on installing the Development Kit on other distributions,
-see: [Support](/SUPPORT.md).
+see: [Support](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 
 ## Links to More Information
 
 ### Getting Help
-For contact information or to report a bug see [Support](/SUPPORT.md).
+For contact information or to report a bug see [Support](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 ### How to Contribute
-For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
+For guidelines on contributions see [Contributing](https://github.com/pavedroad-io/pavedroad/blob/master/CONTRIBUTING.md).
 ### Code of Conduct
-This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
+This project follows this [Code of Conduct](https://github.com/pavedroad-io/pavedroad/blob/master/CODE_OF_CONDUCT.md).
 ### License
-This project is licensed under the following [License](/LICENSE).
+This project is licensed under the following [License](https://github.com/pavedroad-io/pavedroad/blob/master/LICENSE).
 
