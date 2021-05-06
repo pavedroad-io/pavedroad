@@ -158,7 +158,7 @@ extensive configuration ability to provide customized output.
 ### Platforms Tested
 
 For detailed information on platforms that have been tested see:
-[Platforms Tested](/devkit/PLATFORMS.md).
+[Platforms Tested](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 
 Feedback is much appreciated on installing the Development Kit on other distributions,
 see: [Support](/SUPPORT.md).
