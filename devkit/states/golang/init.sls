@@ -250,14 +250,14 @@ golang-bin:
   {% endfor %}
 {% endif %}
 
-# following packages no longer build so binaries are grabbed
+# these packages no longer build so binary install scripts are grabbed and run
 dep:
   cmd.run:
     - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh\
-                | PATH={{ golang_exec }}:$PATH sh
+                | PATH={{ golang_exec }}:$PATH bash
 gometalinter:
   cmd.run:
-    - name:     curl -L https://git.io/vp6lP | sh
+    - name:     curl -L https://git.io/vp6lP | bash
 
 {# Fix for Centos ignoring "runas" above leaving files with owner/group == root/root #}
 {% if grains.os_family == 'RedHat' %}
