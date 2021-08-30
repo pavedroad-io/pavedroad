@@ -7,12 +7,18 @@ Plug 'itchyny/lightline.vim'
 " fzf.sls depends on files installed by the next line
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-plug'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'wincent/ferret'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Add other plugins
+if filereadable(expand("~/.vimplug"))
+  source ~/.vimplug
+endif
 
 call plug#end()
 
