@@ -216,7 +216,7 @@ grains:
     installs:
       - kubebuilder
     kubebuilder:
-      version: v2.3.1
+      version: latest
     completion:
       - None
     debug:
