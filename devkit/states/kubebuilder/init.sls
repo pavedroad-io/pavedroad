@@ -30,18 +30,11 @@
 kubebuilder:
   {# tar file contains 4 binaries in /bin, only copy kubebuilder #}
   {% if kubebuilder_binary_install %}
-  archive.extracted:
-    - unless:         command -v {{ kubebuilder_pkg_name }}
-    - name:           {{ kubebuilder_tmp_dir }}
-    - source:         {{ kubebuilder_url }}
-    - tar_options:    z
-    - archive_format: tar
-    - skip_verify:    True
   file.managed:
-    - unless:    command -v {{ kubebuilder_pkg_name }}
-    - name:      {{ kubebuilder_path }}
-    - source:    {{ kubebuilder_tmp_path }}{{ kubebuilder_pkg_name }}
-    - mode:      755
+    - name:        {{ kubebuilder_path }}
+    - source:      {{ kubebuilder_url }}
+    - skip_verify: True
+    - mode:        755
   {% else %}
   pkg.installed:
     - unless:   command -v {{ kubebuilder_pkg_name }}
