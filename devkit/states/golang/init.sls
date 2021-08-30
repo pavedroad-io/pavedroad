@@ -250,7 +250,7 @@ golang-bin:
   {% endfor %}
 {% endif %}
 
-# these packages no longer build so binary install scripts are grabbed and run
+{# these packages no longer build so binary install scripts are grabbed and run #}
 dep:
   cmd.run:
     - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh\
