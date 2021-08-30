@@ -8,8 +8,11 @@
 include:
   - nodejs
 
-# npm.installed fails even when install succeeds (weird json output)
 pretty-swag-installed:
+{# npm.installed fails even when install succeeds (weird json output)
+  npm.installed:
+    - name:     {{ pretty_swag_pkg_name }}
+#}
   cmd.run:
     - name:     npm install {{ pretty_swag_pkg_name }} -g
     - require:
