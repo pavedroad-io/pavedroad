@@ -253,7 +253,8 @@ golang-bin:
 # following packages no longer build so binaries are grabbed
 dep:
   cmd.run:
-    - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+    - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh\
+                | PATH={{ golang_exec }}:$PATH sh
 gometalinter:
   cmd.run:
     - name:     curl -L https://git.io/vp6lP | sh
