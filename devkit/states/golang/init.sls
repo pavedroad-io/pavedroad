@@ -250,6 +250,14 @@ golang-bin:
   {% endfor %}
 {% endif %}
 
+# following packages no longer build so binaries are grabbed
+dep:
+  cmd.run:
+    - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+gometalinter:
+  cmd.run:
+    - name:     curl -L https://git.io/vp6lP | sh
+
 {# Fix for Centos ignoring "runas" above leaving files with owner/group == root/root #}
 {% if grains.os_family == 'RedHat' %}
 chown-go-path:
