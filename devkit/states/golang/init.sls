@@ -199,7 +199,6 @@ golang-bin:
 
   {% load_yaml as go_tools %}
   asmfmt:        github.com/klauspost/asmfmt/cmd/asmfmt
-  dep:           github.com/golang/dep/cmd/dep
   dlv:           github.com/go-delve/delve/cmd/dlv
   errcheck:      github.com/kisielk/errcheck
   fillstruct:    github.com/davidrjenni/reftools/cmd/fillstruct
@@ -212,7 +211,6 @@ golang-bin:
   gogetdoc:      github.com/zmb3/gogetdoc
   goimports:     golang.org/x/tools/cmd/goimports
   golint:        golang.org/x/lint/golint
-  gometalinter:  github.com/alecthomas/gometalinter
   gomodifytags:  github.com/fatih/gomodifytags
   gopls:         golang.org/x/tools/gopls
   gorename:      golang.org/x/tools/cmd/gorename
