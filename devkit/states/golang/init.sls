@@ -226,7 +226,7 @@ golang-bin:
   modgraphviz:   golang.org/x/exp/cmd/modgraphviz
   motion:        github.com/fatih/motion
   swagger:       github.com/go-swagger/go-swagger/cmd/swagger
-  yq:            github.com/mikefarah/yq
+  yq:            github.com/mikefarah/yq/v4
   {% endload %}
 
   {% for key in go_tools %}
