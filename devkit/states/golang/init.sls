@@ -236,7 +236,7 @@ golang-bin:
       {# go get does not have -o option to resolve name collisions, thus two steps #}
     - name:     |
                 rm -f go.mod
-                {{ golang_exec }}/go mod init
+                {{ golang_exec }}/go mod init local/build
                 {{ golang_exec }}/go get -d {{ go_tools[key] }}
                 {{ golang_exec }}/go build -o {{ golang_bin }}/{{ key }} {{ go_tools[key] }}
       {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
