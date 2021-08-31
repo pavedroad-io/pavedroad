@@ -12,9 +12,13 @@ subdirs := $(if $(subdirs), $(subdirs), $(makedirs))
 
 .PHONY: $(subdirs) all clean dryrun
 
-all: $(subdirs)
+all: organization.yaml $(subdirs)
 clean: $(subdirs)
 dryrun: $(subdirs)
 
 $(subdirs):
 	make -C $@ $(makecmds)
+
+organization.yaml: metadata.yaml organization.tpl
+	@echo Making $@
+	@python3 j2cvt.py $^ $@

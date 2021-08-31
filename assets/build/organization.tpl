@@ -56,37 +56,37 @@ milestones_link: https://github.com/pavedroad-io/pavedroad/milestones
 releases_name: Official Releases
 releases_link: https://github.com/pavedroad-io/pavedroad/releases
 assets_name: Document Generation
-assets_readme: https://github.com/pavedroad-io/pavedroad/blob/master/assets/README.md
+assets_readme: {{prpath}}/assets/README.md
 assets_build: /assets/build
 assets_templates: /assets/templates
 templates_link: /assets/templates/default
 devkit_name: Developer Kit
-devkit_readme: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/README.md
+devkit_readme: {{prpath}}/devkit/README.md
 devkit_boot_unix: /devkit/bootstrap-unix.sh
 devkit_boot_macos: /devkit/bootstrap-macos.sh
 devkit_docker: /devkit/docker
 devkit_vagrant: /devkit/vagrant
-devkit_install: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/INSTALL.md
-devkit_bootstrap: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOOTSTRAP.md
-devkit_devsoftware: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_DEV_SOFTWARE.md
-devkit_gopackages: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_GO_PACKAGES.md
-devkit_vimplugins: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_VIM_PLUGINS.md
-devkit_shellcomps: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_SHELL_COMPS.md
-devkit_platforms: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/PLATFORMS.md
-docker_readme: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/docker/README.md
-vagrant_readme: https://github.com/pavedroad-io/pavedroad/blob/master/devkit/vagrant/README.md
-conduct: https://github.com/pavedroad-io/pavedroad/blob/master/CODE_OF_CONDUCT.md
-contrib: https://github.com/pavedroad-io/pavedroad/blob/master/CONTRIBUTING.md
-dco: https://github.com/pavedroad-io/pavedroad/blob/master/DCO
-govern: https://github.com/pavedroad-io/pavedroad/blob/master/GOVERNANCE.md
-install: https://github.com/pavedroad-io/pavedroad/blob/master/INSTALL.md
-license: https://github.com/pavedroad-io/pavedroad/blob/master/LICENSE
-meeting: https://github.com/pavedroad-io/pavedroad/blob/master/MEETING.md
-owners: https://github.com/pavedroad-io/pavedroad/blob/master/OWNERS.md
-readme: https://github.com/pavedroad-io/pavedroad/blob/master/README.md
-roadmap: https://github.com/pavedroad-io/pavedroad/blob/master/ROADMAP.md
-security: https://github.com/pavedroad-io/pavedroad/blob/master/SECURITY.md
-support: https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md
+devkit_install: {{prpath}}/devkit/INSTALL.md
+devkit_bootstrap: {{prpath}}/devkit/BOOTSTRAP.md
+devkit_devsoftware: {{prpath}}/devkit/BOM_DEV_SOFTWARE.md
+devkit_gopackages: {{prpath}}/devkit/BOM_GO_PACKAGES.md
+devkit_vimplugins: {{prpath}}/devkit/BOM_VIM_PLUGINS.md
+devkit_shellcomps: {{prpath}}/devkit/BOM_SHELL_COMPS.md
+devkit_platforms: {{prpath}}/devkit/PLATFORMS.md
+docker_readme: {{prpath}}/devkit/docker/README.md
+vagrant_readme: {{prpath}}/devkit/vagrant/README.md
+conduct: {{prpath}}/CODE_OF_CONDUCT.md
+contrib: {{prpath}}/CONTRIBUTING.md
+dco: {{prpath}}/DCO
+govern: {{prpath}}/GOVERNANCE.md
+install: {{prpath}}/INSTALL.md
+license: {{prpath}}/LICENSE
+meeting: {{prpath}}/MEETING.md
+owners: {{prpath}}/OWNERS.md
+readme: {{prpath}}/README.md
+roadmap: {{prpath}}/ROADMAP.md
+security: {{prpath}}/SECURITY.md
+support: {{prpath}}/SUPPORT.md
 
 # debug - uncomment to see what full fledged support page looks like
 # twitter: True
