@@ -10,7 +10,7 @@ resources to make it easier to get your contribution accepted.
 By contributing to this project you agree to the Developer Certificate of
 Origin (DCO). This document was created by the Linux Kernel community and is a
 simple statement that you, as a contributor, have the legal right to make the
-contribution. See the [DCO](/DCO) file for details.
+contribution. See the [DCO](https://github.com/pavedroad-io/pavedroad/blob/master/DCO) file for details.
 
 Contributors sign-off that they adhere to these requirements by adding a
 Signed-off-by line to commit messages. For example:

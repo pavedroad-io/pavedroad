@@ -13,7 +13,7 @@ Each script checks the _sudo_ privileges for the user and prompts for a
 password if necessary.
 
 See more detailed information on bootstrap scripts for the Development Kit:
-[Bootstrap Detail](/devkit/BOOTSTRAP.md).
+[Bootstrap Detail](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOOTSTRAP.md).
 
 ## Unix Bootstrap
 

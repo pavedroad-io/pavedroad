@@ -17,7 +17,7 @@ PavedRoad uses a two-tiered system of maintainer roles:
 
 ## Becoming a maintainer
 
-The current list of maintainers is published and updated in [OWNERS.md](/OWNERS.md).
+The current list of maintainers is published and updated in [OWNERS.md](https://github.com/pavedroad-io/pavedroad/blob/master/OWNERS.md).
 
 ### Maintainer Pre-requisites
 
@@ -35,7 +35,7 @@ To become a maintainer you need to demonstrate the following:
 
 ### Your organization is not yet a maintainer
 
-* Express interest to the [senior maintainers](/OWNERS.md#senior-maintainers) directly that your
+* Express interest to the [senior maintainers](https://github.com/pavedroad-io/pavedroad/blob/master/OWNERS.md#senior-maintainers) directly that your
   organization is interested in becoming a maintainer. Becoming a maintainer generally means that
   you are going to be spending substantial time (>25%) on PavedRoad for the foreseeable future. You
   should have domain expertise and be extremely proficient with Kubernetes and Golang.  Ultimately
@@ -76,7 +76,7 @@ the maintainers per the voting process below.
 * Monitor email aliases.
 * Monitor Slack (delayed response is perfectly acceptable).
 * Triage GitHub issues and perform pull request reviews for other maintainers and the community.
-  The areas of specialization listed in [OWNERS.md](/OWNERS.md) can be used to help with routing
+  The areas of specialization listed in [OWNERS.md](https://github.com/pavedroad-io/pavedroad/blob/master/OWNERS.md) can be used to help with routing
   an issue/question to the right person.
 * During GitHub issue triage, apply all applicable [labels](https://github.com/pavedroad-io/pavedroad/labels)
   to each new issue. Labels are extremely useful for future issue follow up. Which labels to apply

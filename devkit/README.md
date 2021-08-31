@@ -132,7 +132,7 @@ _kubectl_, _kustomize_, _skaffold_, _stern_ and _tilt_.
 Other development applications include _ctags_, _direnv_, _fossa-cli_, _fzf_, _graphviz_,
 _jq_, _nodejs_, _ripgrep_, and _sonar-scanner_.
 
-See the complete list of software installed: [Development Software](/devkit/BOM_DEV_SOFTWARE.md).
+See the complete list of software installed: [Development Software](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/BOM_DEV_SOFTWARE.md).
 
 ## Swagger
 

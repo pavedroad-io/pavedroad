@@ -2,8 +2,8 @@
 
 This page lists all active maintainers and their areas of expertise. This can be used for routing PRs, questions, etc. to the right place.
 
-* See [CONTRIBUTING.md](/CONTRIBUTING.md) for general contribution guidelines.
-* See [GOVERNANCE.md](/GOVERNANCE.md) for governance guidelines and maintainer responsibilities.
+* See [CONTRIBUTING.md](https://github.com/pavedroad-io/pavedroad/blob/master/CONTRIBUTING.md) for general contribution guidelines.
+* See [GOVERNANCE.md](https://github.com/pavedroad-io/pavedroad/blob/master/GOVERNANCE.md) for governance guidelines and maintainer responsibilities.
 
 ## Senior maintainers
 
@@ -14,11 +14,11 @@ Here's the current list of senior maintainers:
 
 ## Maintainers
 
-There are currently no maintainers. Maintainers will be added according to the [process for adding a maintainer](/GOVERNANCE.md#becoming-a-maintainer) in the [governance](/GOVERNANCE.md).
+There are currently no maintainers. Maintainers will be added according to the [process for adding a maintainer](https://github.com/pavedroad-io/pavedroad/blob/master/GOVERNANCE.md#becoming-a-maintainer) in the [governance](https://github.com/pavedroad-io/pavedroad/blob/master/GOVERNANCE.md).
 
 ## Emeritus maintainers
 
-There are currently no emeritus maintainers.  This list will be updated according to the [process for removing a maintainer](/GOVERNANCE.md#removing-a-maintainer) in the [governance](/GOVERNANCE.md).
+There are currently no emeritus maintainers.  This list will be updated according to the [process for removing a maintainer](https://github.com/pavedroad-io/pavedroad/blob/master/GOVERNANCE.md#removing-a-maintainer) in the [governance](https://github.com/pavedroad-io/pavedroad/blob/master/GOVERNANCE.md).
 
 ## Friends of PavedRoad
 

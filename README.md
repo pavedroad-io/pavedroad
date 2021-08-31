@@ -24,8 +24,8 @@ running on bare-metal and virtual machines.
 It comes with a complete integrated tool network for developing, deploying,
 and operating those services. 
 
-For information on installing the Development Kit see [Dev Kit README](/devkit/README.md)
-and for information on document generation see [Doc Gen README](/assets/README.md).
+For information on installing the Development Kit see [Dev Kit README](https://github.com/pavedroad-io/pavedroad/blob/master/devkit/README.md)
+and for information on document generation see [Doc Gen README](https://github.com/pavedroad-io/pavedroad/blob/master/assets/README.md).
 
 ## Stacks as Code (SaC)
 Stacks as Code (SaC) is the process of managing and provisioning computer data centers
@@ -45,7 +45,7 @@ This enables the tool network to be formed using standard k8s labels and selecto
 The project is an early preview.
 We realize that it's going to take a village to arrive at the vision of a multi-cloud
 control plane, and we wanted to open this up early to get your help and feedback.
-Please see the [Roadmap](/ROADMAP.md) for details on what we are planning for future releases. 
+Please see the [Roadmap](https://github.com/pavedroad-io/pavedroad/blob/master/ROADMAP.md) for details on what we are planning for future releases. 
 
 ## Official Releases
 
@@ -60,11 +60,11 @@ at any time without compatibility support and without prior notice.
 ## Links to More Information
 
 ### Getting Help
-For contact information or to report a bug see [Support](/SUPPORT.md).
+For contact information or to report a bug see [Support](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 ### How to Contribute
-For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
+For guidelines on contributions see [Contributing](https://github.com/pavedroad-io/pavedroad/blob/master/CONTRIBUTING.md).
 ### Code of Conduct
-This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
+This project follows this [Code of Conduct](https://github.com/pavedroad-io/pavedroad/blob/master/CODE_OF_CONDUCT.md).
 ### License
-This project is licensed under the following [License](/LICENSE).
+This project is licensed under the following [License](https://github.com/pavedroad-io/pavedroad/blob/master/LICENSE).
 
