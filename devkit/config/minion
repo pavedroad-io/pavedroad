@@ -314,7 +314,7 @@ grains:
     installs:
       - sonar_scanner
     sonar_scanner:
-      version: latest
+      version: 4.6.2.2472
     debug:
       enable: True
   cfg_snapd:
