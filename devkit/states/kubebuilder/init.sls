@@ -9,6 +9,7 @@
   {% set kubebuilder_tmp_dir = '/tmp' %}
   {% set kubebuilder_testdir = grains.homedir + '/go/src/testkubebuilder' %}
 
+  {# kubebuilder download url only supports latest and not version numbers #}
   {% if kubebuilder_binary_install %}
     {% if grains.cfg_kubebuilder.kubebuilder.version is defined %}
       {% set version = grains.cfg_kubebuilder.kubebuilder.version %}
@@ -28,7 +29,7 @@
   {% endif %}
 
 kubebuilder:
-  {# tar file contains 4 binaries in /bin, only copy kubebuilder #}
+  {# kubebuilder binary is no longer contained in a tar file #}
   {% if kubebuilder_binary_install %}
   file.managed:
     - name:        {{ kubebuilder_path }}
