@@ -26,20 +26,22 @@
       {% endif %}
       {% set sonar_scanner_zip_file = sonar_scanner_version + '.zip' %}
       {% set sonar_scanner_url = sonar_scanner_prefix + sonar_scanner_zip_file %}
+      {% set sonar_scanner_file = sonar_scanner_pkg_name + '-' + sonar_scanner_version %}
     {% else %}
       {% set sonar_scanner_properties =
         'https://raw.githubusercontent.com/SonarSource/sonar-update-center-properties/master/scannercli.properties' %}
       {% set sonar_scanner_version = salt.cmd.shell('curl -s ' + sonar_scanner_properties
-        + ' | grep publicVersions | awk -F= "{print $2}"') %}
+        + ' | grep publicVersions | sed -e s/publicVersions=//') %}
       {% if grains.os_family == 'MacOS' %}
         {% set sonar_scanner_grep = sonar_scanner_version + '.downloadUrl.macos' %}
       {% else %}
         {% set sonar_scanner_grep = sonar_scanner_version + '.downloadUrl.linux' %}
       {% endif %}
       {% set sonar_scanner_url = salt.cmd.shell('curl -s ' + sonar_scanner_properties
-        + ' | grep ' + sonar_scanner_grep + ' | awk -F= "{print $2}"') %}
+        + ' | grep ' + sonar_scanner_grep + ' | sed s/' + sonar_scanner_grep + '=//') %}
+      {% set sonar_scanner_file = salt.cmd.shell('echo ' + sonar_scanner_url
+        + ' | sed -e "s|^.*-cli/||" -e "s/-cli//" -e "s/.zip//"') %}
     {% endif %}
-    {% set sonar_scanner_file = sonar_scanner_pkg_name + '-' + sonar_scanner_version %}
     {% set sonar_scanner_lib_path = sonar_scanner_lib_dir + sonar_scanner_pkg_name + '/bin/' %}
   {% endif %}
 
