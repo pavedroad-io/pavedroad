@@ -20,9 +20,9 @@
       grains.cfg_sonar_scanner.sonar_scanner.version == 'latest' %}
       {% set sonar_scanner_version = salt.cmd.run('curl -s https://raw.githubusercontent.com/SonarSource/sonar-update-center-properties/master/scannercli.properties | grep publicVersions | awk -F= "{print $2}"') %}
       {% if grains.os_family == 'MacOS' %}
-        {% set sonar_scanner_grep = version + '.downloadUrl.macos' %}
+        {% set sonar_scanner_grep = sonar_scanner_version + '.downloadUrl.macos' %}
       {% else %}
-        {% set sonar_scanner_grep = version + '.downloadUrl.linux' %}
+        {% set sonar_scanner_grep = sonar_scanner_version + '.downloadUrl.linux' %}
       {% endif %}
       {% set sonar_scanner_url = salt.cmd.run('curl -s https://raw.githubusercontent.com/SonarSource/sonar-update-center-properties/master/scannercli.properties | grep {{ sonar_scanner_grep }} | awk -F= "{print $2}"') %}
     {% else %}
