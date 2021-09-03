@@ -257,7 +257,7 @@ dep:
                 | PATH={{ golang_exec }}:$PATH bash
 gometalinter:
   cmd.run:
-    - name:     curl -L https://git.io/vp6lP | bash
+    - name:     curl -L https://git.io/vp6lP | BINDIR={{ golang_bin }} bash
 
 {# Fix for Centos ignoring "runas" above leaving files with owner/group == root/root #}
 {% if grains.os_family == 'RedHat' %}
