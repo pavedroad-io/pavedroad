@@ -9,10 +9,14 @@ include:
   - nodejs
 
 pretty-swag-installed:
+{# npm.installed fails even when install succeeds (weird json output)
   npm.installed:
-    - name:       {{ pretty_swag_pkg_name }}
+    - name:     {{ pretty_swag_pkg_name }}
+#}
+  cmd.run:
+    - name:     npm install {{ pretty_swag_pkg_name }} -g
     - require:
-      - sls:      nodejs
+      - sls:    nodejs
 
   {% if grains.cfg_pretty_swag.debug.enable %}
 pretty-swag-version:

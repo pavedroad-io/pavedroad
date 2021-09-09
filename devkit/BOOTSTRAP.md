@@ -81,7 +81,7 @@ The bootstrap scripts have been designed to be run multiple times
 in sequence if a temporary glitch has occurred.
 Also the salt states will run to completion even if some states fail.
 
-Please report any bootstrap script failures to: [Support](/SUPPORT.md).
+Please report any bootstrap script failures to: [Support](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 
 ## sudo Requirement
 

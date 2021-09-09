@@ -199,7 +199,6 @@ golang-bin:
 
   {% load_yaml as go_tools %}
   asmfmt:        github.com/klauspost/asmfmt/cmd/asmfmt
-  dep:           github.com/golang/dep/cmd/dep
   dlv:           github.com/go-delve/delve/cmd/dlv
   errcheck:      github.com/kisielk/errcheck
   fillstruct:    github.com/davidrjenni/reftools/cmd/fillstruct
@@ -212,7 +211,6 @@ golang-bin:
   gogetdoc:      github.com/zmb3/gogetdoc
   goimports:     golang.org/x/tools/cmd/goimports
   golint:        golang.org/x/lint/golint
-  gometalinter:  github.com/alecthomas/gometalinter
   gomodifytags:  github.com/fatih/gomodifytags
   gopls:         golang.org/x/tools/gopls
   gorename:      golang.org/x/tools/cmd/gorename
@@ -226,7 +224,7 @@ golang-bin:
   modgraphviz:   golang.org/x/exp/cmd/modgraphviz
   motion:        github.com/fatih/motion
   swagger:       github.com/go-swagger/go-swagger/cmd/swagger
-  yq:            github.com/mikefarah/yq
+  yq:            github.com/mikefarah/yq/v4
   {% endload %}
 
   {% for key in go_tools %}
@@ -235,6 +233,8 @@ golang-bin:
   cmd.run:
       {# go get does not have -o option to resolve name collisions, thus two steps #}
     - name:     |
+                rm -f go.mod
+                {{ golang_exec }}/go mod init local/build
                 {{ golang_exec }}/go get -d {{ go_tools[key] }}
                 {{ golang_exec }}/go build -o {{ golang_bin }}/{{ key }} {{ go_tools[key] }}
       {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
@@ -249,6 +249,15 @@ golang-bin:
     {% endif %}
   {% endfor %}
 {% endif %}
+
+{# these packages no longer build so binary install scripts are grabbed and run #}
+dep:
+  cmd.run:
+    - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh\
+                | PATH={{ golang_exec }}:$PATH bash
+gometalinter:
+  cmd.run:
+    - name:     curl -L https://git.io/vp6lP | BINDIR={{ golang_bin }} bash
 
 {# Fix for Centos ignoring "runas" above leaving files with owner/group == root/root #}
 {% if grains.os_family == 'RedHat' %}

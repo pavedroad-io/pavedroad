@@ -145,11 +145,11 @@ the build directory.
 ## Links to More Information
 
 ### Getting Help
-For contact information or to report a bug see [Support](/SUPPORT.md).
+For contact information or to report a bug see [Support](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 ### How to Contribute
-For guidelines on contributions see [Contributing](/CONTRIBUTING.md).
+For guidelines on contributions see [Contributing](https://github.com/pavedroad-io/pavedroad/blob/master/CONTRIBUTING.md).
 ### Code of Conduct
-This project follows this [Code of Conduct](/CODE_OF_CONDUCT.md).
+This project follows this [Code of Conduct](https://github.com/pavedroad-io/pavedroad/blob/master/CODE_OF_CONDUCT.md).
 ### License
-This project is licensed under the following [License](/LICENSE).
+This project is licensed under the following [License](https://github.com/pavedroad-io/pavedroad/blob/master/LICENSE).
 

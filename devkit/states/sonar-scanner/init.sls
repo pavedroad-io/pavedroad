@@ -7,6 +7,11 @@
   {% set sonar_scanner_path = '/usr/local/bin/' %}
   {% set sonar_scanner_tmp_dir = '/tmp/sonar-scanner/' %}
   {% set sonar_scanner_binary_install = True %}
+  {% if grains.os_family == 'MacOS' %}
+    {% set sonar_scanner_lib_dir = '/usr/local/lib/' %}
+  {% else %}
+    {% set sonar_scanner_lib_dir = '/usr/lib/' %}
+  {% endif %}
 
   {% if sonar_scanner_binary_install %}
     {% set sonar_scanner_prefix =
@@ -14,19 +19,29 @@
     {% if grains.cfg_sonar_scanner.sonar_scanner.version is defined and
       grains.cfg_sonar_scanner.sonar_scanner.version != 'latest' %}
       {% set version = grains.cfg_sonar_scanner.sonar_scanner.version %}
+      {% if grains.os_family == 'MacOS' %}
+        {% set sonar_scanner_version = version + '-macosx' %}
+      {% else %}
+        {% set sonar_scanner_version = version + '-linux' %}
+      {% endif %}
+      {% set sonar_scanner_zip_file = sonar_scanner_version + '.zip' %}
+      {% set sonar_scanner_url = sonar_scanner_prefix + sonar_scanner_zip_file %}
+      {% set sonar_scanner_file = sonar_scanner_pkg_name + '-' + sonar_scanner_version %}
     {% else %}
-      {% set version = 'latest' %}
+      {% set sonar_scanner_properties =
+        'https://raw.githubusercontent.com/SonarSource/sonar-update-center-properties/master/scannercli.properties' %}
+      {% set sonar_scanner_version = salt.cmd.shell('curl -s ' + sonar_scanner_properties
+        + ' | grep publicVersions | sed -e s/publicVersions=//') %}
+      {% if grains.os_family == 'MacOS' %}
+        {% set sonar_scanner_grep = sonar_scanner_version + '.downloadUrl.macos' %}
+      {% else %}
+        {% set sonar_scanner_grep = sonar_scanner_version + '.downloadUrl.linux' %}
+      {% endif %}
+      {% set sonar_scanner_url = salt.cmd.shell('curl -s ' + sonar_scanner_properties
+        + ' | grep ' + sonar_scanner_grep + ' | sed s/' + sonar_scanner_grep + '=//') %}
+      {% set sonar_scanner_file = salt.cmd.shell('echo ' + sonar_scanner_url
+        + ' | sed -e "s|^.*-cli/||" -e "s/-cli//" -e "s/.zip//"') %}
     {% endif %}
-    {% if grains.os_family == 'MacOS' %}
-      {% set sonar_scanner_version = version + '-macosx' %}
-      {% set sonar_scanner_lib_dir = '/usr/local/lib/' %}
-    {% else %}
-      {% set sonar_scanner_version = version + '-linux' %}
-      {% set sonar_scanner_lib_dir = '/usr/lib/' %}
-    {% endif %}
-    {% set sonar_scanner_zip_file = sonar_scanner_version + '.zip' %}
-    {% set sonar_scanner_url = sonar_scanner_prefix + sonar_scanner_zip_file %}
-    {% set sonar_scanner_file = sonar_scanner_pkg_name + '-' + sonar_scanner_version %}
     {% set sonar_scanner_lib_path = sonar_scanner_lib_dir + sonar_scanner_pkg_name + '/bin/' %}
   {% endif %}
 
