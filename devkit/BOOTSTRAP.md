@@ -19,11 +19,11 @@ In particular both bootstrap scripts run the same salt state script:
     apply-state.sh
 
 The salt state script is generally not run standalone but can be run
-with the update option to update all commands that support updating:
+with the upgrade option to upgrade all packages that support upgrading:
 
     apply-state.sh -u
 
-At this point only the _roadctl_ command supports updating.
+At this point only the _golang_ and _roadctl_ dev kits support upgrading.
 
 The salt state script runs in masterless mode and installs a number of
 development tool packages along with their man pages and completion scripts.

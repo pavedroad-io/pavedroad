@@ -16,7 +16,7 @@ function usage
     echo "-g            - show grains.items"
     echo "-h            - show usage help"
     echo "-n            - perform dry run"
-    echo "-u            - set update mode"
+    echo "-u            - set upgrade mode"
     echo "-l <loglevel> - set --log-level"
     echo "-o <output>   - set --state-output"
     echo "-v <verbose>  - set --state-verbose"
@@ -35,7 +35,7 @@ while getopts ":ghl:no:uv:" opt; do
       ;;
     o ) output="--state-output=${OPTARG}"
       ;;
-    u ) saltrun="update"
+    u ) saltrun="upgrade"
       ;;
     v ) verbose="--state-verbose=${OPTARG}"
       ;;

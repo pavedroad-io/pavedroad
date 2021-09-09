@@ -69,7 +69,7 @@
     - match: compound
     - git
 
-  'G@tops:golang and G@saltrun:install':
+  'G@tops:golang and G@saltrun:(install|upgrade)':
     - match: compound
     - golang
 
@@ -122,7 +122,7 @@
     - match: compound
     - direnv
 
-  'G@tops:roadctl and P@saltrun:(install|update)':
+  'G@tops:roadctl and P@saltrun:(install|upgrade)':
     - match: compound
     - roadctl
 

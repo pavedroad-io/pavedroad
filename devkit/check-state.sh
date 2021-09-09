@@ -10,10 +10,11 @@ usage_top() {
 usage_options() {
 cat << EOF
 Valid options:
+-f force color
 -h help with usage
 -l list log options
 -n script dry run
--u update mode
+-u upgrade mode
 -C command
 -D clear cache
 -F state file
@@ -26,6 +27,7 @@ Valid options:
 -S show grains
 -T show <type>
 -V <verbose>
+-X <execute>
 EOF
 }
 
@@ -66,6 +68,7 @@ usage_state() {
 }
 
 dryrun=
+forcecolor=
 highstate=
 clearcache=
 nostate=
@@ -79,9 +82,10 @@ showtype=
 render=
 state=
 verbose=
+saltargs=
 saltrun="install"
 
-while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
+while getopts ":acdefgipqtwC:DF:GHNO:PRST:V:X:hlnu" opt; do
   case ${opt} in
     a ) loglevel="--log-level=all"
       ;;
@@ -132,6 +136,10 @@ while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
       ;;
     V ) verbose="${OPTARG}"
       ;;
+    X ) saltargs="${OPTARG}"
+      ;;
+    f ) forcecolor="--force-color"
+      ;;
     h ) usage_top
         usage_options
         log_options
@@ -145,7 +153,7 @@ while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
       ;;
     n ) dryrun=1
       ;;
-    u ) saltrun="update"
+    u ) saltrun="upgrade"
       ;;
     : )
         echo Argument required: $OPTARG 1>&2
@@ -184,7 +192,9 @@ fi
 
 shift $((OPTIND - 1))
 state_error=
-if [[ ${nostate} ]]; then
+if [[ ${saltargs} ]]; then
+    echo execute: salt-call ${saltargs}
+elif [[ ${nostate} ]]; then
     if [[ ${state} ]]; then
         echo Ignoring state: ${state}
     fi
@@ -230,7 +240,9 @@ if [[ ! ${command} ]]; then
     fi
 fi
 
-if [[ ${clearcache} ]]; then
+if [[ ${saltargs} ]]; then
+    execute=${saltargs}
+elif [[ ${clearcache} ]]; then
     execute="saltutil.clear_cache"
 elif [[ ${command} ]]; then
     execute="${command} ${file}"
@@ -296,4 +308,4 @@ salt-call \
     --pillar-root "${saltdir}/pillar/" \
     --file-root   "${saltdir}/states/" \
     ${loglevel} ${output} ${verbose} \
-    ${execute}
+    ${forcecolor} ${execute}
