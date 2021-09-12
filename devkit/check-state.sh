@@ -14,6 +14,7 @@ Valid options:
 -h help with usage
 -l list log options
 -n script dry run
+-r run command
 -u upgrade mode
 -C command
 -D clear cache
@@ -67,6 +68,7 @@ usage_state() {
     echo $(ls $salt_top | grep -v top.* | tr '\n' ' ')
 }
 
+cmd=
 dryrun=
 forcecolor=
 highstate=
@@ -82,10 +84,11 @@ showtype=
 render=
 state=
 verbose=
+runcmd=
 saltargs=
 saltrun="install"
 
-while getopts ":acdefgipqtwC:DF:GHNO:PRST:V:X:hlnu" opt; do
+while getopts ":acdefgipqtwC:DF:GHNO:PRST:V:X:hlnr:u" opt; do
   case ${opt} in
     a ) loglevel="--log-level=all"
       ;;
@@ -153,6 +156,8 @@ while getopts ":acdefgipqtwC:DF:GHNO:PRST:V:X:hlnu" opt; do
       ;;
     n ) dryrun=1
       ;;
+    r ) runcmd="${OPTARG}"
+      ;;
     u ) saltrun="upgrade"
       ;;
     : )
@@ -192,7 +197,9 @@ fi
 
 shift $((OPTIND - 1))
 state_error=
-if [[ ${saltargs} ]]; then
+if [[ ${runcmd} ]]; then
+    echo execute: salt-call cmd.run "${runcmd}"
+elif [[ ${saltargs} ]]; then
     echo execute: salt-call ${saltargs}
 elif [[ ${nostate} ]]; then
     if [[ ${state} ]]; then
@@ -240,7 +247,9 @@ if [[ ! ${command} ]]; then
     fi
 fi
 
-if [[ ${saltargs} ]]; then
+if [[ ${runcmd} ]]; then
+    cmd=cmd.run
+elif [[ ${saltargs} ]]; then
     execute=${saltargs}
 elif [[ ${clearcache} ]]; then
     execute="saltutil.clear_cache"
@@ -303,9 +312,18 @@ if [ ${setgrains} ]; then
     done
 fi
 
-salt-call \
-    --config-dir  "${saltdir}/config/" \
-    --pillar-root "${saltdir}/pillar/" \
-    --file-root   "${saltdir}/states/" \
-    ${loglevel} ${output} ${verbose} \
-    ${forcecolor} ${execute}
+if [[ ${runcmd} ]]; then
+    salt-call \
+        --config-dir  "${saltdir}/config/" \
+        --pillar-root "${saltdir}/pillar/" \
+        --file-root   "${saltdir}/states/" \
+        ${loglevel} ${output} ${verbose} \
+        ${forcecolor} ${cmd} "${runcmd}"
+else
+    salt-call \
+        --config-dir  "${saltdir}/config/" \
+        --pillar-root "${saltdir}/pillar/" \
+        --file-root   "${saltdir}/states/" \
+        ${loglevel} ${output} ${verbose} \
+        ${forcecolor} ${execute}
+fi
