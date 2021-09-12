@@ -284,10 +284,10 @@ gometalinter:
 {% if grains.saltrun == 'install' %}
     - unless:   command -v {{ golang_bin }}/gometalinter
 {% endif %}
-{# exception: revive@latest fails plus no GOPATH fails #}
+{# exception: install of revive@latest fails silently if GOPATH is not set #}
 revive:
   cmd.run:
-    - name:     GOPATH={{ golang_path }} {{ golang_exec }}/go install github.com/mgechev/revive@master
+    - name:     GOPATH={{ golang_path }} {{ golang_exec }}/go install github.com/mgechev/revive@latest
 {% if grains.saltrun == 'install' %}
     - unless:   command -v {{ golang_bin }}/revive
 {% endif %}
