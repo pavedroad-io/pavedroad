@@ -247,13 +247,11 @@ golang-bin:
   yq:            github.com/mikefarah/yq/v4
   {% endload %}
 
-  {# set golang_build_dir = salt.temp.dir() #}
   {% for key in go_tools %}
     {% if key in installs %}
 {{ key }}:
   {# go install with explicit version allows tools to be installed without modules #}
   cmd.run:
-    {# - cwd:      {{ golang_build_dir }} #}
     - name:     {{ golang_exec }}/go install {{ go_tools[key] }}@latest
       {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
       {% if not grains.os_family == 'MacOS' %}
