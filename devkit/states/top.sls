@@ -74,8 +74,7 @@
     - golang
 
 # vim.sls depends on files installed by golang.sls
-# 'G@tops:vim and G@saltrun:(install|upgrade)':
-  'G@tops:vim and G@saltrun:install':
+  'G@tops:vim and G@saltrun:(install|upgrade)':
     - match: compound
     - vim
 
