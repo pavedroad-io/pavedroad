@@ -7,10 +7,6 @@
   {% set fzf_plugin = grains.homedir + '/.vim/plugged/fzf' %}
 {# fzf is installed using vim-plug in vim/init.sls #}
 {# The binary, completion files and the man page are copied as needed #}
-{#
-include:
-  - vim
-#}
 
 fzf-binary:
   file.managed:
