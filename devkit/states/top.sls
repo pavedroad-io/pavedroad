@@ -69,13 +69,12 @@
     - match: compound
     - git
 
-  'G@tops:golang and G@saltrun:(install|upgrade)':
+  'G@tops:golang and P@saltrun:(install|upgrade)':
     - match: compound
     - golang
 
 # vim.sls depends on files installed by golang.sls
-# 'G@tops:vim and G@saltrun:(install|upgrade)':
-  'G@tops:vim and (G@saltrun:install or G@saltrun:upgrade)':
+  'G@tops:vim and P@saltrun:(install|upgrade)':
     - match: compound
     - vim
 
