@@ -348,8 +348,9 @@ golang-test:
     - group:    {{ grains.realgroup }}
     - makedirs: True
   cmd.run:
+    - cwd:      {{ golang_path}}/src/hello
     - name: |
-                cd {{ golang_path}}/src/hello
+                {{ golang_exec }}/go mod init hello
                 {{ golang_exec }}/go build
                 ./hello
   {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
