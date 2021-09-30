@@ -33,7 +33,17 @@ include:
   - vim.src
   {% endif %}
 
+pre-debug:
+  cmd.run:
+    - name:     |
+                echo family {{ grains.os_family }}
+                echo saltrun {{ grains.saltrun }}
   {% if not vim_src_install %}
+vim-debug:
+  cmd.run:
+    - name:     |
+                echo installing vim
+                command -v {{ vim_pkg_name }}
 vim:
   pkg.installed:
     - name:     {{ vim_pkg_name }}
@@ -60,6 +70,10 @@ viminfo:
 {% endif %}
 
 {% if installs and 'go-plugins' in installs %}
+plug-debug:
+  cmd.run:
+    - name:     |
+                echo installing vim go plugins
 vim-autoload:
   file.managed:
     - name:     {{ grains.homedir }}/.vim/autoload/plug.vim
