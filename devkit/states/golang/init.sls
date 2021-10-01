@@ -272,7 +272,7 @@ golang-bin:
 dep:
   cmd.run:
     - name:     curl https://raw.githubusercontent.com/golang/dep/master/install.sh\
-                | PATH={{ golang_exec }}:$PATH bash
+                | GOPATH={{ golang_path }} PATH={{ golang_exec }}:$PATH bash
 {% if grains.saltrun == 'install' %}
     - unless:   command -v {{ golang_bin }}/dep
 {% endif %}
