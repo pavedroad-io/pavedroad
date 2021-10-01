@@ -110,7 +110,8 @@ EOF
 
 ignore_message() {
 cat << EOF
-Running salt in masterless mode: Ignore the following message types:
+Running salt in masterless mode
+Generally the following message types can be ignored:
     [INFO    ] Routine salt information messages
     [WARNING ] Typically python deprecation warnings
     [ERROR   ] Spurious salt errors unless state fails
