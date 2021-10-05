@@ -19,11 +19,17 @@ In particular both bootstrap scripts run the same salt state script:
     apply-state.sh
 
 The salt state script is generally not run standalone but can be run
-with the update option to update all commands that support updating:
+with the upgrade option to upgrade all devkit packages with upgrade support:
 
     apply-state.sh -u
 
-At this point only the _roadctl_ command supports updating.
+Upgrading a devkit package may cause it to be removed and reinstalled
+in order to guarantee the upgrade.
+At this point only the following devkit packages support upgrades:
+
+    _golang_
+    _roadctl_
+    _vim_
 
 The salt state script runs in masterless mode and installs a number of
 development tool packages along with their man pages and completion scripts.
@@ -79,7 +85,11 @@ The bootstrap scripts can fail for a number of reasons:
 
 The bootstrap scripts have been designed to be run multiple times
 in sequence if a temporary glitch has occurred.
-Also the salt states will run to completion even if some states fail.
+If a devkit package has been successfully installed
+then it will not be reinstalled in a subsequent run.
+In each run salt states run to completion even if some states fail.
+When the script is rerun only failed installs will be reattempted.
+Thus the script can be run multiple times until it succeeds.
 
 Please report any bootstrap script failures to: [Support](https://github.com/pavedroad-io/pavedroad/blob/master/SUPPORT.md).
 

@@ -18,6 +18,12 @@
     {% set vim_path = "/usr/local/bin/" %}
   {% endif %}
 
+  {% if grains.saltrun == 'install' %}
+    {% set vim_plug = "PlugInstall" %}
+  {% else %}
+    {% set vim_plug = "PlugUpdate" %}
+  {% endif %}
+
 include:
   - pip3
   {% if grains.os_family == 'Debian' %}
@@ -34,10 +40,12 @@ vim:
     {% if grains.cfg_vim.vim.version is defined %}
     - version:  {{ grains.cfg_vim.vim.version }}
     {% endif %}
-    {% if grains.os_family == 'MacOS' %}
+    {% if grains.saltrun == 'install' %}
+      {% if grains.os_family == 'MacOS' %}
     - unless:   brew list {{ vim_pkg_name }}
-    {% else %}
-    - unless:   command -v vim
+      {% else %}
+    - unless:   command -v {{ vim_pkg_name }}
+      {% endif %}
     {% endif %}
   {% endif %}
 viminfo:
@@ -46,7 +54,9 @@ viminfo:
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
+  {% if grains.saltrun == 'install' %}
     - replace:  False
+  {% endif %}
 {% endif %}
 
 {% if installs and 'go-plugins' in installs %}
@@ -56,10 +66,12 @@ vim-autoload:
     - source:   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     - makedirs: True
     - skip_verify: True
-    - replace:  False
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
+  {% if grains.saltrun == 'install' %}
+    - replace:  False
+  {% endif %}
 vim-plugged:
   file.directory:
     - name:     {{ grains.homedir }}/.vim/plugged
@@ -74,6 +86,9 @@ vimrc-plug:
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
+  {% if grains.saltrun == 'install' %}
+    - replace:  False
+  {% endif %}
 vimrc-init:
   file.managed:
     - name:     {{ grains.homedir }}/.pr_vimrc_init
@@ -81,25 +96,32 @@ vimrc-init:
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
+  {% if grains.saltrun == 'install' %}
+    - replace:  False
+  {% endif %}
 pynvim-dep:
   cmd.run:
-    - unless:   pip3 list | grep pynvim
     - name:     pip3 install pynvim
     - require:
       - sls:    pip3
+  {% if grains.saltrun == 'install' %}
+    - unless:   pip3 list | grep pynvim
+  {% endif %}
 neovim-dep:
   cmd.run:
-    - unless:   pip3 list | grep neovim
     - name:     pip3 install neovim
     - require:
       - cmd:    pynvim-dep
+  {% if grains.saltrun == 'install' %}
+    - unless:   pip3 list | grep neovim
+  {% endif %}
 vim-plugins:
   cmd.run:
     {# Fix for Centos ignoring "runas" leaving files with owner/group == root/root #}
     {% if not grains.docker and grains.os_family == 'RedHat' %}
-    - name:     sudo -u {{ grains.realuser }} {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    - name:     sudo -u {{ grains.realuser }} {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +{{ vim_plug }} +qall
     {% else %}
-    - name:     {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +PlugInstall +qall
+    - name:     {{ vim_path }}vim -e -s -u {{ grains.homedir }}/.pr_vimrc_plug +{{ vim_plug }} +qall
     {% endif %}
     {# Salt cannot retrieve environment for "runas" on MacOS not being run with sudo #}
     {% if not grains.os_family == 'MacOS' %}
@@ -141,7 +163,9 @@ vimrc:
     - user:     {{ grains.realuser }}
     - group:    {{ grains.realgroup }}
     - mode:     644
+  {% if grains.saltrun == 'install' %}
     - replace:  False
+  {% endif %}
 
   {% if grains.cfg_vim.vimrc.append %}
 append-source-vimrc:
@@ -152,12 +176,13 @@ append-source-vimrc:
       - file:   vimrc-plug
       - file:   vimrc-init
   {% endif %}
-  {% if grains.cfg_vim.debug.enable %}
+{% endif %}
+
+{% if grains.cfg_vim.debug.enable %}
 vim-version:
   cmd.run:
-    - name:     {{ vim_path }}vim -u NONE --version
+  - name:     {{ vim_path }}vim -u NONE --version
 vim-plugin-ls:
   cmd.run:
     - name:     ls -l {{ grains.homedir }}/.vim/plugged
-  {% endif %}
 {% endif %}

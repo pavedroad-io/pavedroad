@@ -16,7 +16,7 @@ function usage
     echo "-g            - show grains.items"
     echo "-h            - show usage help"
     echo "-n            - perform dry run"
-    echo "-u            - set update mode"
+    echo "-u            - set upgrade mode"
     echo "-l <loglevel> - set --log-level"
     echo "-o <output>   - set --state-output"
     echo "-v <verbose>  - set --state-verbose"
@@ -35,7 +35,7 @@ while getopts ":ghl:no:uv:" opt; do
       ;;
     o ) output="--state-output=${OPTARG}"
       ;;
-    u ) saltrun="update"
+    u ) saltrun="upgrade"
       ;;
     v ) verbose="--state-verbose=${OPTARG}"
       ;;
@@ -110,7 +110,8 @@ EOF
 
 ignore_message() {
 cat << EOF
-Running salt in masterless mode: Ignore the following message types:
+Running salt in masterless mode
+Generally the following message types can be ignored:
     [INFO    ] Routine salt information messages
     [WARNING ] Typically python deprecation warnings
     [ERROR   ] Spurious salt errors unless state fails

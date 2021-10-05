@@ -101,8 +101,8 @@ install_type="bootstrap"
 install_name="salt"
 
 # Set salt install version for each supported OS versions
-ubuntu_3000_versions=( 16.04 18.04 )
-ubuntu_3001_versions=( 20.04 )
+ubuntu_3000_versions=( 16.04 )
+ubuntu_3001_versions=( 18.04 20.04 )
 centos_3000_versions=( 7 8 )
 fedora_3000_versions=( 30 31 )
 fedora_3001_versions=( 32 )

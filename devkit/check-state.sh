@@ -10,10 +10,12 @@ usage_top() {
 usage_options() {
 cat << EOF
 Valid options:
+-f force color
 -h help with usage
 -l list log options
 -n script dry run
--u update mode
+-r run command
+-u upgrade mode
 -C command
 -D clear cache
 -F state file
@@ -26,6 +28,7 @@ Valid options:
 -S show grains
 -T show <type>
 -V <verbose>
+-X <execute>
 EOF
 }
 
@@ -65,7 +68,9 @@ usage_state() {
     echo $(ls $salt_top | grep -v top.* | tr '\n' ' ')
 }
 
+cmd=
 dryrun=
+forcecolor=
 highstate=
 clearcache=
 nostate=
@@ -79,9 +84,11 @@ showtype=
 render=
 state=
 verbose=
+runcmd=
+saltargs=
 saltrun="install"
 
-while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
+while getopts ":acdefgipqtwC:DF:GHNO:PRST:V:X:hlnr:u" opt; do
   case ${opt} in
     a ) loglevel="--log-level=all"
       ;;
@@ -132,6 +139,10 @@ while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
       ;;
     V ) verbose="${OPTARG}"
       ;;
+    X ) saltargs="${OPTARG}"
+      ;;
+    f ) forcecolor="--force-color"
+      ;;
     h ) usage_top
         usage_options
         log_options
@@ -145,7 +156,9 @@ while getopts ":acdegipqtwC:DF:GHNO:PRST:V:hlnu" opt; do
       ;;
     n ) dryrun=1
       ;;
-    u ) saltrun="update"
+    r ) runcmd="${OPTARG}"
+      ;;
+    u ) saltrun="upgrade"
       ;;
     : )
         echo Argument required: $OPTARG 1>&2
@@ -184,7 +197,11 @@ fi
 
 shift $((OPTIND - 1))
 state_error=
-if [[ ${nostate} ]]; then
+if [[ ${runcmd} ]]; then
+    echo execute: salt-call cmd.run "${runcmd}"
+elif [[ ${saltargs} ]]; then
+    echo execute: salt-call ${saltargs}
+elif [[ ${nostate} ]]; then
     if [[ ${state} ]]; then
         echo Ignoring state: ${state}
     fi
@@ -230,7 +247,11 @@ if [[ ! ${command} ]]; then
     fi
 fi
 
-if [[ ${clearcache} ]]; then
+if [[ ${runcmd} ]]; then
+    cmd=cmd.run
+elif [[ ${saltargs} ]]; then
+    execute=${saltargs}
+elif [[ ${clearcache} ]]; then
     execute="saltutil.clear_cache"
 elif [[ ${command} ]]; then
     execute="${command} ${file}"
@@ -291,9 +312,18 @@ if [ ${setgrains} ]; then
     done
 fi
 
-salt-call \
-    --config-dir  "${saltdir}/config/" \
-    --pillar-root "${saltdir}/pillar/" \
-    --file-root   "${saltdir}/states/" \
-    ${loglevel} ${output} ${verbose} \
-    ${execute}
+if [[ ${runcmd} ]]; then
+    salt-call \
+        --config-dir  "${saltdir}/config/" \
+        --pillar-root "${saltdir}/pillar/" \
+        --file-root   "${saltdir}/states/" \
+        ${loglevel} ${output} ${verbose} \
+        ${forcecolor} ${cmd} "${runcmd}"
+else
+    salt-call \
+        --config-dir  "${saltdir}/config/" \
+        --pillar-root "${saltdir}/pillar/" \
+        --file-root   "${saltdir}/states/" \
+        ${loglevel} ${output} ${verbose} \
+        ${forcecolor} ${execute}
+fi
