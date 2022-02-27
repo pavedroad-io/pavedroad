@@ -207,12 +207,13 @@ augroup go
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabedit')
 
   " Shorter mappings for more common vim-go commands
+  autocmd FileType go nmap     <silent> <leader>a :GoAddTags<CR>
   autocmd FileType go nmap     <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
   autocmd FileType go nmap     <silent> <leader>c <Plug>(go-coverage-toggle)
   autocmd FileType go nnoremap <silent> <leader>C :GoCoverageBrowser<CR>
-  autocmd FileType go nmap     <silent> <leader>d <Plug>(go-doc)
-  autocmd FileType go nmap     <silent> <leader>D <Plug>(go-doc-browser)
-  autocmd FileType go nmap     <silent> <leader>e <Plug>(go-iferr)
+  autocmd FileType go nmap     <silent> <leader>d :GoDebugStart<CR>
+  autocmd FileType go nmap     <silent> <leader>D :GoDocBrowser<CR>
+  autocmd FileType go nmap     <silent> <leader>e :UltiSnipsEdit<CR>
   autocmd FileType go nnoremap <silent> <leader>f :GoFillStruct<CR>
   autocmd FileType go nmap     <silent> <leader>i <Plug>(go-implements)
   autocmd FileType go nnoremap <silent> <leader>I :GoImpl<CR>
@@ -220,6 +221,7 @@ augroup go
   autocmd FileType go nmap     <silent> <leader>m <Plug>(go-metalinter)
   autocmd FileType go nmap     <silent> <leader>r <Plug>(go-run)
   autocmd FileType go nmap     <silent> <leader>R <Plug>(go-rename)
+  autocmd FileType go nmap     <silent> <leader>s :FzfSnippets<CR>
   autocmd FileType go nmap     <silent> <leader>t <Plug>(go-test-func)
 
 augroup END
@@ -409,28 +411,26 @@ nmap <leader>sb :UltiSnipsEdit!<cr>
 nnoremap <leader>G :Git!<Space>
 nnoremap <leader>Ga :Git add .<CR>
 nnoremap <leader>Gau :Git add --update<CR>
-nnoremap <leader>Gb :Gblame<CR>
-nnoremap <leader>Gc :Gcheckout<CR>
-nnoremap <leader>Gc- :Git checkout -<CR>
-nnoremap <leader>Gcm :Git checkout master<CR>
-nnoremap <leader>Gc :Gcommit<CR>
-nnoremap <leader>Gcn :Gcommit -n<CR> " commit but ignore hooks
+nnoremap <leader>Gb :Git blame<CR>
+nnoremap <leader>Gco :Git checkout<CR>
+nnoremap <leader>Gc :Git commit<CR>
+nnoremap <leader>Gcn :Git commit -n<CR> " commit but ignore hooks
 nnoremap <leader>Gd :Gdiff<CR>
 nnoremap <leader>Gdo :Gdiffoff<CR>
 nnoremap <leader>Ge :Gedit<CR>
 nnoremap <leader>Ges :Gedit<Space>
-nnoremap <leader>Gf :Gfetch<CR>
+nnoremap <leader>Gf :Git fetch<CR>
 nnoremap <leader>Gg :silent Ggrep! <cword><CR>
 nnoremap <leader>Gl :GV!<CR> " git log for the current file
 nnoremap <leader>Glf :GV<CR> " full git log
 nnoremap <leader>Gm :Gmove<Space>
 nnoremap <leader>Gp :Git! push<CR>
-nnoremap <leader>Gpf :Gpush --force-with-lease<CR>
+nnoremap <leader>Gpf :Git push --force-with-lease<CR>
 nnoremap <leader>Gpl :Git! pull<CR>
 nnoremap <leader>Gr :Gread<CR>
-nnoremap <leader>Grb :Grebase -i master<CR>
+nnoremap <leader>Grb :Git rebase -i master<CR>
 nnoremap <leader>Grm :Gremove<CR>
-nnoremap <leader>Gs :Gstatus<CR>
+nnoremap <leader>Gs :Git<CR>
 nnoremap <leader>Gv :Gvdiff<CR>
 nnoremap <leader>Gw :Gwrite<CR> " git add
 
